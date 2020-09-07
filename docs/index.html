@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Scientific Python QuickStart &#8212; 数学建模系列课程</title>
+    <title>HiMCM备赛课程 &#8212; 数学建模系列课程</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -25,8 +25,9 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
@@ -70,7 +71,12 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <ul class="nav sidenav_l1">
+  <p class="caption">
+ <span class="caption-text">
+  数学建模基础课
+ </span>
+</p>
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="LP.html">
    1. 规划模型
@@ -81,14 +87,21 @@
    2. 评价模型
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模高阶课
+ </span>
+</p>
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="prediction_model.html">
-   3. 预测模型
+   1. 预测模型
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="answers.html">
-   4. 作业解答
+   2. 作业解答
   </a>
  </li>
 </ul>
@@ -182,28 +195,18 @@
         
               <div>
                 
-  <div class="section" id="scientific-python-quickstart">
-<h1>Scientific Python QuickStart<a class="headerlink" href="#scientific-python-quickstart" title="Permalink to this headline">¶</a></h1>
-<p>This is a short sequence of lectures on Python programming for scientific
-work, written by <a class="reference external" href="http://www.tomsargent.com/">Thomas J.  Sargent</a> and <a class="reference external" href="https://johnstachurski.net/">John
-Stachurski</a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>These lectures were built using the new Sphinx-based <a class="reference external" href="https://beta.jupyterbook.org/intro.html">Jupyter Book
-2.0</a> tool set, as part of the
-<a class="reference external" href="https://ebp.jupyterbook.org/en/latest/">ExecutableBookProject</a>.  They are
-intended mainly as a demonstration of these tools.
-Instructions for how to build them from source can be found in the Jupyter
-Book documentation.</p>
+  <div class="section" id="himcm">
+<h1>HiMCM备赛课程<a class="headerlink" href="#himcm" title="Permalink to this headline">¶</a></h1>
+<p>这是LinCol教育开发的HiMCM备赛课程。</p>
+<p>目前正在迭代过程汇总。</p>
+<p>已经加入的课件有：</p>
+<ul class="simple">
+<li><p>规划模型</p></li>
+<li><p>评价模型</p></li>
+<li><p>预测模型</p></li>
+</ul>
+<div class="toctree-wrapper compound">
 </div>
-<p>These lectures are a mini-version of a <a class="reference external" href="https://executablebooks.github.io/quantecon-example/docs/index.html">longer
-series</a>
-of lectures, also built using Jupyter Book 2.0.  That series contains more
-features and applications but also requires more libraries and takes longer to
-run.</p>
-<p>Both lecture series are taken from a <a class="reference external" href="https://python.quantecon.org">more complete set of
-lectures</a> on open source computing hosted by
-<a class="reference external" href="https://quantecon.org">QuantEcon</a>.</p>
 <div class="toctree-wrapper compound">
 </div>
 </div>
