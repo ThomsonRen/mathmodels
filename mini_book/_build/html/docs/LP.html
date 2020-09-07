@@ -25,8 +25,9 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
@@ -38,7 +39,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="2. 评价模型" href="evaluation_model.html" />
-    <link rel="prev" title="Scientific Python QuickStart" href="index.html" />
+    <link rel="prev" title="HiMCM备赛课程" href="index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -71,7 +72,12 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <ul class="current nav sidenav_l1">
+  <p class="caption">
+ <span class="caption-text">
+  数学建模基础课
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    1. 规划模型
@@ -82,14 +88,21 @@
    2. 评价模型
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模高阶课
+ </span>
+</p>
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="prediction_model.html">
-   3. 预测模型
+   1. 预测模型
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="answers.html">
-   4. 作业解答
+   2. 作业解答
   </a>
  </li>
 </ul>
@@ -240,34 +253,34 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id10">
+  <a class="reference internal nav-link" href="#id9">
    1.4. 使用Python求解包含非线性项的规划问题
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id11">
+  <a class="reference internal nav-link" href="#id10">
    1.5. 从整数规划到0-1规划
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
+    <a class="reference internal nav-link" href="#id11">
      1.5.1. 整数规划模型
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
+    <a class="reference internal nav-link" href="#id12">
      1.5.2. 0-1规划模型
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id14">
+  <a class="reference internal nav-link" href="#id13">
    1.6. 案例分析
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
+    <a class="reference internal nav-link" href="#id14">
      1.6.1. 建立与简化模型
     </a>
    </li>
@@ -279,7 +292,7 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id16">
+  <a class="reference internal nav-link" href="#id15">
    1.7. 练习作业
   </a>
  </li>
@@ -544,7 +557,7 @@ beq = \left[\begin{matrix} 5 \\
 <a class="reference internal image-reference" href="https://cdn.kesci.com/upload/image/q0jgxmo90i.jpg?imageView2/0/"><img alt="https://cdn.kesci.com/upload/image/q0jgxmo90i.jpg?imageView2/0/" src="https://cdn.kesci.com/upload/image/q0jgxmo90i.jpg?imageView2/0/" style="height: 400px;" /></a>
 </div>
 <p>单纯形法的思路就是在可行域的一个顶点处找到一个<strong>初始可行解</strong>，<strong>判断该解是不是最优</strong>，若不是，则<strong>迭代到下一个顶点处</strong>进行重复判断。因为最优解的搜索范围从整个可行域缩小到了可行域的有限个顶点，算法的效率得到了极大的提升。</p>
-<div class="figure align-default" id="id9">
+<div class="figure align-default" id="directive-fig3">
 <a class="reference internal image-reference" href="https://cdn.kesci.com/upload/image/q0jgyianss.png?imageView2/0"><img alt="https://cdn.kesci.com/upload/image/q0jgyianss.png?imageView2/0" src="https://cdn.kesci.com/upload/image/q0jgyianss.png?imageView2/0" style="height: 400px;" /></a>
 </div>
 <p><strong>具体的找初始可行解的方法，判断解是否最优的条件，如何进行迭代这里不做详细展开，有兴趣的同学可以查阅相关资料。</strong></p>
@@ -702,8 +715,8 @@ beq = \left[\begin{matrix} 5 \\
 </div>
 <p>即当 <span class="math notranslate nohighlight">\(x_1 = 0.8, x_2 = 1.8, x_3 = 0\)</span> 时，目标函数取得最小值 <span class="math notranslate nohighlight">\(z = 7\)</span></p>
 </div>
-<div class="section" id="id10">
-<h2><span class="section-number">1.4. </span>使用Python求解包含非线性项的规划问题<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h2><span class="section-number">1.4. </span>使用Python求解包含非线性项的规划问题<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <ul class="simple">
@@ -834,14 +847,14 @@ x3 = 0.95
 </div>
 <p>即当 <span class="math notranslate nohighlight">\(x_1 = 0.55, x_2 = 1.2, x_3 = 0.95\)</span> 时，目标函数取得最小值 <span class="math notranslate nohighlight">\(z = 10.65\)</span></p>
 </div>
-<div class="section" id="id11">
-<h2><span class="section-number">1.5. </span>从整数规划到0-1规划<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id10">
+<h2><span class="section-number">1.5. </span>从整数规划到0-1规划<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>本节为拓展内容，仅做了解，不要求掌握</p>
 </div>
-<div class="section" id="id12">
-<h3><span class="section-number">1.5.1. </span>整数规划模型<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3><span class="section-number">1.5.1. </span>整数规划模型<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>规划中的变量（部分或全部）限制为整数时，称为整数规划。若在线性规划模型中，变量限制为整数，则称为整数线性规划。</p>
 <p><strong>当决策变量均为整数时，称纯整数规划；</strong></p>
 <p><strong>当决策变量中部分为整数，部分为实数时，称混合整数规划；</strong></p>
@@ -872,8 +885,8 @@ x3 = 0.95
 </ul>
 <p><strong>由于模型求解可以直接使用求解器（主要是Lingo），这里仅提供求解思路，如果在比赛中遇到该类问题，可以再查阅相关资料。</strong></p>
 </div>
-<div class="section" id="id13">
-<h3><span class="section-number">1.5.2. </span>0-1规划模型<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3><span class="section-number">1.5.2. </span>0-1规划模型<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>当整数规划问题中的整数型决策变量限制为只能取0或1时，称为0-1整数规划，简称为0-1规划。</p>
 <p>因为0-1规划问题的解空间比一般的整数规划问题较少，求解起来较为容易，且所有的整数规划问题都可以化为0-1规划问题，所以在建立混合整数规划模型求解实际问题时，应尽量使用0-1决策变量进行建模。</p>
 <p><strong>例如</strong>：有十个工厂可供决策时，可以使用10个0-1变量，当取值为0时时代表不使用这个工厂，取值为1时使用该工厂。</p>
@@ -896,8 +909,8 @@ s.t.&amp;\left\{\begin{array}{ll}
 \end{split}\]</div>
 </div>
 </div>
-<div class="section" id="id14">
-<h2><span class="section-number">1.6. </span>案例分析<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h2><span class="section-number">1.6. </span>案例分析<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <div class="admonition- admonition">
 <p class="admonition-title">案例1：投资的收益和风险</p>
 <p>市场上有<span class="math notranslate nohighlight">\(n\)</span>种资产<span class="math notranslate nohighlight">\(s_i(i = 1,2,\cdots,n)\)</span>可以选择，现用数额为<span class="math notranslate nohighlight">\(M\)</span>的相当大的资金作一个时期的投资。购买这<span class="math notranslate nohighlight">\(n\)</span>种资产的收益率为<span class="math notranslate nohighlight">\(r_i\)</span>，风险损失率为<span class="math notranslate nohighlight">\(q_i\)</span>,投资越分散，总的风险越少，总体风险可以用投资<span class="math notranslate nohighlight">\(s_i\)</span>中最大的一个风险来度量。</p>
@@ -930,8 +943,8 @@ s.t.&amp;\left\{\begin{array}{ll}
 <li><p><span class="math notranslate nohighlight">\(n\)</span>种资产<span class="math notranslate nohighlight">\(s_i\)</span>之间是相互独立的</p></li>
 <li><p>在投资的这一时期内，<span class="math notranslate nohighlight">\(r_i,p_i,q_i,r_0\)</span>为定值</p></li>
 </ol>
-<div class="section" id="id15">
-<h3><span class="section-number">1.6.1. </span>建立与简化模型<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3><span class="section-number">1.6.1. </span>建立与简化模型<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>根据模型假设和符号规定，我们可以写出模型的第一个优化目标为总体风险尽可能小,而总体风险是所有投资中风险最大的一个</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1058,8 +1071,8 @@ s.t.&amp;\left\{\begin{array}{ll}
 \end{split}\]</div>
 </div>
 </div>
-<div class="section" id="id16">
-<h2><span class="section-number">1.7. </span>练习作业<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id15">
+<h2><span class="section-number">1.7. </span>练习作业<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <div class="admonition- admonition">
 <p class="admonition-title">作业1：</p>
 <ul class="simple">
@@ -1161,7 +1174,7 @@ s.t.&amp;\left\{\begin{array}{ll}
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="index.html" title="previous page">Scientific Python QuickStart</a>
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">HiMCM备赛课程</a>
     <a class='right-next' id="next-link" href="evaluation_model.html" title="next page"><span class="section-number">2. </span>评价模型</a>
 
     </div>

@@ -310,7 +310,7 @@ name: directive-fig2
 ```{figure} https://cdn.kesci.com/upload/image/q0jgyianss.png?imageView2/0
 ---
 height: 400px
-name: directive-fig2
+name: directive-fig3
 ---
 
 ```

@@ -3,10 +3,15 @@
 - file: docs/index
   numbered: true
 
-- file: docs/LP
-- file: docs/evaluation_model
-- file: docs/prediction_model
-- file: docs/answers
+- part: 数学建模基础课
+  chapters:
+  - file: docs/LP
+  - file: docs/evaluation_model
+
+- part: 数学建模高阶课
+  chapters:
+  - file: docs/prediction_model
+  - file: docs/answers
 
 
 

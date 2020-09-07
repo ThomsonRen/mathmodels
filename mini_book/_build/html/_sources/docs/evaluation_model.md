@@ -30,6 +30,33 @@ name: directive-fig
 
  这时候我们就需要用到评价模型，评价模型是数学建模比赛中最基础也是最常用的模型, 例如[2018年HiMCM A题](https://www.comap.com/highschool/contests/himcm/2018problems.html) 就专门考察了评价模型。
 
+:::: {admonition} 2018HiMCM-A
+ 
+There are several Roller Coaster rating/ranking sites online that, while taking some objective measures into account, heavily rely on subjective input to determine the rating or ranking of a particular roller coaster (e.g., an "excitement"or "experience" score of an "expert" rider to measure "thrill").
+
+In addressing this HiMCM problem, consider only roller coasters currently in operation. We have provided data for a subset of operating roller coasters whose height, speed, and/or drop are above the average of worldwide operating coasters. Therefore, we have not included family or kiddie coasters, nor have we included bobsled or mountain type coasters.
+
+1. Create an objective quantitative algorithm or set of algorithms to develop a descriptive roller coaster rating/ranking system based only on roller coaster numerical and descriptive specification data (e.g., speed, duration of ride, steel or wood, drop).
+2. Use your algorithm(s) to develop your "Top 10 Roller Coasters in the World" list. Compare and discuss the rating/ranking results and descriptions from your team's algorithm(s) with at least two other rating/ranking systems found online.
+3. Describe the concept and design for a user-friendly app that uses your algorithm(s) to help a potential roller coaster rider find a roller coaster that she or he would want to ride. NOTE: You DO NOT need to program and/or write code for the app. You are developing the concept and design for the app only.
+4. Write a one-page non-technical News Release describing your new algorithm, results, and app.
+
+
+::: {admonition} 数据下载地址
+[点我下载](https://www.comap.com/highschool/contests/himcm/COMAP_RollerCoasterData_2018.xlsx)
+:::
+
+::::
+
+ 
+
+ 
+
+ 
+
+ 
+
+
 
 +++ {"id": "59E0309E704E449A84B6FDDACCB11296", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
@@ -51,7 +78,12 @@ $$
 - **权重系数**： 每一个综合评价问题都有相应的评价目的，针对某种评价目的，各评价指标之间的相对重要性是不同的，评价指标之间的这种相对重要性的大小，可用权重系数来刻画。当各评价对象和评价指标值都确定以后，综合评价结果就依赖于权重系数的取值了，即**权重系数确定的合理与否，直接关系到综合评价结果的可信度，甚至影响到最后决策的正确性**。因此，权重系数的确定要特别谨慎，应按一定的方法和原则来确定。如果用$w_{j}(j=1,2, \cdots, m)$来表示评价指标$x_j$的权重系数，一般应满足
 
 $$
-w_{j} \geq 0, j=1,2, \cdots, m  \quad  并且  \quad  \sum_{j=1}^{m} w_{j}=1
+w_{j} \geq 0, j=1,2, \cdots, m
+$$
+
+
+$$
+\sum_{j=1}^{m} w_{j}=1
 $$
 
 - **综合模型** 对于多指标（或多因素）的综合评价问题，就是要通过建立一定的数学模型将多个评价指标值综合成为一个整体的综合评价值，作为综合评价的依据，从而得到相应的评价结果。
@@ -90,16 +122,17 @@ $$
 
 一般情况下，在综合评价指标中，有的指标比较重要，有的影响微乎其微，另外各指标值可能属于不同类型、不同单位或不同数量级，从而使得各指标之间存在着不可公度性，给综合评价带来了诸多不便。为了尽可能地反映实际情况，消除由于各项指标间的这些差别带来的影响，避免出现不合理的评价结果，就需要对评价指标进行一定的预处理，包括
 
-1. **指标的筛选**
-1. **指标的一致化处理**
-1. **无量纲化处理**
-1. **定性数据定量化**
+1. [**指标的筛选**](content:choose_1)
+1. [**指标的一致化处理**](content:choose_2)
+1. [**无量纲化处理**](content:choose_3)
+1. [**定性数据定量化**](content:choose_4)
 
 下面分别介绍。
 
 +++ {"id": "D87331E1D43940508293B385D33A5C90", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
-### 评价指标的筛选方法
+(content:choose_1)=
+### 评价指标的筛选
 
 要根据综合评价的目的，针对具体的评价对象、评价内容收集有关指标信息，采用适当的筛选方法对指标进行筛选，合理地选取主要指标，剔除次要指标，以简化评价指标体系。常用的评价指标筛选方法主要有专家调研法、**最小均方差法、极大极小离差法**等。我们重点来看后两种方法。
 
@@ -170,7 +203,7 @@ $$
 
 其他几个常用的评价指标筛选方法还有条件广义方差极小法、极大不相关法等，这里限于篇幅不再展开。
 
-
+(content:choose_2)=
 ### 指标的一致化处理
 
 所谓一致化处理就是将评价指标的类型进行统一。
@@ -240,6 +273,8 @@ $$
 
 +++ {"id": "306F6FB12C8F4767A5AE374EB2DB7E69", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
+
+(content:choose_3)=
 ### 指标的无量纲化处理
 
 +++ {"id": "ABD711F3126C453DAEC7060738A2D77E", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
@@ -337,6 +372,7 @@ $$
 
 +++ {"id": "942B6E5BAAA44EDBB0C2B3D83708130A", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
+(content:choose_4)=
 ### 定性指标的定量化
 
 在综合评价工作中，有些评价指标是定性指标，即只给出定性的描述，例如，质量很好、性能一般、可靠性高等。对于这些指标，在进行综合评价时，必须先通过适当的方式进行赋值，使其量化。一般来说，对于指标最优值可赋值1，对于指标最劣值可赋值0。对极大型定性指标常按以下方式赋值。
@@ -454,6 +490,75 @@ $$
 
 
 ![Image Name](https://cdn.kesci.com/upload/image/q37aduhn3h.png?imageView2/0/w/640/h/640)
+
+
+当然，直接看结果可能不够直观，我们来通过一张雷达图解释这个评价的结果。
+
+
+```{code-cell} ipython3
+---
+id: 951D5B72403641A5B2A8895C107F5791
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: ["remove-input"]
+---
+import plotly.graph_objects as go
+
+categories = ['人均专著','生师比','科研经费','逾期毕业率']
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatterpolar(
+      r=[0.063758,0.597022,0.344901,0.275343],
+      theta=categories,
+      fill='toself',
+      name='院校 A'
+))
+fig.add_trace(go.Scatterpolar(
+      r=[0.127, 0.597,0.413,0.231],
+      theta=categories,
+      fill='toself',
+      name='院校 B'
+))
+
+fig.add_trace(go.Scatterpolar(
+      r=[0.255,0.497,0.482,0.193],
+      theta=categories,
+      fill='toself',
+      name='院校 C'
+))
+
+
+fig.add_trace(go.Scatterpolar(
+      r=[0.573,0.199,0.689,0.562],
+      theta=categories,
+      fill='toself',
+      name='院校 D'
+))
+
+fig.add_trace(go.Scatterpolar(
+      r=[0.765,0,0.027,0.718],
+      theta=categories,
+      fill='toself',
+      name='院校 E'
+))
+
+
+fig.update_layout(
+  polar=dict(
+    radialaxis=dict(
+      visible=True,
+#       range=[0, 5]
+    )),
+  showlegend=True
+)
+
+fig
+```
+
+
+
 
 
 
@@ -581,6 +686,7 @@ $$
 $$
 e_{j}=-k \sum_{i=1}^{n} p_{i j} \ln \left(p_{i j}\right), \quad j=1, \cdots, m
 $$
+
 其中，
 
 
