@@ -1,0 +1,46 @@
+#######################################################################################
+# Book settings
+title : 数学建模系列课程
+author: LinCol Education
+logo: 'qe-logo-large.png'
+
+# Information about where the book exists on the web
+description: >-
+  A brief introduction to Python programming for scientific applications.
+
+#######################################################################################
+# Execution settings
+execute:
+  execute_notebooks           : cache
+
+#######################################################################################
+# HTML-specific settings
+html:
+  home_page_in_navbar         : false
+  use_repository_button: true
+
+# #######################################################################################
+# Interact link settings
+notebook_interface            : "notebook"
+
+#######################################################################################
+# Launch button settings
+repository:
+  url                         : https://github.com/executablebooks/quantecon-mini-example
+  path_to_book                : "mini_book"
+
+binder:
+  binderhub_url               : "https://mybinder.org"
+  text                        : "Launch binder"
+
+latex:
+  latex_engine                : "xelatex"
+  latex_documents:
+    targetname: book.tex
+
+sphinx:
+  config:
+    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+parse:
+  myst_extended_syntax: true
