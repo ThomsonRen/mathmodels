@@ -16,10 +16,16 @@ name: directive-fig
  这时候我们就需要用到评价模型，评价模型是数学建模比赛中最基础也是最常用的模型, 例如[2018年HiMCM A题](https://www.comap.com/highschool/contests/himcm/2018problems.html) 就专门考察了评价模型。
 
 :::: {admonition} 2018HiMCM-A
- 
+
 There are several Roller Coaster rating/ranking sites online that, while taking some objective measures into account, heavily rely on subjective input to determine the rating or ranking of a particular roller coaster (e.g., an "excitement"or "experience" score of an "expert" rider to measure "thrill").
 
 In addressing this HiMCM problem, consider only roller coasters currently in operation. We have provided data for a subset of operating roller coasters whose height, speed, and/or drop are above the average of worldwide operating coasters. Therefore, we have not included family or kiddie coasters, nor have we included bobsled or mountain type coasters.
+
+
+
+::: {admonition} 数据下载地址
+[点我下载](https://www.comap.com/highschool/contests/himcm/COMAP_RollerCoasterData_2018.xlsx)
+:::
 
 1. Create an objective quantitative algorithm or set of algorithms to develop a descriptive roller coaster rating/ranking system based only on roller coaster numerical and descriptive specification data (e.g., speed, duration of ride, steel or wood, drop).
 2. Use your algorithm(s) to develop your "Top 10 Roller Coasters in the World" list. Compare and discuss the rating/ranking results and descriptions from your team's algorithm(s) with at least two other rating/ranking systems found online.
@@ -27,9 +33,7 @@ In addressing this HiMCM problem, consider only roller coasters currently in ope
 4. Write a one-page non-technical News Release describing your new algorithm, results, and app.
 
 
-::: {admonition} 数据下载地址
-[点我下载](https://www.comap.com/highschool/contests/himcm/COMAP_RollerCoasterData_2018.xlsx)
-:::
+
 
 ::::
 
@@ -468,7 +472,12 @@ fig
 
 ## 熵权法
 
-下面我们来学习一种客观赋权的方法：熵权法，它是一种突出局部差异的客观赋权方法。因为它的权重选取仅依赖于数据本身的离散性。
+下面我们来学习一种客观赋权的方法：熵权法（ Entropy Weight Method），它是一种突出局部差异的客观赋权方法。因为它的权重选取仅依赖于数据本身的离散性。
+
+```{tip}
+通俗来说可以这么理解熵权法：熵权法认为离散性越大的变量，其在评价中的重要性越突出。
+```
+
 
 我们通过一个例子来看。
 
@@ -585,8 +594,8 @@ $$
 这里的$x_{ij}$是标准化以后的数据。
 
 ```{admonition} 思考
-
- 熵权法是客观赋权，这里的**客观**就一定是优于主观的吗？经过熵权法计算得到的权重，应用中会不会有什么问题？
+1. 熵权法是客观赋权，这里的**客观**就一定是优于主观的吗？经过熵权法计算得到的权重，应用中会不会有什么问题？
+2. 熵权法中用的是熵来衡量变量的离散程度，除此之外之外，你还可以思考方差是不是也能达到类似的效果？
 ```
 
 

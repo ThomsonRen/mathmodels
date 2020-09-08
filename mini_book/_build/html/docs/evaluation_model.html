@@ -38,7 +38,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="1. 预测模型" href="prediction_model.html" />
+    <link rel="next" title="3. 预测模型" href="prediction_model.html" />
     <link rel="prev" title="1. 规划模型" href="LP.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,7 +58,7 @@
         <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../index.html">
   
-  <img src="../_static/qe-logo-large.png" class="logo" alt="logo">
+  <img src="../_static/logo.jpeg" class="logo" alt="logo">
   
   
   <h1 class="site-logo" id="site-title">数学建模系列课程</h1>
@@ -88,21 +88,21 @@
    2. 评价模型
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="prediction_model.html">
+   3. 预测模型
+  </a>
+ </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
-  数学建模高阶课
+  作业解答
  </span>
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="prediction_model.html">
-   1. 预测模型
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="answers.html">
-   2. 作业解答
+   1. 作业解答
   </a>
  </li>
 </ul>
@@ -166,7 +166,7 @@
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/executablebooks/quantecon-mini-example"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/ThomsonRen/math-models.github.io"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         
@@ -187,7 +187,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/quantecon-mini-example/master?urlpath=tree/mini_book/docs/evaluation_model.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ThomsonRen/math-models.github.io/master?urlpath=tree/mini_book/docs/evaluation_model.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -356,16 +356,16 @@
 <p class="admonition-title"> 2018HiMCM-A</p>
 <p>There are several Roller Coaster rating/ranking sites online that, while taking some objective measures into account, heavily rely on subjective input to determine the rating or ranking of a particular roller coaster (e.g., an “excitement”or “experience” score of an “expert” rider to measure “thrill”).</p>
 <p>In addressing this HiMCM problem, consider only roller coasters currently in operation. We have provided data for a subset of operating roller coasters whose height, speed, and/or drop are above the average of worldwide operating coasters. Therefore, we have not included family or kiddie coasters, nor have we included bobsled or mountain type coasters.</p>
+<div class="admonition">
+<p class="admonition-title"> 数据下载地址</p>
+<p><a class="reference external" href="https://www.comap.com/highschool/contests/himcm/COMAP_RollerCoasterData_2018.xlsx">点我下载</a></p>
+</div>
 <ol class="simple">
 <li><p>Create an objective quantitative algorithm or set of algorithms to develop a descriptive roller coaster rating/ranking system based only on roller coaster numerical and descriptive specification data (e.g., speed, duration of ride, steel or wood, drop).</p></li>
 <li><p>Use your algorithm(s) to develop your “Top 10 Roller Coasters in the World” list. Compare and discuss the rating/ranking results and descriptions from your team’s algorithm(s) with at least two other rating/ranking systems found online.</p></li>
 <li><p>Describe the concept and design for a user-friendly app that uses your algorithm(s) to help a potential roller coaster rider find a roller coaster that she or he would want to ride. NOTE: You DO NOT need to program and/or write code for the app. You are developing the concept and design for the app only.</p></li>
 <li><p>Write a one-page non-technical News Release describing your new algorithm, results, and app.</p></li>
 </ol>
-<div class="admonition">
-<p class="admonition-title"> 数据下载地址</p>
-<p><a class="reference external" href="https://www.comap.com/highschool/contests/himcm/COMAP_RollerCoasterData_2018.xlsx">点我下载</a></p>
-</div>
 </div>
 <p>如何去思考综合评价问题的建模呢？通常有如下五个角度</p>
 <ul class="simple">
@@ -831,7 +831,11 @@ if (outputEl) {{
 </div>
 <div class="section" id="id18">
 <h2><span class="section-number">2.4. </span>熵权法<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
-<p>下面我们来学习一种客观赋权的方法：熵权法，它是一种突出局部差异的客观赋权方法。因为它的权重选取仅依赖于数据本身的离散性。</p>
+<p>下面我们来学习一种客观赋权的方法：熵权法（ Entropy Weight Method），它是一种突出局部差异的客观赋权方法。因为它的权重选取仅依赖于数据本身的离散性。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>通俗来说可以这么理解熵权法：熵权法认为离散性越大的变量，其在评价中的重要性越突出。</p>
+</div>
 <p>我们通过一个例子来看。</p>
 <p>某医院为了提高自身的护理水平，对拥有的11个科室进行了考核，考核标准包括9项整体护理，并对护理水平较好的科室进行奖励。下表是对各个科室指标考核后的评分结果。</p>
 <p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/q37bu55zpt.png?imageView2/0/w/640/h/640" /></p>
@@ -923,7 +927,10 @@ s_{i}=\sum_{j=1}^{m} w_{j} x_{i j}, \quad i=1, \cdots, n
 <p>这里的<span class="math notranslate nohighlight">\(x_{ij}\)</span>是标准化以后的数据。</p>
 <div class="admonition- admonition">
 <p class="admonition-title">思考</p>
-<p>熵权法是客观赋权，这里的<strong>客观</strong>就一定是优于主观的吗？经过熵权法计算得到的权重，应用中会不会有什么问题？</p>
+<ol class="simple">
+<li><p>熵权法是客观赋权，这里的<strong>客观</strong>就一定是优于主观的吗？经过熵权法计算得到的权重，应用中会不会有什么问题？</p></li>
+<li><p>熵权法中用的是熵来衡量变量的离散程度，除此之外之外，你还可以思考方差是不是也能达到类似的效果？</p></li>
+</ol>
 </div>
 </div>
 <div class="section" id="id19">
@@ -1244,7 +1251,7 @@ CR= -1.644774851296528e-16
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="LP.html" title="previous page"><span class="section-number">1. </span>规划模型</a>
-    <a class='right-next' id="next-link" href="prediction_model.html" title="next page"><span class="section-number">1. </span>预测模型</a>
+    <a class='right-next' id="next-link" href="prediction_model.html" title="next page"><span class="section-number">3. </span>预测模型</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

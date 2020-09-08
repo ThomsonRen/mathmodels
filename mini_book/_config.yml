@@ -2,11 +2,11 @@
 # Book settings
 title : 数学建模系列课程
 author: LinCol Education
-logo: 'qe-logo-large.png'
+logo: 'logo.jpeg'
 
 # Information about where the book exists on the web
 description: >-
-  A brief introduction to Python programming for scientific applications.
+  数学建模系列课程
 
 #######################################################################################
 # Execution settings
@@ -26,7 +26,7 @@ notebook_interface            : "notebook"
 #######################################################################################
 # Launch button settings
 repository:
-  url                         : https://github.com/executablebooks/quantecon-mini-example
+  url                         : https://github.com/ThomsonRen/math-models.github.io
   path_to_book                : "mini_book"
 
 binder:

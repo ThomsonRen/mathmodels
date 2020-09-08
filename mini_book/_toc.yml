@@ -7,12 +7,13 @@
   chapters:
   - file: docs/LP
   - file: docs/evaluation_model
-
-- part: 数学建模高阶课
-  chapters:
   - file: docs/prediction_model
-  - file: docs/answers
 
+
+
+- part: 作业解答
+  chapters:
+    - file: docs/answers
 
 
 
