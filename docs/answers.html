@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>2. 作业解答 &#8212; 数学建模系列课程</title>
+    <title>1. 作业解答 &#8212; 数学建模系列课程</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -38,7 +38,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="1. 预测模型" href="prediction_model.html" />
+    <link rel="prev" title="3. 预测模型" href="prediction_model.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -87,21 +87,21 @@
    2. 评价模型
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="prediction_model.html">
+   3. 预测模型
+  </a>
+ </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
-  数学建模高阶课
+  作业解答
  </span>
 </p>
 <ul class="current nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="prediction_model.html">
-   1. 预测模型
-  </a>
- </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   2. 作业解答
+   1. 作业解答
   </a>
  </li>
 </ul>
@@ -165,7 +165,7 @@
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/executablebooks/quantecon-mini-example"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/ThomsonRen/math-models.github.io"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         
@@ -186,7 +186,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/quantecon-mini-example/master?urlpath=tree/mini_book/docs/answers.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ThomsonRen/math-models.github.io/master?urlpath=tree/mini_book/docs/answers.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -209,7 +209,12 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   2.1. 规划模型
+   1.1. 规划模型
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   1.2. 预测模型
   </a>
  </li>
 </ul>
@@ -223,9 +228,11 @@
               <div>
                 
   <div class="section" id="id1">
-<h1><span class="section-number">2. </span>作业解答<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">1. </span>作业解答<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id2">
-<h2><span class="section-number">2.1. </span>规划模型<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.1. </span>规划模型<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="admonition- admonition">
+<p class="admonition-title">作业1</p>
 <ul class="simple">
 <li><p>请使用Python <code class="docutils literal notranslate"><span class="pre">scipy</span></code>库 的<code class="docutils literal notranslate"><span class="pre">optimize.linprog</span></code>方法，求解以下线性规划问题,并通过图解法验证。</p></li>
 </ul>
@@ -239,6 +246,7 @@
 {x_{1}, x_{2} \geq 0}
 \end{array}\right.}\end{array}
 \end{split}\]</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#导入相关库</span>
@@ -275,6 +283,8 @@
 </div>
 </div>
 </div>
+<div class="admonition- admonition">
+<p class="admonition-title">作业2</p>
 <ul class="simple">
 <li><p>请使用Python <code class="docutils literal notranslate"><span class="pre">scipy</span></code>库 的<code class="docutils literal notranslate"><span class="pre">optimize.minimize</span></code>方法，求解以下非线性规划问题</p></li>
 </ul>
@@ -287,6 +297,7 @@
 { x_{1}, x_{2},x_3 \geq 0}
 \end{array}\right.}\end{array}
 \end{split}\]</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -348,6 +359,8 @@ x3 = 3.0
 </div>
 </div>
 </div>
+<div class="admonition- admonition">
+<p class="admonition-title">作业3</p>
 <ul class="simple">
 <li><p>某农场 I,II,III 等耕地的面积分别为 <span class="math notranslate nohighlight">\(100 hm^2\)</span>、<span class="math notranslate nohighlight">\(300 hm^2\)</span> 和 <span class="math notranslate nohighlight">\(200 hm^2\)</span>，计划种植水稻、大豆和玉米，要求三种作物的最低收获量分别为<span class="math notranslate nohighlight">\(190000kg\)</span>、<span class="math notranslate nohighlight">\(130000kg\)</span>和<span class="math notranslate nohighlight">\(350000kg\)</span>。I,II,III 等耕地种植三种作物的单产如下表所示。
 若三种作物的售价分别为水稻1.20元/kg，大豆1.50元/kg，玉米0.80元/kg。那么，</p>
@@ -384,6 +397,43 @@ x3 = 3.0
 </tr>
 </tbody>
 </table>
+</div>
+<p>设第<span class="math notranslate nohighlight">\(i\)</span>个农场种第<span class="math notranslate nohighlight">\(j\)</span>种作物的量为<span class="math notranslate nohighlight">\(x_{ij}\)</span>,三个农场，三种作物，因此决策变量一共有九个</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(
+\begin{matrix}
+x_{11}&amp; x_{12} &amp; x_{13}\\
+x_{21}&amp; x_{22} &amp; x_{23}\\
+x_{31}&amp; x_{32} &amp; x_{33}\\
+\end{matrix}
+\right)
+\end{split}\]</div>
+<p>追求产量最大时，目标函数为</p>
+<div class="math notranslate nohighlight">
+\[
+\max 1000\left(11x_{11} + 8x_{12}+14 x_{13} + 9.5x_{21}+6.9x_{22}+12x_{23}+9x_{31}+6x_{32}+10x_{33} \right)
+\]</div>
+<p>约束条件为最低产量约束和种植面积约束</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+s.t.
+\left\{
+\begin{aligned}
+11 x_{11} + 9.5x_{21} + 9x_{31} \geq 190\\
+8 x_{12} + 6.9x_{22} + 6x_{32} \geq 130\\
+14 x_{13} + 12x_{23} + 10x_{33} \geq 350\\
+x_{11} + x_{12} + x_{13} = 100 \\
+x_{21} + x_{22} + x_{23} = 300 \\
+x_{31} + x_{32} + x_{33} = 200 \\
+\end{aligned}\right.
+\end{split}\]</div>
+<p>除此之外，还有正值约束</p>
+<div class="math notranslate nohighlight">
+\[
+x_{ij}\geq 0
+\]</div>
+<p>编程求解如下</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#导入相关库</span>
@@ -438,6 +488,9 @@ x3 = 3.0
 </div>
 </div>
 </div>
+<div class="section" id="id3">
+<h2><span class="section-number">1.2. </span>预测模型<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -468,7 +521,7 @@ x3 = 3.0
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="prediction_model.html" title="previous page"><span class="section-number">1. </span>预测模型</a>
+    <a class='left-prev' id="prev-link" href="prediction_model.html" title="previous page"><span class="section-number">3. </span>预测模型</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
