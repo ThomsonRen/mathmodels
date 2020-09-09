@@ -343,9 +343,9 @@ TOPSIS 法是一种常用的组内综合评价方法，能充分利用原始数�
 
 ![Image Name](https://cdn.kesci.com/upload/image/q36cu5oq77.png?imageView2/0/w/500/h/500)
 
-TOPSIS 法使用距离尺度来度量样本差距，使用距离尺度就需要对指标属性进行同向化处理（若一个维度的数据越大越好，另一个维度的数据越小越好，会造成尺度混乱）。通常采用成本型指标向效益型指标转化（即数值越大评价越高，事实上几乎所有的评价方法都需要进行转化）
+**Step1**: 指标的筛选，经过观察，该数据不需要进行指标的筛选。
 
-通过分析，我们知道：
+**Step2**: 指标的一致化处理。通过分析，我们知道：
 
 - 人均专著，越多越好（极大型指标）
 - 科研经费，越多越好（极大型指标）
@@ -354,11 +354,35 @@ TOPSIS 法使用距离尺度来度量样本差距，使用距离尺度就需要�
 
 设研究生院的生师比最佳区间为$[5,6]$，在最佳区间内生师比得分为1 ，如果生师比小于2或者大于12都是0分，在其他的区间都按照线性关系进行变换。
 
+
+import numpy as np
+import matplotlib.pyplot as plt
+plt.style.use('science')
+x_list = np.linspace(0,14,100)
+y_list = []
+import seaborn as sns
+sns.set(font_scale=1.5)
+for x in x_list:
+    if x <= 2:
+        y_list.append(0)
+    elif x>2 and x<=5:
+        y_list.append( (x-2)*1/3 )
+    elif x>5 and x<=6:
+        y_list.append(1)
+    elif x>6 and x<=12:
+        y_list.append( 1 - (x-6)*1/6 )
+    elif x>12:
+        y_list.append(0)
+plt.figure(figsize=(8,6))
+plt.plot(x_list,y_list)
+plt.xlabel('$x$');
+plt.ylabel('$y$');
+
 因此，我们把两个极大型指标保持不变，对极小型指标采用取倒数操作，对区间型指标使用上面介绍的处理方法。处理结果见下图。
 
 ![Image Name](https://cdn.kesci.com/upload/image/q36dpsx5kl.png?imageView2/0/w/400/h/400)
 
-接下来，我们进行无量纲处理，以 "人均专著" 属性为例，我们使用向量归一化方法：
+**Step3**:无量纲处理。以 "人均专著" 属性为例，我们使用向量归一化方法：
 
 $$
 \begin{aligned}
@@ -377,11 +401,11 @@ $$
 
 ![Image Name](https://cdn.kesci.com/upload/image/q37a7zebvn.png?imageView2/0/w/400/h/400)
 
-接着，我们选出其中的最优方案和最劣方案。
+**Step4**: 选出其中的最优方案和最劣方案。
 
 ![Image Name](https://cdn.kesci.com/upload/image/q37a9tyx43.png?imageView2/0/w/400/h/400)
 
-然后，我们开始计算每一个学校，与最优方案以及最劣方案之间的距离
+**Step5**: 计算每一个学校，与最优方案以及最劣方案之间的距离
 
 $$
 \begin{array}{l}
@@ -401,7 +425,7 @@ $$
 如果理想中最好的大学是真实存在的，其得分$C_i$应该等于几，为什么？如果是理想中最差的大学真实存在呢？
 ```
 
-最终评价结果如下
+**Step6**: 最终评价结果如下
 
 
 ![Image Name](https://cdn.kesci.com/upload/image/q37aduhn3h.png?imageView2/0/w/640/h/640)
@@ -486,7 +510,7 @@ fig
 
 ![Image Name](https://cdn.kesci.com/upload/image/q37bu55zpt.png?imageView2/0/w/640/h/640)
 
-但是由于各项护理的难易程度不同，因此需要对9项护理进行赋权，以便能够更加合理的对各个科室的护理水平进行评价。根据原始评分表，对数据进行标准化后可以得到下列数据标准化表
+但是由于各项护理的难易程度不同，因此需要对9项护理进行赋权，以便能够更加合理的对各个科室的护理水平进行评价。根据原始评分表，对数据进行归一化后可以得到下列数据归一化表
 
 
 ![Image Name](https://cdn.kesci.com/upload/image/q37bvhlzaq.png?imageView2/0/w/640/h/640)
@@ -612,19 +636,80 @@ AHP (Analytic Hierarchy Process)层次分析法是美国运筹学家Saaty教授�
 
 我们一样通过一个案例来学习层次分析法。
 
-人们在日常生活中经常会碰到多目标决策问题，例如假期某人想要出去旅游，现有三个目的地（方案）：风光绮丽的杭州（P1）、迷人的北戴河（P2）和山水甲天下的桂林（P3）。假如选择的标准和依据（行动方案准则）有5个：景色，费用，饮食，居住和旅途。则常规思维的方式如下：
+人们在日常生活中经常会碰到多目标决策问题，例如假期某人想要出去旅游，现有三个目的地（方案）：
+
+- 风光绮丽的杭州（P1）
+- 迷人的北戴河（P2）
+- 山水甲天下的桂林（P3）
+
+假如选择的标准和依据（行动方案准则）有5个：景色，费用，饮食，居住和旅途。则常规思维的方式如下：
 
 
-![Image Name](https://cdn.kesci.com/upload/image/q37ay9fgbp.png?imageView2/0/w/500/h/500)
+```{figure} ../_static/lecture_specific/evaluation_model/ahp2.png
+---
+width: 700px
+name: ahp_2
+align: center
+---
+
+```
 
 通过相互比较确定各准则对于目标的权重，即构造判断矩阵。在层次分析法中，为使矩阵中的各要素的重要性能够进行定量显示，引进了矩阵判断标度（1～9标度法） :
 
+```{figure} ../_static/lecture_specific/evaluation_model/ahp.png
+---
+width: 700px
+name: ahp_matrix
+align: center
+---
 
-![Image Name](https://cdn.kesci.com/upload/image/q37azh9ui8.png?imageView2/0/w/700/h/700)
+```
 
 构造判断矩阵
 
 ![Image Name](https://cdn.kesci.com/upload/image/q37b0ivv9d.png?imageView2/0/w/960/h/960)
+
+
+我们以其中的一个判断矩阵（景色）为例，介绍判断矩阵的构建方法。对于有三个城市的景色对比来说，在$B_1$矩阵中，第$i$行第$j$列表示第$i$个城市，相比比第$j$个城市，按照1-9标度法得到的比较值。
+
+$$
+B_1 = \left[\begin{matrix} 
+\dfrac{w_1}{w_1} & \dfrac{w_1}{w_2} &\dfrac{w_1}{w_3} \\
+\dfrac{w_2}{w_1} & \dfrac{w_2}{w_2} &\dfrac{w_2}{w_3}  \\
+\dfrac{w_3}{w_1} & \dfrac{w_3}{w_2} &\dfrac{w_3}{w_3} 
+\end{matrix}  \right]
+$$
+
+比如，
+
+$$
+B_1 = \left[\begin{matrix} 
+1 & 2 &5 \\
+1/2 &1 &2 \\
+1/5 & 1/2& 1
+\end{matrix}  \right]
+$$
+
+- 可以肯定的是，对角线元素都是1，因为自己比自己的重要性肯定是相等的
+-  第一行第二列的2则表示杭州相比北戴河，景色要稍微好一些（程度为2）
+-  第一行第三列的5则表示杭州相比桂林，景色要明显好一些（程度为5）
+-  第二行第三列的2则表示北戴河相比桂林，景色要稍微好一些（程度为2）
+-  沿对角线对称位置的元素互为倒数也就是$a_{ij} a_{ji} = 1$
+
+
+如果我们设每一个城市景色的重要性为$w = [w_1,w_2,w_3]$的话，上述的$B_1$矩阵有一个非常有趣的性质为
+
+$$
+B_1 w = 3w
+$$
+
+我们后续将通过这个性质求解$w = [w_1,w_2,w_3]$，也就是每一个城市在景色上的得分。
+
+
+```{admonition} 思考
+- 请你尝试证明上面的$B_1 w = 3w$
+- 对于更一搬的$n\times n$的判断矩阵而言，请证明$A w = nw$
+```
 
 ### 层次单排序和总排序
 
@@ -639,7 +724,10 @@ $$
 
 式中，$\lambda_{max}$ 为矩阵$B$的最大特征跟根，$W$为对应于$\lambda_{max}$的特征向量，$W$的分量$w_i$即为相应元素单排序的权值。
 
-A = [[1,2,9],[1/2,1,1/2],[1/9,2,1]]
+下面介绍使用python求解矩阵的特征值与特征向量的方法：
+
+## 矩阵的输入
+A = [[1,2,5],[1/2,1,2],[1/5,1/2,1]]
 A
 
 # 调用 np.linalg.eig方法计算矩阵的特征值和特征向量，其中lamb是特征值，v是特征向量
@@ -651,9 +739,23 @@ lambda_max = max(abs(lamb))                    # 提取最大的特征值
 loc = np.where(lamb == lambda_max)             # 获取最大特征值的索引
 
 weight = abs(v[0:len(A),loc[0][0]])            # 获取最大特征值对应的特征向量
+weight = weight/sum(weight)  # 归一化
 weight
 
-![Image Name](https://cdn.kesci.com/upload/image/q37b2ynn0.png?imageView2/0/w/960/h/960)
+对于其他的判断矩阵也可以执行类似的操作。最终的计算结果如下图{numref}`Figure {number}<ahp_3>`
+
+```{figure} ../_static/lecture_specific/evaluation_model/ahp3.png
+---
+width: 600px
+name: ahp_3
+align: center
+---
+AHP计算结果图
+```
+
+
+
+进行层次总排序即可得到最终的打分结果
 
 $$
 W=W^{(3)} W^{(2)}=\left(\begin{array}{ccccc}
@@ -675,16 +777,15 @@ $$
 
 决策结果是首选旅游地为$P_3$ ,其次为$P_1$，再次$P_2$
 
-
-一般地，若层次结构由$k$个层次（目标层算第一层），则方案的优先程度的排序向量为:
-
-$$
-W=W^{(k)} W^{(k-1)} \dots W^{(2)}
-$$
-
 ### 判断一致性
 
 判断矩阵通常是不一致的，但是为了能用它的对应于特征根的特征向量作为被比较因素的权向量，其不一致程度应在容许的范围内.如何确定这个范围？ 
+
+```{admonition} 思考
+为什么说判断矩阵通常是不一致的？你是否能举个例子
+```
+
+
 
 一致性指标：
 
@@ -701,12 +802,13 @@ $$
 
 当$CR<0.1$时，认为层次排序是具有满意的一致性的，我们可以接受该分析结果。
 
-A = [[1,2,6],[1/2,1,2],[1/5,1/2,1]]
+A = [[1,2,5],[1/2,1,2],[1/5,1/2,1]]
 # 调用 np.linalg.eig方法计算矩阵的特征值和特征向量，其中lamb是特征值，v是特征向量
 lamb,v = np.linalg.eig(A)      
 lambda_max = max(abs(lamb))                    # 提取最大的特征值
 loc = np.where(lamb == lambda_max)             # 获取最大特征值的索引
 weight = abs(v[0:len(A),loc[0][0]])            # 获取最大特征值对应的特征向量
+weight = weight/sum(weight) 
 RI_list = [0 ,0 ,0.58,0.9,1.12,1.24,1.32,1.41,1.45]   
 RI = RI_list[len(A)-1]                        # 计算RI
 CI = (lambda_max - len(A))/(len(A)-1)         # 计算CI
@@ -729,7 +831,7 @@ A=\left(\begin{array}{ccc}{1} & {1 / 5} & {1 / 3} \\ {5} & {1} & {3} \\ {3} & {1
 $$
 
 $$
-B_{1}=\left(\begin{array}{ccccc}{1} & {2} & {3} & {4} & {7} \\ {1 / 3} & {1} & {3} & {2} & {5} \\ {1 / 5} & {1 / 3} & {1} & {1 / 2} & {1} \\ {1 / 4} & {1 / 2} & {2} & {1} & {3} \\ {1 / 7} & {1 / 5} & {1 / 2} & {1 / 3} & {1}\end{array}\right) \quad B_{2}=\left(\begin{array}{cccc}{1} & {1 / 7} & {1 / 3} & {1 / 5} \\ {7} & {1} & {5} & {3} \\ {3} & {1 / 5} & {1} & {1 / 3} \\ {5} & {1 / 2} & {3} & {1}\end{array}\right) \quad B_{3}=\left(\begin{array}{cccc}{1} & {1} & {3} & {3} \\ {1} & {1} & {3} & {3} \\ {1 / 3} & {1 / 3} & {1} & {1} \\ {1 / 7} & {1 / 3} & {1} & {1}\end{array}\right)
+B_{1}=\left(\begin{array}{ccccc}{1} & {2} & {3} & {4} & {7} \\ {1 / 3} & {1} & {3} & {2} & {5} \\ {1 / 5} & {1 / 3} & {1} & {1 / 2} & {1} \\ {1 / 4} & {1 / 2} & {2} & {1} & {3} \\ {1 / 7} & {1 / 5} & {1 / 2} & {1 / 3} & {1}\end{array}\right) \quad B_{2}=\left(\begin{array}{cccc}{1} & {1 / 7} & {1 / 3} & {1 / 5} \\ {7} & {1} & {5} & {3} \\ {3} & {1 / 5} & {1} & {1 / 3} \\ {5} & {1 / 2} & {3} & {1}\end{array}\right) \quad B_{3}=\left(\begin{array}{cccc}{1} & {1} & {3} & {3} \\ {1} & {1} & {3} & {3} \\ {1 / 3} & {1 / 3} & {1} & {1} \\ {1 / 3} & {1 / 3} & {1} & {1}\end{array}\right)
 $$
 
 # 层次分析法函数
@@ -739,6 +841,7 @@ def AHP(A):
     lambda_max = max(abs(lamb))                    # 提取最大的特征值
     loc = np.where(lamb == lambda_max)             # 获取最大特征值的索引
     weight = abs(v[0:len(A),loc[0][0]])            # 获取最大特征值对应的特征向量
+    weight = weight/sum(weight) 
     RI_list = [0 ,0 ,0.58,0.9,1.12,1.24,1.32,1.41,1.45]   
     RI = RI_list[len(A)-1]                        # 计算RI
     CI = (lambda_max - len(A))/(len(A)-1)         # 计算CI
@@ -750,14 +853,9 @@ def AHP(A):
     print('CR=',CR)
     return weight,CI,RI,CR
 
-A = np.array([[1, 1/2, 4,3,3],
-             [2,  1,    7,5,5],
-             [1/4, 1/7,   1,1/2,1/3],
-             [1/3,1/5,2,1,1],
-             [1/3,1/5,3,1,1]])
-# A = np.array([[1, 1/5, 1/3],
-#              [5,  1,    3],
-#              [3, 1/3,   1]])            # 输入判断矩阵
+A = np.array([[1, 1/5, 1/3],
+            [5,  1,    3],
+            [3, 1/3,   1]])            # 输入判断矩阵
 weight,CI,RI,CR = AHP(A)
 
 B1 = np.array([[1, 2, 3, 4, 7],
@@ -779,6 +877,8 @@ B3 = np.array([[1,1,3,3],
               [1/3,1/3,1,1]])     # 输入判断矩阵
 weight,CI,RI,CR = AHP(B3)
 
+最后经过层次总排序即可得到最终的打分排名结果
+
 ![Image Name](https://cdn.kesci.com/upload/image/q37bsjooi.png?imageView2/0/w/960/h/960)
 
 ## 评价模型总结
@@ -792,5 +892,5 @@ weight,CI,RI,CR = AHP(B3)
 
 ``` {tip}
 - 优先选择客观方法，但也具有其局限性
-- 如果选用了主观方法（AHP）,一定不要忘记一致性检验和敏感性分析
+- 如果选用了主观方法（AHP）,需要做一致性检验和敏感性分析
 ```

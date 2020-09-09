@@ -598,7 +598,6 @@ while abs(Terr)>0.00001:
         Terr.append(err)
         w = w + 2*k*err*np.array(yt[j-N:j])
     Terr = max(Terr)
-    print(w)
 
 **$N$, $k$值和初始权数的确定**
 

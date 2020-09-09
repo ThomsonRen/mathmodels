@@ -864,7 +864,6 @@ while abs(Terr)>0.00001:
         Terr.append(err)
         w = w + 2*k*err*np.array(yt[j-N:j])
     Terr = max(Terr)
-    print(w)
 ```
 
 +++ {"id": "B5F1917B12204DB9BF1DFCAE9698B16C", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
