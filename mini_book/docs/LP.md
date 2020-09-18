@@ -99,7 +99,7 @@ $$
 
 $$
 \begin{aligned}
-&\max \quad z= x_{1}+ x_{2}\\
+&\min \quad z= x_{1}+ x_{2}\\
 &\text { s.t. }\left\{\begin{array}{l}
 {x_{1}+2 x_{2} \leq 10} \\
 {4 x_{1}+3 x_{2} \leq 24} \\

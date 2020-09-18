@@ -335,8 +335,8 @@
 <li><p><strong>参数之间的确定性关系是指某参数可以完全由其他参数所决定</strong>，例如正方形的面积与边长的关系，总价格与单价和数量的关系等。</p></li>
 <li><p><strong>相关关系是指一个或多个变量之间有一定的联系，但是这个联系不是完全决定性的</strong>。例如，人的身高与体重有一定的关系，一般来讲身高高的人体重相对大一些。但是它们之间不能用一个确定的表达式表示出来。这次变量之间的关系。我们称之为相关关系。又如环境因素与农作物的产量也有相关关系，因为在相同环境条件下农作物的产量也有区别，这也就是说农作物的产量是一个随机变量。</p></li>
 </ul>
-<p>**回归分析：**回归分析就是研究相关关系的一种数学方法，是寻找不完全确定的变量间的数学关系式并进行统计推断的一种方法。它能帮助我们从一个变量取得的值去估计另一个变量的值。</p>
-<p>**线性回归：**回归分析中最简单的是线性回归。</p>
+<p><strong>回归分析</strong>：回归分析就是研究相关关系的一种数学方法，是寻找不完全确定的变量间的数学关系式并进行统计推断的一种方法。它能帮助我们从一个变量取得的值去估计另一个变量的值。</p>
+<p><strong>线性回归</strong>：回归分析中最简单的是线性回归。</p>
 <div class="section" id="id5">
 <h3><span class="section-number">3.2.1. </span>一元线性回归模型<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>单变量线性回归，又称简单线性回归（simple linear regression,SLR），是最简单但用途很广的回归模型。其回归式为：</p>
@@ -903,37 +903,42 @@ $<span class="math notranslate nohighlight">\(
 </div>
 <div class="section" id="id14">
 <h4><span class="section-number">3.4.1.3. </span>趋势移动平均法<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
-<p>下面讨论如何利用移动平均的滞后偏差建立直线趋势预测模型。设时间序列<span class="math notranslate nohighlight">\(\left\{y_{t}\right\}\)</span>从某时期开始具有直线趋势，且认为未来时期也按此直线趋势变化，则可设此直线趋势预测模型为
-$<span class="math notranslate nohighlight">\(
+<p>下面讨论如何利用移动平均的滞后偏差建立直线趋势预测模型。设时间序列<span class="math notranslate nohighlight">\(\left\{y_{t}\right\}\)</span>从某时期开始具有直线趋势，且认为未来时期也按此直线趋势变化，则可设此直线趋势预测模型为</p>
+<div class="math notranslate nohighlight">
+\[
 \hat{y}_{t+T}=a_{t}+b_{t} T, \quad T=1,2, \cdots 
 \tag{1}
-\)</span>$</p>
+\]</div>
 <p>其中 <span class="math notranslate nohighlight">\(t\)</span> 为当前时期数；<span class="math notranslate nohighlight">\(T\)</span> 为由<span class="math notranslate nohighlight">\(t\)</span>至预测期的时期数； <span class="math notranslate nohighlight">\(a_t\)</span> 为截距； <span class="math notranslate nohighlight">\(b_t\)</span> 为斜率。两者又称为平滑系数。</p>
-<p>现在，我们根据移动平均值来确定平滑系数。由模型(1)可知
-$<span class="math notranslate nohighlight">\(
+<p>现在，我们根据移动平均值来确定平滑系数。由模型(1)可知</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{aligned}
 &amp;a_{t}=y_{t}\\
 &amp;y_{t-1}=y_{t}-b_{t}\\
 &amp;y_{t-2}=y_{t}-2 b_{t}\\
 &amp;y_{t-N+1}=y_{t}-(N-1) b_{t}
 \end{aligned}
-\)</span>$</p>
-<p>所以
-$<span class="math notranslate nohighlight">\(
+\end{split}\]</div>
+<p>所以</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{aligned}
 M_{t}^{(1)} &amp;=\frac{y_{t}+y_{t-1}+\cdots+y_{t-N+1}}{N}=\frac{y_{t}+\left(y_{t}-b_{t}\right)+\cdots+\left[y_{t}-(N-1) b_{t}\right]}{N} \\
 &amp;=\frac{N y_{t}-[1+2+\cdots+(N-1)] b_{t}}{N}=y_{t}-\frac{N-1}{2} b_{t}
 \end{aligned}
-\)</span>$</p>
-<p>因此
-$<span class="math notranslate nohighlight">\(
+\end{split}\]</div>
+<p>因此</p>
+<div class="math notranslate nohighlight">
+\[
 y_{t}-M_{t}^{(1)}=\frac{N-1}{2} b_{t}
 \tag{2}
-\)</span>$</p>
-<p>类似以上的推导，我们还可以得到
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<p>类似以上的推导，我们还可以得到</p>
+<div class="math notranslate nohighlight">
+\[
 y_{t-1}-M_{t-1}^{(1)}=\frac{N-1}{2} b_{t}
-\)</span>$</p>
+\]</div>
 <p>所以</p>
 <div class="math notranslate nohighlight">
 \[
@@ -945,13 +950,14 @@ y_{t}-y_{t-1}=M_{t}^{(1)}-M_{t-1}^{(1)}=b_{t}
 M_{t}^{(1)}-M_{t}^{(2)}=\frac{N-1}{2} b_{t}
 \tag{3}
 \]</div>
-<p>于是，由式（2）和式（3）可得平滑系数的计算公式为
-$<span class="math notranslate nohighlight">\(
+<p>于是，由式（2）和式（3）可得平滑系数的计算公式为</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \left\{\begin{array}{l}
 {a_{t}=2 M_{t}^{(1)}-M_{t}^{(2)}} \\
 {b_{t}=\dfrac{2}{N-1}\left(M_{t}^{(1)}-M_{t}^{(2)}\right)}
 \end{array}\right.
-\)</span>$</p>
+\end{split}\]</div>
 <p>继续沿用上面的例子，进行趋势移动平均的计算</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1006,10 +1012,11 @@ $<span class="math notranslate nohighlight">\(
 <div class="section" id="id15">
 <h4><span class="section-number">3.4.1.4. </span>自适应滤波法<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <p>自适应滤波法与移动平均法、指数平滑法一样，也是以时间序列的历史观测值进行某种加权平均来预测的，它要寻找一组“最佳”的权数，其办法是先用一组给定的权数来计算一个预测值，然后计算预测误差，再根据预测误差调整权数以减少误差。这样反复进行，直至找出一组“最佳”权数，使误差减少到最低限度。由于这种调整权数的过程与通讯工程中的传输噪声过滤过程极为接近，故称为自适应滤波法。</p>
-<p>自适应滤波法的基本预测公式为
-$<span class="math notranslate nohighlight">\(
+<p>自适应滤波法的基本预测公式为</p>
+<div class="math notranslate nohighlight">
+\[
 \hat{y}_{t+1}=w_{1} y_{t}+w_{2} y_{t-1}+\cdots+w_{N} y_{t-N+1}=\sum_{i=1}^{N} w_{i} y_{t-i+1}
-\)</span>$</p>
+\]</div>
 <p>式中,<span class="math notranslate nohighlight">\(\hat{y}_{t+1}\)</span>为第<span class="math notranslate nohighlight">\(t +1\)</span>期的预测值,<span class="math notranslate nohighlight">\(w_i\)</span>为第<span class="math notranslate nohighlight">\(t-i+1\)</span>期的观测权数。其调整权数的公式为</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1050,31 +1057,40 @@ w_{i}^{\prime}=w_{i}+2 k \cdot e_{i+1} y_{t-i+1}
 </table>
 <p>本例中<span class="math notranslate nohighlight">\(N = 2\)</span>。取初始权数 <span class="math notranslate nohighlight">\(w_1 = 0.5\)</span>， <span class="math notranslate nohighlight">\(w_2 = 0.5\)</span> ，并设<span class="math notranslate nohighlight">\(k = 0.9\)</span>。<span class="math notranslate nohighlight">\(t\)</span>的取值由<span class="math notranslate nohighlight">\(N = 2\)</span>开始，当<span class="math notranslate nohighlight">\(t=2\)</span>时：</p>
 <ol class="simple">
-<li><p>按预测公式,求第<span class="math notranslate nohighlight">\(t +1= 3\)</span>期的预测值。
-$<span class="math notranslate nohighlight">\(
+<li><p>按预测公式,求第<span class="math notranslate nohighlight">\(t +1= 3\)</span>期的预测值。</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
 \hat{y}_{t+1}=\hat{y}_{3}=w_{1} y_{2}+w_{2} y_{1}=0.15
-\)</span>$</p></li>
-<li><p>计算预测误差。
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<ol class="simple">
+<li><p>计算预测误差。</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
 e_{t+1}=e_{3}=y_{3}-\hat{y}_{3}=0.3-0.15=0.15
-\)</span>$</p></li>
-<li><p>更新权重
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<ol class="simple">
+<li><p>更新权重</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
 w_{i}^{\prime}=w_{i}+2 k \cdot e_{i+1} y_{t-i+1}
-\)</span><span class="math notranslate nohighlight">\(
-展开就是，
-\)</span><span class="math notranslate nohighlight">\(
+\]</div>
+<p>展开就是，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{aligned}
 &amp;w_{1}^{\prime}=w_{1}+2 k e_{3} y_{2}=0.554\\
 &amp;w_{2}^{\prime}=w_{2}+2 k e_{3} y_{1}=0.527
 \end{aligned}
-\)</span>$</p></li>
-</ol>
+\end{split}\]</div>
 <p>依次类推，我们可以按照同样的规律从4-10继续调整权重，这时，第一轮调整就此结束。</p>
-<p>把现有的新权数作为初始权数，重新开始<span class="math notranslate nohighlight">\(t = 2\)</span>的过程。这样反复进行下去，到预测误差（指新一轮的预测总误差）没有明显改进时，就认为获得了一组“最佳”权数，能实际用来预测第11 期的数值。本例在调整过程中，可使得误差降为零，而权数达到稳定不变，最后得到的“最佳”权数为
-$<span class="math notranslate nohighlight">\(
+<p>把现有的新权数作为初始权数，重新开始<span class="math notranslate nohighlight">\(t = 2\)</span>的过程。这样反复进行下去，到预测误差（指新一轮的预测总误差）没有明显改进时，就认为获得了一组“最佳”权数，能实际用来预测第11 期的数值。本例在调整过程中，可使得误差降为零，而权数达到稳定不变，最后得到的“最佳”权数为</p>
+<div class="math notranslate nohighlight">
+\[
 w_{1}^{\prime}=2.0, \quad w_{2}^{\prime}=-1.0
-\)</span>$</p>
+\]</div>
 <p>用“最佳”权数预测第 11 期的取值</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1104,10 +1120,11 @@ w_{1}^{\prime}=2.0, \quad w_{2}^{\prime}=-1.0
 <p><strong><span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(k\)</span>值和初始权数的确定</strong></p>
 <p>在开始调整权数时，首先要确定权数个数<span class="math notranslate nohighlight">\(N\)</span>和学习常数<span class="math notranslate nohighlight">\(k\)</span> 。一般说来，当时间序列的观测值呈季节变动时， <span class="math notranslate nohighlight">\(N\)</span> 应取季节性长度值。如序列以一年为周期进行季节变动时，若数据是月度的，则取<span class="math notranslate nohighlight">\(N = 12\)</span>，若季节是季度的，则取<span class="math notranslate nohighlight">\(N = 4\)</span>。如果时间序列无明显的周期变动，则可用自相关系数法来确定，即取<span class="math notranslate nohighlight">\(N\)</span>为最高自相关系数的滞后时期。</p>
 <p><span class="math notranslate nohighlight">\(k\)</span>的取值一般可定为<span class="math notranslate nohighlight">\(1/N\)</span> ，也可以用不同的<span class="math notranslate nohighlight">\(k\)</span>值来进行计算，以确定一个能使<span class="math notranslate nohighlight">\(S\)</span>最小的<span class="math notranslate nohighlight">\(k\)</span>值。</p>
-<p>初始权数的确定也很重要，如无其它依据，也可用<span class="math notranslate nohighlight">\(1/ N\)</span> 作为初始权系数用，即
-$<span class="math notranslate nohighlight">\(
+<p>初始权数的确定也很重要，如无其它依据，也可用<span class="math notranslate nohighlight">\(1/ N\)</span> 作为初始权系数用，即</p>
+<div class="math notranslate nohighlight">
+\[
 w_{i}=\frac{1}{N}(i=1,2, \cdots, N)
-\)</span>$</p>
+\]</div>
 <p>自适应滤波法有两个明显的优点：</p>
 <ul class="simple">
 <li><p>一是技术比较简单，可根据预测意图来选择权数的个数和学习常数，以控制预测。也可以由计算机自动选定。</p></li>
@@ -1123,9 +1140,10 @@ w_{i}=\frac{1}{N}(i=1,2, \cdots, N)
 </div>
 <div class="section" id="id17">
 <h2><span class="section-number">3.6. </span>练习<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
-<li><p>用如下代码生成一个包含了随机变动的正弦函数曲线，请你使用多项式拟合方法，研究用二次，三次，以及更高次函数拟合的情况，给你你认为的最好的拟合方法。</p></li>
-</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">练习1</p>
+<p>用如下代码生成一个包含了随机变动的正弦函数曲线，请你使用多项式拟合方法，研究用二次，三次，以及更高次函数拟合的情况，给你你认为的最好的拟合方法。</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1143,6 +1161,11 @@ w_{i}=\frac{1}{N}(i=1,2, \cdots, N)
 </div>
 <img alt="../_images/prediction_model_65_1.png" src="../_images/prediction_model_65_1.png" />
 </div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">练习2</p>
+<p>给出下面的<code class="docutils literal notranslate"><span class="pre">interest</span> <span class="pre">rate</span></code>，<code class="docutils literal notranslate"><span class="pre">unemployment</span> <span class="pre">rate</span></code>和<code class="docutils literal notranslate"><span class="pre">stock</span> <span class="pre">index</span> <span class="pre">price</span></code>的数据，请你通过多元线性回归的方法，通过<code class="docutils literal notranslate"><span class="pre">interest</span> <span class="pre">rate</span></code>，<code class="docutils literal notranslate"><span class="pre">unemployment</span> <span class="pre">rate</span></code>来预测<code class="docutils literal notranslate"><span class="pre">stock</span> <span class="pre">index</span> <span class="pre">price</span></code>。给出你所得到的计算公式。你可以调用 <code class="docutils literal notranslate"><span class="pre">sklearn.linear_model</span></code>中的 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 函数，关于该函数的使用方法，可以参考官方文档。</p>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/qgbqq4833c.png?imageView2/0/w/960/h/960" /></p>
 </div>
 </div>
 </div>
