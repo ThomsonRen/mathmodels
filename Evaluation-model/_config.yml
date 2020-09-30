@@ -17,7 +17,7 @@ execute:
 # HTML-specific settings
 html:
   home_page_in_navbar         : false
-  use_repository_button: true
+  use_repository_button: false
 
 # #######################################################################################
 # Interact link settings
