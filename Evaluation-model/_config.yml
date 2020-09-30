@@ -25,13 +25,13 @@ notebook_interface            : "notebook"
 
 #######################################################################################
 # Launch button settings
-repository:
-  url                         : https://github.com/ThomsonRen/math-models.github.io
-  path_to_book                : "mini_book"
+# repository:
+#   url                         : https://github.com/ThomsonRen/math-models.github.io
+#   path_to_book                : "mini_book"
 
-binder:
-  binderhub_url               : "https://mybinder.org"
-  text                        : "Launch binder"
+# binder:
+#   binderhub_url               : "https://mybinder.org"
+#   text                        : "Launch binder"
 
 latex:
   latex_engine                : "xelatex"
