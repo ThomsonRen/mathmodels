@@ -1,0 +1,856 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>6. 马氏链模型 &#8212; 数学建模系列课程</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. 作业解答" href="answers.html" />
+    <link rel="prev" title="5. 蒙特卡洛模拟" href="monte-carlo.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.jpeg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">数学建模系列课程</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  数学建模基础课
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="LP.html">
+   1. 规划模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="evaluation_model.html">
+   2. 评价模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="prediction_model.html">
+   3. 预测模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ode_model.html">
+   4. 微分方程模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="monte-carlo.html">
+   5. 蒙特卡洛模拟
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   6. 马氏链模型
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  作业解答
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="answers.html">
+   1. 作业解答
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/docs/markov-chain.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/docs/markov-chain.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/markov-chain.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   6.1. 马氏链简介
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   6.2. 随机过程的定义
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   6.3. 马尔可夫链的定义
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   6.4. 转移概率矩阵
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   6.5. 柯尔莫哥洛夫定理
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   6.6. 转移概率的渐近性质—极限概率分布
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   6.7. 吸收链
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   6.8. 马氏链案例代码求解
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     6.8.1. 问题：从睡觉状态开始，2 天后李梅最后选择跑步的概率是多少？
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     6.8.2. 先尝试随机生成李梅2天后的状态
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id12">
+   6.9. 作业
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1><span class="section-number">6. </span>马氏链模型<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.1. </span>马氏链简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>在考察随机因素影响的动态系统时，常常碰到这样的情况，<strong>系统在每个时期所处的状态是随机的，从这个时期到下个时期的状态按照一定的概率进行转移，并且下个时期的状态只取决于这个时期的状态和转移概率，与以前各时期的状态无关</strong>。这种性质称为无后效性或马尔可夫性。通俗的说就是将来仅仅与当下有关而与历史无关。具有马氏性的，时间、状态为离散的随机转移过程通常用马氏链(Markov Chain)模型描述。</p>
+<div class="figure align-default" id="markov">
+<a class="reference internal image-reference" href="../_images/markov.jpg"><img alt="../_images/markov.jpg" src="../_images/markov.jpg" style="height: 400px;" /></a>
+</div>
+<p>马尔可夫链由俄国数学家安德雷·马尔可夫首次提出。马氏链模型在经济、社会、生态、遗传等许多领域中有着广泛的应用。值得提出的是，虽然它是解决随机转移过程的工具，但是一些确定性系统的状态转移问题也能用马氏链模型处理。</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.2. </span>随机过程的定义<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>一个随机试验的结果有多种可能性，在数学上用一个随机变量（或随机向量）来描述。在许多情况下，人们不仅需要对随机现象进行一次观测，而且要进行多次，甚至接连不断地观测它的变化过程。这就要研究无限多个，即一族随机变量。随机过程理论研究的就是随机现象变化过程的概率规律性。</p>
+<p><strong>定义 1:</strong> 设<span class="math notranslate nohighlight">\(\left\{\xi_{t}, t \in T\right\}\)</span>是一族随机变量，<span class="math notranslate nohighlight">\(T\)</span> 是一个实数集合，若对任意实数 <span class="math notranslate nohighlight">\(t \in T, \xi_{t}\)</span>是一个随机变量，则称<span class="math notranslate nohighlight">\(\left\{\xi_{t}, t \in T\right\}\)</span> 为随机过程。</p>
+<p><span class="math notranslate nohighlight">\(T\)</span> 称为参数集合，参数<span class="math notranslate nohighlight">\(t\)</span>可以看作时间。<span class="math notranslate nohighlight">\(\xi_{t}\)</span> 的每一个可能取值称为随机过程的一个状态。其全体可能取值所构成的集合称为状态空间，记作<span class="math notranslate nohighlight">\(E\)</span>。当参数集合<span class="math notranslate nohighlight">\(T\)</span>为非负整数集时，随机过程又称随机序列。</p>
+<p>本章要介绍的<strong>马氏链就是一类特殊的随机序列</strong>。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">马氏链案例</p>
+<ol class="simple">
+<li><p>在一条自动生产线上检验产品质量，每次取一个，“废品”记为 1，“合格品”记为 0。以<span class="math notranslate nohighlight">\(\xi_n\)</span>表示第<span class="math notranslate nohighlight">\(n\)</span>次检验结果，则<span class="math notranslate nohighlight">\(\xi_n\)</span>是一个随机变量。不断检验，得到一列随机变量<span class="math notranslate nohighlight">\(\xi_1\)</span>,<span class="math notranslate nohighlight">\(\xi_2\)</span>,<span class="math notranslate nohighlight">\(\cdots\)</span>，记为<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span>。它是一个随机序列，其<strong>状态空间</strong><span class="math notranslate nohighlight">\(E=\{0,1\}\)</span>。</p></li>
+<li><p>在<span class="math notranslate nohighlight">\(m\)</span>个商店联营出租照相机的业务中（顾客从其中一个商店租出，可以到<span class="math notranslate nohighlight">\(m\)</span>个商店中的任意一个归还），规定一天为一个时间单位，“<span class="math notranslate nohighlight">\(\xi_{t}=j\)</span> ”表示“第<span class="math notranslate nohighlight">\(t\)</span> 天开始营业时照相机在第<span class="math notranslate nohighlight">\(j\)</span>个商店”，<span class="math notranslate nohighlight">\(j = 1,2,\cdots,m\)</span> 。则<span class="math notranslate nohighlight">\(\{ \xi_n = 1,2,\cdots\}\)</span>是一个随机序列，其状态空间 <span class="math notranslate nohighlight">\(E = \{1,2,\cdots,m\}\)</span>。</p></li>
+<li><p>统计某种商品在<span class="math notranslate nohighlight">\(t\)</span>时刻的库存量，对于不同的<span class="math notranslate nohighlight">\(t\)</span> ，得到一族随机变量，<span class="math notranslate nohighlight">\(\left\{\xi_{t}, t \in[0,+\infty)\right\}\)</span> 是一个随机过程，状态空间<span class="math notranslate nohighlight">\(E = [0,R]\)</span>，其中 <span class="math notranslate nohighlight">\(R\)</span> 为最大库存量。</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">6.3. </span>马尔可夫链的定义<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>现实世界中有很多这样的现象：某一系统在已知现在情况的条件下，系统未来时刻的情况只与现在有关，而与过去的历史无直接关系。描述这类随机现象的数学模型称为马氏模型。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">定义</p>
+<p>设<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span>是一个随机序列，状态空间<span class="math notranslate nohighlight">\(E\)</span> 为有限或可列集，对于任意的正整数<span class="math notranslate nohighlight">\(n\)</span> ，若<span class="math notranslate nohighlight">\(i, j, i_{k} \in E(k=1, \cdots, n-1)\)</span>，有</p>
+<div class="math notranslate nohighlight" id="equation-markov-definition">
+<span class="eqno">(6.1)<a class="headerlink" href="#equation-markov-definition" title="Permalink to this equation">¶</a></span>\[
+P\left\{\xi_{n+1}=j | \xi_{n}=i, \xi_{n-1}=i_{n-1}, \cdots, \xi_{1}=i_{1}\right\}=P\left\{\xi_{n+1}=j | \xi_{n}=i\right\}
+\]</div>
+<p>则称<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span> 为一个马尔可夫链（简称马氏链），<a class="reference internal" href="#equation-markov-definition">(6.1)</a>式称为马氏性。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">6.4. </span>转移概率矩阵<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>我们先来看一个例子，用来引入转移概率矩阵的定义</p>
+<div class="admonition- admonition">
+<p class="admonition-title">转移概率矩阵案例</p>
+<p>某计算机机房的一台计算机经常出故障，研究者每隔 15 分钟观察一次计算机的运行状态，收集了 24 小时的数据（共作 97 次观察）。用 1 表示正常状态，用 0 表示不正常状态，所得的数据序列如下：</p>
+<p><code class="docutils literal notranslate"><span class="pre">1110010011111110011110111111001111111110001101101111011011010111101110111101111110011011111100111</span></code></p>
+</div>
+<p>设<span class="math notranslate nohighlight">\(X_{n}(n=1, \cdots, 97)\)</span>为第<span class="math notranslate nohighlight">\(n\)</span> 个时段的计算机状态，可以认为它是一个马氏链，状态空间 <span class="math notranslate nohighlight">\(E = \{0,1\}\)</span>，</p>
+<p>求得 96 次状态转移的情况是：</p>
+<p>0 → 0，8 次； 0 →1，18 次；</p>
+<p>1→ 0 ，18 次； 1→1，52 次，</p>
+<p>因此，一步转移概率可用频率近似地表示为</p>
+<div class="math notranslate nohighlight">
+\[
+p_{00}=P\left\{X_{n+1}=0 | X_{n}=0\right\} \approx \dfrac{8}{8+18}=\dfrac{4}{13}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+p_{01}=P\left\{X_{n+1}=1 | X_{n}=0\right\} \approx \dfrac{18}{8+18}=\dfrac{9}{13}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+p_{10}=P\left\{X_{n+1}=0 | X_{n}=1\right\} \approx \dfrac{18}{18+52}=\dfrac{9}{35}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+p_{11}=P\left\{X_{n+1}=1 | X_{n}=1\right\} \approx \dfrac{52}{18+52}=\dfrac{26}{35}
+\]</div>
+<p>对于一个马尔可夫链<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span> ，称<span class="math notranslate nohighlight">\(P =p_ {ij}\)</span> 为马尔可夫链的一步转移矩阵。它们具有下列两个基本性质：</p>
+<p>（i）对一切<span class="math notranslate nohighlight">\(i, j \in E, \quad 0 \leq p_{i j}(m) \leq 1\)</span>；</p>
+<p>（ii）对一切<span class="math notranslate nohighlight">\(i \in E, \sum_{j \in E} p_{i j}(m)=1\)</span>；</p>
+<p>当实际问题可以用马尔可夫链来描述时，首先要确定它的状态空间及参数集合，然后确定它的一步转移概率。关于这一概率的确定，可以由问题的内在规律得到，也可以由过去经验给出，还可以根据观测数据来估计。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">转移概率矩阵求解案例</p>
+<p>设一随机系统状态空间 <span class="math notranslate nohighlight">\(E = \{1,2,3,4\}\)</span>，记录观测系统所处状态如下：</p>
+<p><code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">3</span> <span class="pre">2</span> <span class="pre">1</span> <span class="pre">4</span> <span class="pre">3</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">2</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">4</span> <span class="pre">4</span> <span class="pre">3</span> <span class="pre">3</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">3</span> <span class="pre">3</span> <span class="pre">2</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">2</span> <span class="pre">2</span> <span class="pre">4</span> <span class="pre">4</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">4</span> <span class="pre">3</span> <span class="pre">1</span> </code></p>
+<p>若该系统可用马氏模型描述，估计转移概率<span class="math notranslate nohighlight">\(p_{ij}\)</span></p>
+</div>
+<p><strong>解：</strong> 首先将不同类型的转移数nij 统计出来分类记入下表</p>
+<p><span class="math notranslate nohighlight">\(i \rightarrow j\)</span>转移数<span class="math notranslate nohighlight">\(n_{ij}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{|c|cccc|c|}\hline &amp; {1} &amp; {2} &amp; {3} &amp; {4} &amp; {\text { 行和 } n_{i}} \\ \hline 1 &amp; {4} &amp; {4} &amp; {1} &amp; {1} &amp; {10} \\ {2} &amp; {3} &amp; {2} &amp; {4} &amp; {2} &amp; {11} \\ {3} &amp; {4} &amp; {4} &amp; {2} &amp; {1} &amp; {11} \\ {4} &amp; {0} &amp; {1} &amp; {4} &amp; {2} &amp; {7} \\ \hline\end{array}
+\end{split}\]</div>
+<p>各类转移总和<span class="math notranslate nohighlight">\(\displaystyle \sum_{i} \sum_{j} n_{i j}\)</span>等于观测数据中马氏链处于各种状态次数总和减 1，而行和<span class="math notranslate nohighlight">\(n_i\)</span> 是系统从状态i 转移到其它状态的次数,<span class="math notranslate nohighlight">\(n_{ij}\)</span>是由状态<span class="math notranslate nohighlight">\(i\)</span> 到状态 <span class="math notranslate nohighlight">\(j \)</span>的转移次数,，则 <span class="math notranslate nohighlight">\(p_{ij}\)</span> 的估计值<span class="math notranslate nohighlight">\(p_{i j}=\dfrac{n_{i j}}{n_{i}}\)</span>。计算得</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{P}=\left[\begin{array}{cccc}{2 / 5} &amp; {2 / 5} &amp; {1 / 10} &amp; {1 / 10} \\ {3 / 11} &amp; {2 / 11} &amp; {4 / 11} &amp; {2 / 11} \\ {4 / 11} &amp; {4 / 11} &amp; {2 / 11} &amp; {1 / 11} \\ {0} &amp; {1 / 7} &amp; {4 / 7} &amp; {2 / 7}\end{array}\right]
+\end{split}\]</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">6.5. </span>柯尔莫哥洛夫定理<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>设<span class="math notranslate nohighlight">\(P\)</span>是一个马氏链转移矩阵（ <span class="math notranslate nohighlight">\(P\)</span> 的行向量是概率向量）， <span class="math notranslate nohighlight">\(P^{(0)}\)</span> 是初始分布行向量，则第<span class="math notranslate nohighlight">\(n\)</span> 步的概率分布为</p>
+<div class="math notranslate nohighlight">
+\[
+P^{(n)}=P^{(0)} P^{n}
+\]</div>
+<div class="admonition- admonition">
+<p class="admonition-title">柯尔莫哥洛夫定理案例</p>
+<p>若顾客的购买是无记忆的，即已知现在顾客购买情况，未来顾客的购买情况不受过去购买历史的影响，而只与现在购买情况有关。现在市场上供应<span class="math notranslate nohighlight">\(A、B、C\)</span>三个不同厂家生产的 50 克袋状味精，用“<span class="math notranslate nohighlight">\(\xi_n = 1\)</span>”、“<span class="math notranslate nohighlight">\(\xi_n = 2\)</span> ”、“<span class="math notranslate nohighlight">\(\xi_n = 3\)</span>”分别表示“顾客第<span class="math notranslate nohighlight">\(n\)</span> 次购买<span class="math notranslate nohighlight">\(A、B、C\)</span>厂的味精”。显然<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span>是一个马氏链。若已知第一次顾客购买三个厂味精的概率依次为 0.2，0.4，0.4。又知道一般顾客购买的倾向由表 2给出。求顾客第四次购买各家味精的概率。</p>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/q2y45nlv3n.png?imageView2/0/w/960/h/960" /></p>
+</div>
+<p><strong>解:</strong> 第一次购买的概率分布为
+<span class="math notranslate nohighlight">\(P^{(1)}=\left[\begin{array}{lll}{0.2} &amp; {0.4} &amp; {0.4}\end{array}\right]\)</span></p>
+<p>转移矩阵<span class="math notranslate nohighlight">\(P=\left[\begin{array}{lll}{0.8} &amp; {0.1} &amp; {0.1} \\ {0.5} &amp; {0.1} &amp; {0.4} \\ {0.5} &amp; {0.3} &amp; {0.2}\end{array}\right]\)</span></p>
+<p>则顾客第四次购买各家味精的概率为
+<span class="math notranslate nohighlight">\(P^{(4)}=P^{(1)} P^{3}=\left[\begin{array}{ccc}{0.7004} &amp; {0.136} &amp; {0.1636}\end{array}\right]\)</span>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.4</span><span class="p">])</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">],[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.4</span><span class="p">],[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.2</span><span class="p">]])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">p2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.56 0.18 0.26]
+[0.668 0.152 0.18 ]
+[0.7004 0.136  0.1636]
+[0.71012 0.13272 0.15716]
+[0.713036 0.131432 0.155532]
+[0.7139108 0.1311064 0.1549828]
+[0.71417324 0.13099656 0.1548302 ]
+[0.71425197 0.13096604 0.15478199]
+[0.71427559 0.1309564  0.15476801]
+[0.71428268 0.1309536  0.15476372]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">6.6. </span>转移概率的渐近性质—极限概率分布<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>现在我们考虑，随<span class="math notranslate nohighlight">\(n \)</span>的增大， <span class="math notranslate nohighlight">\(P^n\)</span> 是否会趋于某一固定向量？先考虑一个简单例子：
+转移矩阵<span class="math notranslate nohighlight">\(P=\left[\begin{array}{ll}{0.5} &amp; {0.5} \\ {0.7} &amp; {0.3}\end{array}\right]\)</span> ,当<span class="math notranslate nohighlight">\(n \rightarrow+\infty\)</span>
+时</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P^{n} \rightarrow\left[\begin{array}{cc}{\dfrac{7}{12}} &amp; {\dfrac{5}{12}} \\ {\dfrac{7}{12}} &amp; {\dfrac{5}{12}}\end{array}\right]
+\end{split}\]</div>
+<p>又若取</p>
+<div class="math notranslate nohighlight">
+\[
+u=\left[\begin{array}{ll}{\dfrac{7}{12}} &amp; {\dfrac{5}{12}}\end{array}\right]
+\]</div>
+<p>则<span class="math notranslate nohighlight">\(u P=u, u^{T}\)</span>为矩阵 <span class="math notranslate nohighlight">\(P^T\)</span> 的对应于特征值<span class="math notranslate nohighlight">\(λ = 1\)</span>的特征（概率）向量，<span class="math notranslate nohighlight">\(u\)</span> 也称为 <span class="math notranslate nohighlight">\(P\)</span> 的不动点向量。至于哪些转移矩阵具有不动点向量，需要借助矩阵理论中正则矩阵的概念进行证明。（此处不要求掌握） ，我们只需要通过循环计算，观察计算结果是否稳定即可。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">极限概率分布</p>
+<p>根据例 6 中给出的一般顾客购买三种味精倾向的转移矩阵，预测经过长期的多次购买之后，顾客的购买倾向如何？</p>
+</div>
+<p><strong>解</strong> :  可以根据这个马氏链的转移矩阵，求出其极限概率分布。为此，解下列方程组：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left\{\begin{array}{l}{p_{1}=0.8 p_{1}+0.5 p_{2}+0.5 p_{3}} \\ {p_{2}=0.1 p_{1}+0.1 p_{2}+0.3 p_{3}} \\ {p_{3}=0.1 p_{1}+0.4 p_{2}+0.2 p_{3}} \end{array}\right.
+\end{split}\]</div>
+<p>求得 <span class="math notranslate nohighlight">\(p_1=\dfrac{5}{7}\)</span>,<span class="math notranslate nohighlight">\(p_2=\dfrac{11}{84}\)</span>,<span class="math notranslate nohighlight">\(p_3=\dfrac{13}{84}\)</span>
+这说明，无论第一次顾客购买的情况如何，经过长期多次购买以后， <span class="math notranslate nohighlight">\(A\)</span> 厂产的味精占有市场的<span class="math notranslate nohighlight">\(\dfrac{5}{7}\)</span>,<span class="math notranslate nohighlight">\(B\)</span>,<span class="math notranslate nohighlight">\(C\)</span> 两厂产品分别占有市场的<span class="math notranslate nohighlight">\(\dfrac{11}{84}\)</span>,<span class="math notranslate nohighlight">\(\dfrac{13}{84}\)</span></p>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">6.7. </span>吸收链<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>马氏链还有一种重要类型—吸收链。</p>
+<p>若马氏链的转移矩阵为</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P=\left[\begin{array}{cccc}{0.3} &amp; {0.3} &amp; {0} &amp; {0.4} \\ {0.2} &amp; {0.3} &amp; {0.2} &amp; {0.3} \\ {0} &amp; {0.3} &amp; {0.3} &amp; {0.4} \\ {0} &amp; {0} &amp; {0} &amp; {1}\end{array}\right]
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(P\)</span> 的最后一行表示的是，当转移到状态 4 时，将停留在状态 4，状态 4 称为吸收状态。如果马氏链至少含有一个吸收状态，并且从每一个非吸收状态出发，都可以到达某个吸收状态，那么这个马氏链被称为吸收链。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">P_0</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">]</span>
+
+<span class="n">P</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.4</span><span class="p">],</span>
+     <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+     <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.4</span><span class="p">],</span>
+     <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+
+<span class="n">state1</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">state2</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">state3</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">state4</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">P_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">P_0</span><span class="p">,</span><span class="n">P</span><span class="p">)</span>
+    <span class="c1"># P_0  = P_0/sum(P_0)</span>
+    <span class="n">state1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_0</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">state2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_0</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">state3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_0</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">state4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_0</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">state1</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;state1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">state2</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;state2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">state3</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;state3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">state4</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;state4&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x11dd1e0d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/markov-chain_9_1.png" src="../_images/markov-chain_9_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">6.8. </span>马氏链案例代码求解<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>如果李梅心情不好，她会跑步，或者大吃特吃冰淇淋，要么打个盹儿来调整。</p>
+<p>根据以往数据，如果她睡了一觉调整心情，第二天她有 60% 的可能去跑步，20% 的可能继续待在床上，还有 20% 的可能吃一大份冰淇淋。</p>
+<p>如果她跑步散心，第二天她有 60% 的可能接着跑步，30% 的可能吃冰淇淋，只有 10% 的可能会去睡觉。</p>
+<p>最后，如果她难过时纵情冰淇淋，第二天只有 10% 的可能性继续吃冰淇淋，有 70% 的可能性跑步，还有 20% 的可能性睡觉。</p>
+<div class="section" id="id10">
+<h3><span class="section-number">6.8.1. </span>问题：从睡觉状态开始，2 天后李梅最后选择跑步的概率是多少？<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>我们一起算一下。要从睡觉状态转移到跑步状态，李梅有如下选择：第一天继续睡觉，第二天跑步<span class="math notranslate nohighlight">\(（0.2 \times0.6）\)</span>；第一天换成跑步，第二天继续跑步<span class="math notranslate nohighlight">\(（0.6\times0.6）\)</span>；第一天去吃冰淇淋，第二天换成跑步<span class="math notranslate nohighlight">\(（0.2 \times0.7）\)</span>。算下来概率是：<span class="math notranslate nohighlight">\(((0.2 \times 0.6) + (0.6 \times 0.6) + (0.2 \times 0.7)) = 0.62\)</span>。所以说，从睡觉状态开始，2天后李梅处于跑步状态的概率是 62%。</p>
+<p>现在我们用 Python 来实现一下上面这个例子</p>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">6.8.2. </span>先尝试随机生成李梅2天后的状态<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#先 import 用到的库。</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">rm</span>
+
+
+<span class="c1"># 状态空间</span>
+<span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Sleep&quot;</span><span class="p">,</span><span class="s2">&quot;Icecream&quot;</span><span class="p">,</span><span class="s2">&quot;Run&quot;</span><span class="p">]</span>
+
+<span class="c1"># 可能的事件序列</span>
+<span class="n">transitionName</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;SS&quot;</span><span class="p">,</span><span class="s2">&quot;SR&quot;</span><span class="p">,</span><span class="s2">&quot;SI&quot;</span><span class="p">],[</span><span class="s2">&quot;RS&quot;</span><span class="p">,</span><span class="s2">&quot;RR&quot;</span><span class="p">,</span><span class="s2">&quot;RI&quot;</span><span class="p">],[</span><span class="s2">&quot;IS&quot;</span><span class="p">,</span><span class="s2">&quot;IR&quot;</span><span class="p">,</span><span class="s2">&quot;II&quot;</span><span class="p">]]</span>
+
+<span class="c1"># 概率矩阵（转移矩阵）</span>
+<span class="n">transitionMatrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.2</span><span class="p">],[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.1</span><span class="p">]]</span>
+
+<span class="c1">#要保证概率之和（行之和）是 1</span>
+<span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="nb">sum</span><span class="p">(</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="nb">sum</span><span class="p">(</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Somewhere, something went wrong. Transition matrix, perhaps?&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All is gonna be okay! &quot;</span><span class="p">)</span>
+
+<span class="c1">#我们要用 numpy.random.choice 从可能的转移集合选出随机样本。</span>
+<span class="c1"># 实现了可以预测状态的马尔可夫模型的函数。</span>
+<span class="k">def</span> <span class="nf">activity_forecast</span><span class="p">(</span><span class="n">days</span><span class="p">):</span>
+    <span class="c1"># 选择初始状态</span>
+    <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Sleep&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start state: &quot;</span> <span class="o">+</span> <span class="n">activityToday</span><span class="p">)</span>
+    <span class="c1"># 应该记录选择的状态序列。这里现在只有初始状态。</span>
+    <span class="n">activityList</span> <span class="o">=</span> <span class="p">[</span><span class="n">activityToday</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># 计算 activityList 的概率</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">days</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">activityToday</span> <span class="o">==</span> <span class="s2">&quot;Sleep&quot;</span><span class="p">:</span>
+            <span class="n">change</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">transitionName</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;SS&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.2</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Sleep&quot;</span><span class="p">)</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;SR&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.6</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Run&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Run&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.2</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Icecream&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Icecream&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">activityToday</span> <span class="o">==</span> <span class="s2">&quot;Run&quot;</span><span class="p">:</span>
+            <span class="n">change</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">transitionName</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;RR&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.5</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Run&quot;</span><span class="p">)</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;RS&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.2</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Sleep&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Sleep&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.3</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Icecream&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Icecream&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">activityToday</span> <span class="o">==</span> <span class="s2">&quot;Icecream&quot;</span><span class="p">:</span>
+            <span class="n">change</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">transitionName</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;II&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.1</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Icecream&quot;</span><span class="p">)</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;IS&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.2</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Sleep&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Sleep&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.7</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Run&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Run&quot;</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>  
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Possible states: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">activityList</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;End state after &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">days</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; days: &quot;</span> <span class="o">+</span> <span class="n">activityToday</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Probability of the possible sequence of states: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">prob</span><span class="p">))</span>
+
+<span class="c1"># 预测 2 天后的可能状态</span>
+<span class="n">activity_forecast</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>All is gonna be okay! 
+Start state: Sleep
+Possible states: [&#39;Sleep&#39;, &#39;Icecream&#39;, &#39;Icecream&#39;]
+End state after 2 days: Icecream
+Probability of the possible sequence of states: 0.020000000000000004
+</pre></div>
+</div>
+</div>
+</div>
+<p>从睡觉状态开始，迭代上几百次，就能得到终止于特定状态的预期概率。</p>
+<p>改写了 activity_forecast 函数，加入循环</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#先 import 用到的库。</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">rm</span>
+
+
+<span class="c1"># 状态空间</span>
+<span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Sleep&quot;</span><span class="p">,</span><span class="s2">&quot;Icecream&quot;</span><span class="p">,</span><span class="s2">&quot;Run&quot;</span><span class="p">]</span>
+
+<span class="c1"># 可能的事件序列</span>
+<span class="n">transitionName</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;SS&quot;</span><span class="p">,</span><span class="s2">&quot;SR&quot;</span><span class="p">,</span><span class="s2">&quot;SI&quot;</span><span class="p">],[</span><span class="s2">&quot;RS&quot;</span><span class="p">,</span><span class="s2">&quot;RR&quot;</span><span class="p">,</span><span class="s2">&quot;RI&quot;</span><span class="p">],[</span><span class="s2">&quot;IS&quot;</span><span class="p">,</span><span class="s2">&quot;IR&quot;</span><span class="p">,</span><span class="s2">&quot;II&quot;</span><span class="p">]]</span>
+
+<span class="c1"># 概率矩阵（转移矩阵）</span>
+<span class="n">transitionMatrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.2</span><span class="p">],[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],[</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.1</span><span class="p">]]</span>
+
+<span class="c1">#要保证概率之和（行之和）是 1</span>
+<span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="nb">sum</span><span class="p">(</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="nb">sum</span><span class="p">(</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Somewhere, something went wrong. Transition matrix, perhaps?&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All is gonna be okay! &quot;</span><span class="p">)</span>
+
+<span class="c1">#我们要用 numpy.random.choice 从可能的转移集合选出随机样本。</span>
+<span class="c1"># 改写了了可以预测状态的马尔可夫模型的函数。</span>
+<span class="k">def</span> <span class="nf">activity_forecast</span><span class="p">(</span><span class="n">days</span><span class="p">):</span>
+    <span class="c1"># 选择初始状态</span>
+    <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Sleep&quot;</span>
+    <span class="n">activityList</span> <span class="o">=</span> <span class="p">[</span><span class="n">activityToday</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">days</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">activityToday</span> <span class="o">==</span> <span class="s2">&quot;Sleep&quot;</span><span class="p">:</span>
+            <span class="n">change</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">transitionName</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;SS&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.2</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Sleep&quot;</span><span class="p">)</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;SR&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.6</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Run&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Run&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.2</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Icecream&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Icecream&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">activityToday</span> <span class="o">==</span> <span class="s2">&quot;Run&quot;</span><span class="p">:</span>
+            <span class="n">change</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">transitionName</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;RR&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.5</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Run&quot;</span><span class="p">)</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;RS&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.2</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Sleep&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Sleep&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.3</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Icecream&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Icecream&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">activityToday</span> <span class="o">==</span> <span class="s2">&quot;Icecream&quot;</span><span class="p">:</span>
+            <span class="n">change</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">transitionName</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="n">transitionMatrix</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;II&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.1</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Icecream&quot;</span><span class="p">)</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">change</span> <span class="o">==</span> <span class="s2">&quot;IS&quot;</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.2</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Sleep&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Sleep&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="n">prob</span> <span class="o">*</span> <span class="mf">0.7</span>
+                <span class="n">activityToday</span> <span class="o">=</span> <span class="s2">&quot;Run&quot;</span>
+                <span class="n">activityList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Run&quot;</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>    
+    <span class="k">return</span> <span class="n">activityList</span>
+
+<span class="c1"># 记录每次的 activityList</span>
+<span class="n">list_activity</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># `range` 从第一个参数开始数起，一直到第二个参数（不包含）</span>
+<span class="k">for</span> <span class="n">iterations</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10000</span><span class="p">):</span>
+        <span class="n">list_activity</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">activity_forecast</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># 查看记录到的所有 `activityList`    </span>
+<span class="c1">#print(list_activity)</span>
+
+<span class="c1"># 遍历列表，得到所有最终状态是跑步的 activityList</span>
+<span class="k">for</span> <span class="n">smaller_list</span> <span class="ow">in</span> <span class="n">list_activity</span><span class="p">:</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">smaller_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Run&quot;</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># 计算从睡觉状态开始到跑步状态结束的概率</span>
+<span class="n">percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="mi">10000</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The probability of starting at state:&#39;Sleep&#39; and ending at state:&#39;Run&#39;= &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">percentage</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>All is gonna be okay! 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The probability of starting at state:&#39;Sleep&#39; and ending at state:&#39;Run&#39;= 61.82%
+</pre></div>
+</div>
+</div>
+</div>
+<p>基于大数定律，结果趋于62%</p>
+</div>
+</div>
+<div class="section" id="id12">
+<h2><span class="section-number">6.9. </span>作业<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="admonition- admonition">
+<p class="admonition-title">作业1</p>
+<p>在英国，工党成员的第二代加入工党的概率为0.5，加入保守党的概率为0.4，加入自由党的概率为0.1。而保守党成员的第二代加入工党的概率为0.7，加入保守党的概率为0.2，加入自由党的概率为0.1。而自由党成员的第二代加入工党的概率为0.2，加入保守党的概率为0.4，加入自由党的概率为0.4。
+也就是说，其转移概率矩阵为：</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p>下一代党派</p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p></p></td>
+<td><p></p></td>
+<td><p>工党</p></td>
+<td><p>保守党</p></td>
+<td><p>自由党</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>工党</p></td>
+<td><p>0.5</p></td>
+<td><p>0.4</p></td>
+<td><p>0.1</p></td>
+</tr>
+<tr class="row-even"><td><p>上一代党派</p></td>
+<td><p>保守党</p></td>
+<td><p>0.7</p></td>
+<td><p>0.2</p></td>
+<td><p>0.1</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>自由党</p></td>
+<td><p>0.2</p></td>
+<td><p>0.4</p></td>
+<td><p>0.4</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>求自由党成员的第三代加入工党的概率是多少？</p></li>
+<li><p>在经过较长的时间后，各党成员的后代加入各党派的概率分布是否具有稳定性？如果有，求出这个稳定概率分布，如果没有，请说明理由。</p></li>
+</ul>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">作业2</p>
+<p>社会学的某些调查结果指出：儿童受教育的水平依赖于他们父母受教育的水平。调查过程是将人们划分为三类：<span class="math notranslate nohighlight">\(E\)</span> 类，这类人具有初中或初中以下的文化程度；<span class="math notranslate nohighlight">\(S\)</span>类，这类人具有高中文化程度；<span class="math notranslate nohighlight">\(C\)</span> 类，这类人受过高等教育。当父或母（指文化程度较高者）是这三类人中某一类型时，其子女将属于这三种类型中的任一种的概率由下面给出</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p>孩子</p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p></p></td>
+<td><p></p></td>
+<td><p><span class="math notranslate nohighlight">\(E\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(S\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(C\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><span class="math notranslate nohighlight">\(E\)</span></p></td>
+<td><p>0.7</p></td>
+<td><p>0.2</p></td>
+<td><p>0.1</p></td>
+</tr>
+<tr class="row-even"><td><p>父母</p></td>
+<td><p><span class="math notranslate nohighlight">\(S\)</span></p></td>
+<td><p>0.4</p></td>
+<td><p>0.4</p></td>
+<td><p>0.2</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><span class="math notranslate nohighlight">\(C\)</span></p></td>
+<td><p>0.1</p></td>
+<td><p>0.2</p></td>
+<td><p>0.7</p></td>
+</tr>
+</tbody>
+</table>
+<p>问：</p>
+<ul class="simple">
+<li><p>属于<span class="math notranslate nohighlight">\(S\)</span> 类的人们中，其第三代将接受高等教育的概率是多少？</p></li>
+<li><p>假设不同的调查结果表明，如果父母之一受过高等教育，那么他们的子女总可以进入大学，修改上面的转移矩阵。</p></li>
+<li><p>根据2的解，每一类型人的后代平均要经过多少代，最终都可以接受高等教育？</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="monte-carlo.html" title="previous page"><span class="section-number">5. </span>蒙特卡洛模拟</a>
+    <a class='right-next' id="next-link" href="answers.html" title="next page"><span class="section-number">1. </span>作业解答</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

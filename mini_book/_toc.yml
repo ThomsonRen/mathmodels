@@ -8,7 +8,9 @@
   - file: docs/LP
   - file: docs/evaluation_model
   - file: docs/prediction_model
-  - file: docs/differential_equation
+  - file: docs/ode_model
+  - file: docs/monte-carlo
+  - file: docs/markov-chain
 
 
 

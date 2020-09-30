@@ -1,7 +1,7 @@
 #######################################################################################
 # Book settings
 title : 数学建模系列课程
-author: LinCol Education
+# author: LinCol Education
 logo: 'logo.jpeg'
 
 # Information about where the book exists on the web
@@ -17,7 +17,7 @@ execute:
 # HTML-specific settings
 html:
   home_page_in_navbar         : false
-  use_repository_button: true
+  use_repository_button: false
 
 # #######################################################################################
 # Interact link settings
@@ -25,13 +25,13 @@ notebook_interface            : "notebook"
 
 #######################################################################################
 # Launch button settings
-repository:
-  url                         : https://github.com/ThomsonRen/math-models.github.io
-  path_to_book                : "mini_book"
+# repository:
+#   url                         : https://github.com/ThomsonRen/math-models.github.io
+#   path_to_book                : "mini_book"
 
-binder:
-  binderhub_url               : "https://mybinder.org"
-  text                        : "Launch binder"
+# binder:
+#   binderhub_url               : "https://mybinder.org"
+#   text                        : "Launch binder"
 
 latex:
   latex_engine                : "xelatex"
