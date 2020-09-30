@@ -83,7 +83,7 @@ slideshow:
   slide_type: slide
 tags: []
 ---
-# tips = pd.read_csv("../_static/lecture_specific/seaborn/tips.csv")
+#tips = pd.read_csv("../_static/lecture_specific/seaborn/tips.csv")
 
 ```
 
