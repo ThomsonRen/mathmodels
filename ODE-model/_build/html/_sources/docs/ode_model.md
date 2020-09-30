@@ -9,1172 +9,1285 @@ kernelspec:
   display_name: Python 3
   language: python
   name: python3
+
 ---
 
-+++ {"tags": [], "slideshow": {"slide_type": "slide"}, "id": "8478FBF13EA7419BA3A250ED42FE1112", "mdEditEnable": false, "jupyter": {}}
++++ {"id": "6F4091BA45E54F629F9D4C773C48FFDA", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
-# 评价模型
+# 微分方程模型
 
-## 评价模型介绍
+## 微分方程模型简介
 
-我们常常会遇到如下的综合评价问题：**在若干个(同类)对象中，从多个维度对其进行评分，将这些评分综合后，给定一个最终排名**。如好大学排名，运动员排名，城市排名等。
++++ {"id": "9BFB9F9C3B2F4DEF84C53ECF4B862DCB", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+当我们描述实际对象的某些特性随时间（或空间）而演变的过程、分析它的变化规律、预测它的未来性态、研究它的控制手段时，通常要建立对象的动态模型。
 
 
-```{figure} https://cdn.kesci.com/upload/image/qg32efllvm.jpg?imageView2/0
+事实上，在大家中学的课程中，解所谓应用题时我们已经遇到简单的建立**动态模型问题**，例如
+
+```{admonition} 动态建模案例
+- 一质量为$m$的物体自高$h$处自由下落，初速是0，设阻力与下落速度的平方成正比，比例系数为$k$，求下落速度随时间的变化规律
+- 容器内有盐水$100  L$，内含盐$10 kg$，今以$3 L/min$的速度从一管放进净水，以$2 L/min$的速度从另一管抽出盐水，设容器内盐水浓度始终是均匀的，求容器内含盐量随时间变化的规律 
+```
+
+本节讨论的动态模型与这些问题的主要区别是，所谓微分方程应用题大多是物理或几何方面的典型问题，假设条件已经给出，只需用数学符号将已知规律表示出来，即可列出方程，求解的结果就是问题的答案，答案是唯一的。 
+
+
+而本节的模型主要是非物理领域的实际问题，要分析具体情况或进行类比才能给出假设条件。作出不同的假设，就得到不同的方程，所以是**事先没有答案的，求解结果还要用来解释实际现象并接受检验**。
+
++++ {"id": "7B21FB23D32840D787FC371A9C8B0B19", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+我们首先要弄明白，**什么是微分方程？**
+
+
+```{tip}
+微分方程是含有微分的方程,由此需要解释两个问题
+1. 什么是微分?代表什么含义？
+2. 什么是方程?
+
+- 方程是指**含有未知数的等式**。使等式成立的未知数的值称为“解”或“根”。
+- 微分是对函数的**局部变化率**的一种线性描述。微分可以近似地描述当函数自变量的取值作足够小的改变时，函数的值是怎样改变的。
+```
+
+
+
+
+
+
+
+例如，牛顿第二定律方程就是一个最典型的微分方程
+
+$$
+f=m a=m \frac{\mathrm{d} v}{\mathrm{d} t}
+$$
+
+
++++ {"id": "85649D6FA0BD431E80956B69DC68BFF0", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+例如，这是一个一阶微分方程初值问题
+
+$$
+\left\{\begin{array}{l}
+{\dfrac{\mathrm{d} y}{\mathrm{d} x}=2} \\
+{y(0)=1}
+\end{array}\right.
+$$
+
+大家应该可以非常快速地看出它的解
+
+:::{admonition,dropdown,tip} 答案
+
+$$
+y=2x+1
+$$
+
+:::
+
+
+
+
++++ {"id": "480FB8046DB842738A07537A200F81E6", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+微分方程理论博大精深，我们本节仅就几个最经典的微分方程模型进行讨论，希望能够帮助大家理解微分方程建模的基本思想。我们将通过三个模型案例展开微分方程建模这一课程。他们分别是
+
+- 人口增长模型
+- 传染病模型
+- 猎物-捕食者模型
+
+
+## 人口增长模型
+
++++ {"id": "FE50847BAD404CC889D3570A6DEDBAD0", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+认识人口数量的变化规律，建立人口模型，作出较准确的预报，是有效控制人口增长的前提。
+
+下表给出了近两个世纪的美国人口统计数据，我们以此研究人口增长模型。
+
+```{code-cell} ipython3
 ---
-height: 300px
-name: directive-fig
+id: 3D73ABCA66144A61AAC19594ADB89753
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
 ---
+import pandas as pd
+df = pd.DataFrame()
+df["年份"] = [i for i in  range(1790,2010,10)]
+df["人口"] = [3.9,5.3,7.2,9.6,12.9,17.1,23.2,31.4,38.6,
+50.2,62.9,76,92,106.5,123.2,131.7,150.7,179.3,204,226.5,251.4,281.4]
+df.T
+```
+
++++ {"id": "A7D1A5337BD5412DBAF7E4B99642E2ED", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+先简单通过散点图看一下人口的增长模式。
+
+```{code-cell} ipython3
+---
+id: C1A66958E92542D084622AA02A930969
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+import matplotlib
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.style.use('ggplot')  #设置绘图风格为ggplot
+matplotlib.rcParams['font.size'] = 15  #设置全文绘图字体大小为15号字
+
+year = [i for i in range(1790,2010,10)]
+population = [3.9,5.3,7.2,9.6,12.9,17.1,23.2,31.4,38.6,
+50.2,62.9,76,92,106.5,123.2,131.7,150.7,179.3,204,226.5,251.4,281.4]
+plt.scatter(year,population)   #绘制散点图
+plt.xlabel("Year")
+plt.ylabel("Population(Million)")
+```
+
++++ {"id": "BD06625A7774461DB8AD20105254A929", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+### 指数增长模型
+
+最简单的人口增长模型是公认的：记今年人口为$x_0$,$k$年后人口为$x_k$， 年增长率为$r$，则
+
+$$
+x_{k}=x_{0}(1+r)^{k}
+$$
+
+显然，这个公式的基本条件是年增长率$r$保持不变,这个假设显然过于简单了。
+
+200多年前英国人口学家T. Malthus (1766-1834)调查了英国100多年的人口统计资料，得出了人口增长率不变的假设，并据此建立了著名的人口**指数增长模型**。
+记时刻$t$的人口为$x(t)$，当考察一个国家或一个较大地区的人口时，$x(t)$是一个很大的整数。为了利用微积分这一数学工具，将$x(t)$视为连续、可微函数， 记初始时刻$(t=0)$的人口为$x_0$，假设人口增长率为常数$r$，即单位时间内$x(t)$的增量为等于$r$乘以$x(t)$，于是得到$x(t)$满足微分方程
+
+
+
+$$
+\frac{\mathrm{d} x}{\mathrm{d} t}=r x, x(0)=x_{0}
+$$
+
+由这个方程,通过分离变量法很容易解出其解析解:
+
+
+
+``` {admonition} 分离变量法求解微分方程
+先分离变量
+
+$$
+\frac{\mathrm{d} x}{x}=r  \mathrm{d} t
+$$
+
+两边同时积分
+
+$$
+\int \frac{\mathrm{d} x}{x} = \int r  \mathrm{d} t
+$$
+
+$$
+\ln(x) = rt+C_1
+$$
+
+$$
+x = e^{rt+C_1}
+$$
+
+$$
+x = Ce^{rt}
+$$
+
+当$x=0$时，
+
+$$
+x(0) = C = x_0
+$$
+
+因此$C = x_0$
+
+$$
+x(t)=x_{0} e^{r t}
+$$
 
 ```
 
- 这时候我们就需要用到评价模型，评价模型是数学建模比赛中最基础也是最常用的模型, 例如[2018年HiMCM A题](https://www.comap.com/highschool/contests/himcm/2018problems.html) 就专门考察了评价模型。
+$r>0$时，上式表示人口将按指数规律随时间无限增长，称为指数增长模型．
 
-:::: {admonition} 2018HiMCM-A
+```{code-cell} ipython3
+---
+id: 9457DE424FD44F898D8E0E007609BFB8
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+# 指数增长模型的绘图
+import numpy as np
+x0 = 1  # 初始人口数
+r = 0.02    # 增长率
+t = [i for i in range(1000)] # 时间列表
+x_t = [x0 * np.exp(r * time) for time in t] # 人口增长记录
+plt.plot(t, x_t) # 绘图
+plt.xlabel("Time") # 加横坐标label
+plt.ylabel("Population") # 加纵坐标label
+```
 
-There are several Roller Coaster rating/ranking sites online that, while taking some objective measures into account, heavily rely on subjective input to determine the rating or ranking of a particular roller coaster (e.g., an "excitement"or "experience" score of an "expert" rider to measure "thrill").
++++ {"id": "07629BC514424772A1D158CE2D610D70", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
-In addressing this HiMCM problem, consider only roller coasters currently in operation. We have provided data for a subset of operating roller coasters whose height, speed, and/or drop are above the average of worldwide operating coasters. Therefore, we have not included family or kiddie coasters, nor have we included bobsled or mountain type coasters.
+**模型的参数估计、检验和预报**
+
+
+我们来尝试用这个模型，**带入19世纪的数据，预测20世纪的人口**。
 
 
 
-::: {admonition} 数据下载地址
-[点我下载](https://www.comap.com/highschool/contests/himcm/COMAP_RollerCoasterData_2018.xlsx)
+
+为了估计指数增长模型中的参数$r$和$x_0$，需将原式取对数，得
+
+$$
+y=r t+a
+$$
+
+其中，
+
+$$
+y=\ln x, a=\ln x_{0}
+$$
+
+
+
+```{code-cell} ipython3
+---
+id: C2FC8668C461488C8B81589956010AB0
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+from sklearn.linear_model import LinearRegression # 导入LinearRegression方法
+ln_population = np.log(population)  # 对人口取对数，得到y
+plt.scatter(year[0:12],ln_population[0:12])  # 绘制1790 - 1900的y-t图，并进行线性回归
+
+## 使用LinearRegression 进行线性回归
+lrModel = LinearRegression()
+lrModel.fit(np.array(year[0:12]).reshape(-1,1),ln_population[0:12])
+ln_population_fit = [ lrModel.intercept_  +  lrModel.coef_  *i for i in range(1780,1920,10)  ]
+plt.plot(range(1780,1920,10),ln_population_fit) # 将线性回归以后的直线绘制在散点图上
+plt.xlabel("Year")
+plt.ylabel(r'$\ln(x)$')
+```
+
+```{code-cell} ipython3
+---
+id: 62BE02AA558E4AABBF8E71A60F1DF4CE
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 我们把以上的代码合起来，放在一起。
+## 对比一个世纪后的预测值和真实值
+
+#输入原始数据
+year = [i for i in range(1790,2010,10)]
+population = [3.9,5.3,7.2,9.6,12.9,17.1,23.2,31.4,38.6,
+50.2,62.9,76,92,106.5,123.2,131.7,150.7,179.3,204,226.5,251.4,281.4]  
+plt.scatter(year,population,label = 'Real Data')
+
+#进行参数的线性拟合
+from sklearn.linear_model import LinearRegression
+ln_population = np.log(population)
+lrModel = LinearRegression()
+lrModel.fit(np.array(year[0:12]).reshape(-1,1),ln_population[0:12])
+ln_population_fit = [ lrModel.intercept_  +  lrModel.coef_  *i for i in range(1780,1920,10)  ]
+
+#将预测值和真实值进行对比
+r = lrModel.coef_
+x0 = np.exp(lrModel.intercept_)
+pop_predicted = [x0 * np.exp(lrModel.coef_ * time) for time in year]
+plt.plot(year,pop_predicted,'b',label = 'Predicted')
+plt.legend()
+```
+
++++ {"id": "1EA029CB3B42486689A790B67AC9977B", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+显然，使用1790 - 1900的数据得到的指数模型预测效果不好，不能够准确地预测20世纪的人口增长情况。
+
+
+- 历史上，指数增长模型与19世纪以前欧洲一些地区人口统计数据可以很好地吻合，迁往加拿大的欧洲移民后代入口也大致符合这个模型。另外，用它作短期人口预测可以得到较好的结果。**显然这是因为在这些情况下，人口增长率是常数这个基本假设大致成立。**
+
+- 但是长期来看，任何地区的人口都不可能无限增长，即指数模型不能描述、也不能预测较长时期的人口演变过程。这是因为，人口增长率事实上是在不断地变化着排除灾难、战争等特殊时期，一般说来，当人口较少时 ，增长较快，即增长率较大；人口增加到一定数量以后，增长就会慢下来，即增长率变小。
+
+如果根据上面给出的数据计算一下美国人口的年增长率
+
+```{code-cell} ipython3
+---
+id: EA2F5E6BA55146328706F19F1FB5D115
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 增长率可视化
+year = [i for i in range(1790,2010,10)]
+population = [3.9,5.3,7.2,9.6,12.9,17.1,23.2,31.4,38.6,
+50.2,62.9,76,92,106.5,123.2,131.7,150.7,179.3,204,226.5,251.4,281.4]
+## 计算增长率
+rate = []
+for i in range(len(population)-1):
+    rate.append((population[i+1] - population[i])/ population[i])
+## 可视化
+plt.scatter(year[1:],rate)
+plt.xlabel("Year")
+plt.ylabel(r'$r$')
+```
+
+
+
+
+可以看到增长率从19世纪开始就基本上在缓慢下降。如果用一个平均的年增长率作为$r$，用指数增长模型描述美国人口的变化，会发现结果与实际数据相差很大。
+
+看来，为了使人口预报特别是长期预报更好地符合实际情况，必须修改指数增长模型关于人口增长率是常数这个基本假设。
+
+
+
++++ {"id": "8A2758400F4846DE831A652FAB50FBD0", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+### 阻滞增长模型一logistic模型
+
++++ {"id": "D107A2389DEF403E835CD7162E94EAC9", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+分析人口增长到一定数量后增长率下降的主要原因，人们注意到，自然资源、环境条件等因素对人口的增长起着阻滞作用，并且**随着人口的增加，阻滞作用越来越大**。所谓阻滞增长模型就是考虑到这个因素，对指数增长模型的基本假设进行修改后得到的。
+
++++ {"id": "2EBF3E4C8E554C1EAD7695D0AC84EFC8", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+阻滞作用体现在对人口增长率$r$的影响上，使得$r$随着人口数$x$的增加而下降。若将$r$表示为$x$的函数$r(x)$，则它应是减函数。于是
+
+
+$$
+\frac{d x}{d t}=r(x) x, x(0)=x_{0}
+$$
+
+
+对$r(x)$的一个最简单的假定是，设$r(x)$为$x$的线性函数，即
+
+$$
+r(x)=r-s x(r, s>0)
+$$
+
+
+这里$r$称固有增长率，表示人口很少时（理论上是$x = 0$)的增长率．为了确定系数$s$的意义，引人自然资源和环境条件所能容纳的最大人口数量$x_m$，称人口容量．当 $x=x_m$时人口不再增长，即增长率$r(x_m)=0$
+
++++ {"id": "733E2CF7145E4436863845BEE6851D7D", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+
+
+于是
+
+
+$$
+r(x)=r\left(1-x / x_{m}\right)
+$$
+
+
+带回原方程，得到
+
+$$
+\frac{d x}{d t}=r x\left(1-\frac{x}{x_{m}}\right), \quad x(0)=x_{0}
+$$(logistic_origin)
+
+
+方程右端的因子$rx$体现人口自身的增长趋势，因子$(1-\dfrac{x}{x_m})$则体现了环境和资源对人口增长的阻滞作用．
+
+显然．$x$越大，前一因子越大，后一因子越小，人口增长是两个因子共同作用的结果，上式称为阻滞增长模型,同样地，我们使用分离变量法求解这个方程
+
+
+
+
+
+```{admonition} 分离变量法求解logistic模型
+原方程为{eq}`logistic_origin`
+
+分离变量后
+
+$$
+\frac{\mathrm{d} x}{x\left(1-\dfrac{x}{x_{m}}\right)}=r \mathrm{d} t
+$$
+
+等式左边变形
+
+$$
+\left( \frac{1}{x} + \frac{1}{x_m - x}   \right)  \mathrm{d} x  =r \mathrm{d} t
+$$
+
+两边同时积分
+
+$$
+\int \left( \frac{1}{x} + \frac{1}{x_m - x}   \right)  \mathrm{d} x  =\int  r \mathrm{d} t
+$$
+
+$$
+\ln(x) - \ln(x_m - x) = rt +C
+$$
+
+$$
+\ln\left(\frac{x}{x_m -x}\right) = rt +C
+$$
+
+两边同时取指数
+
+
+$$
+\frac{x}{x_m -x} = e^{rt +C}
+$$
+
+得到
+
+$$
+x = \frac{x_m}{1+C_1e^{-rt}}
+$$
+
+带入初始条件
+
+$$
+x(0) = \frac{x_m}{1+C_1} = x_0
+$$
+
+得到
+
+$$
+C_1 = \frac{x_{m}}{x_{0}}-1
+$$
+
+
+
+最终得到
+
+$$
+x(t)=\frac{x_{m}}{1+\left(\frac{x_{m}}{x_{0}}-1\right) e^{-r t}}
+$$
+
+
+
+```
+
+
+
+
+我们可以看一下 logistic模型的增长曲线
+
+
+```{code-cell} ipython3
+---
+id: 6FA479576B3B47A497754A70BFE763EF
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 阻滞增长模型的绘图
+
+## 输入初始参数
+x0 = 1
+xm = 30
+r = 0.02
+
+# 获得x 和 f(x)
+t = [i for i in range(400)]
+x_t = [xm * (1 + (xm/x0 -1)*np.exp(- r * time))**(-1) for time in t] 
+
+# 绘图1:增长曲线
+plt.figure(figsize=(15,5))
+plt.subplot(1,2,1)
+plt.plot(t,x_t)
+plt.xlabel("Time")
+plt.ylabel("Population")
+
+# 绘图2:增长速度
+plt.subplot(1,2,2)
+x = [xm*i/30 for i in range(31) ]
+deri_x = [r * xx * (1 - xx/xm) for xx in x]
+plt.plot(x,deri_x)
+plt.xlabel(r'$x$')
+plt.ylabel(r'$\frac{\mathrm{d}x}{\mathrm{d}t}$')
+```
+
++++ {"id": "E698EE2A2EDB46E0A7DBEEA386990694", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+上面的阻滞增长模型，是荷兰生物数学家Verhulst 19世纪中叶提出的．它不仅能够大体上描述人口及许多物种数量（如森林中的树木、鱼塘中的鱼群等）的变化规律，而且在社会经济领域也有广泛的应用，例如**耐用消费品的销售**就可以用它来描述。基于这个模型能够描述一些事物符合逻辑的客观规律，人们常称它为logistic模型。
+
++++ {"id": "3564354EB8E849B7820F5FD178581126", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+**模型的参数估计、检验和预报**
+
+用阻滞增长模型进行人口预报，先要作参数估计．除了初始人口$x_0$外，还要估计$r$和$x_m$。它们可以用人口统计数据拟合得到，也可以辅之以专家的估计。
+
++++ {"id": "11E19D094FCE4FBB8906A0E6EA67E0B8", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+原方程可以写为
+
+$$
+\frac{\frac{\mathrm{d} x}{\mathrm{d} t}}{x}=r-s x, s=\frac{r}{x_{m}}
+$$
+
++++ {"id": "B9927F962A8348399ACB8D81EAFD4D12", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+上式左端可以从实际人口数据用**数值微分**算出，右端对参数$r$,$s$是线性的,可借助最小二乘法获得。（什么是数值微分:差分）
+
+```{code-cell} ipython3
+---
+id: F18B2EEFD0B6487F8297D47B849F7BCE
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 对比一个世纪后的预测值和真实值
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+
+# 输入初始数据
+year = [i for i in range(1790,2010,10)]
+population = [3.9,5.3,7.2,9.6,12.9,17.1,23.2,31.4,38.6,
+50.2,62.9,76,92,106.5,123.2,131.7,150.7,179.3,204,226.5,251.4,281.4]
+y = []
+for i in range(len(population)-1):
+    y.append( (population[i+1] - population[i])/10 / population[i]  )
+plt.figure(figsize = (15,5))
+
+# 可视化线性回归结果
+plt.subplot(1,2,1)
+sns.regplot(population[1:],y,ci = 0)
+plt.ylabel(r'$\frac{\mathrm{d}x}{\mathrm{d}t}/{x}$')
+plt.xlabel(r'$x$')
+lrModel = LinearRegression()
+lrModel.fit(np.array(population[7:-1]).reshape(-1,1),y[6:-1])
+r = lrModel.intercept_
+xm = r/(- lrModel.coef_)
+
+
+# 可视化拟合结果
+plt.subplot(1,2,2)
+x0 = population[0]
+plt.plot(year,population,label = 'Real Data')
+pop_predicted = [xm * (1 + (xm/x0 -1)*np.exp(- r * (time - 1790)))**(-1) for time in year]
+plt.plot(year,pop_predicted,label = 'Predicted')
+plt.xlabel('Year')
+plt.xlabel('Population')
+plt.legend()
+```
+
++++ {"id": "2F3DF809FF644A1C9C072D1BDE750643", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+可以看出，这个模型整体拟合效果不错。我们可以用模型计算2000年的人口，与已知的实际数据比较，来检验模型是否合适。
+
+除此之外，我们还可以考虑使用之前讲过的**非线性最小二乘拟合**进行人口的预测。
+
+```{code-cell} ipython3
+---
+id: 57C55B207B5A40B889D5A581E26296A5
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 复习前面学到的预测模型中的非线性拟合
+plt.scatter(year,population,label = 'Real Data')
+def logistic(t,xm,x0,r):
+    return xm * (1 + (xm/x0 -1)*np.exp(- r * (t-1790) ))**(-1)
+from scipy.optimize import curve_fit 
+#popt1, pcov1 = curve_fit(logistic, year, population,p0 = [1,0,0]) 
+popt1, pcov1 = curve_fit(logistic, year, population,p0 = [1,1,1]) 
+
+#popt数组中，三个值分别是待求参数a,b,c  
+y2 = [logistic(i, popt1[0],popt1[1],popt1[2]) for i in year]
+plt.plot(year,y2,'b--',label = 'Fitting Curve')  
+plt.legend()
+```
+
++++ {"id": "12DEE9696F674D0B8745363608BB0A25", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+
+```{admonition} 思考
+可以看到，非线性拟合的误差更小，请解释为什么？
+```
+
+## 传染病模型
+
++++ {"id": "76CC693783724C359E8FC203916591AC", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+**问题的提出** ：医生们发现，在一个民族或地区，当某种传染病流传时，波及到的总人数大体上保持为一个常数。即既非所有人都会得病也非毫无规律，两次流行（同种疾病）的波及人数不会相差太大。如何解释这一现象呢？试用建模方法来加以证明。
+
++++ {"id": "D928EE4245F042228F5A92A16BC4ED92", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+### 指数模型
+
+定义已感染人数为$i(t)$，假设每个病人单位时间有效接触（足以使人致病）的人数为$\lambda$，那么，在时间段$\Delta t$内，病人的增量可以用如下的公式进行计算
+
+$$
+i(t+\Delta t) - i(t)  = \lambda i(t)\Delta t
+$$(exp_infectious_model)
+
+将等式右侧的$\Delta t$除到等式左侧，并 取极限$\Delta t  \to 0 $
+
+$$
+\lim_{x \to 0} \frac{i(t+\Delta t) - i(t)}{\Delta t}  =\lambda i(t)
+$$
+
+写成微分方程
+
+$$
+\frac{\mathrm{d}i}{\mathrm{d}t} = \lambda t
+$$
+
+ 计初始时刻的病人人数为$i(0) = i_0$，那么我们可以得到指数增长的传染病模型
+ 
+$$
+ \begin{cases}
+ \dfrac{\mathrm{d}i}{\mathrm{d}t} = \lambda t\\
+ \quad \\
+ i(0) = i_0
+ \end{cases}
+$$
+
+实际上，这与人口增长的指数模型是一致的，我们直接给出其解析解
+
+$$
+i(t) = i_0 e^{\lambda t}
+$$
+ 
+实际上，除了解析解之外，我们还可以使用欧拉前向差分（Forward Euler Method）的方法近似求解上述方程。 将公式{eq}`exp_infectious_model`中的 $i(t)$移到等式的右边，我们得到如下的递推公式
+
+$$
+i(t+\Delta t)  = i(t) +  \lambda i(t)\Delta t
+$$
+
+以上递推公式意味着，我们可以通过当前时刻的病人人数和致病参数$\lambda$，计算得到$\Delta t$时间后的病人人数，将以上思想在Python中进行实现，代码如下。
+
+```{code-cell} ipython3
+---
+id: B96A807D9D9D486C8E2E9F7BEC85B119
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+def exp():
+    # 输入计算参数
+    deltaT = 0.01
+    lamb = 2
+    i_list = []
+    i0 = 0.08; # 初始有8%的人患病
+    i_list.append(i0)
+    Tot_Time = 10
+    TotStep = int(Tot_Time/deltaT)
+    ## 递推地求解差分方程
+    for i in range(TotStep):
+        i_new = i_list[-1] + lamb * i_list[-1] * deltaT
+        i_list.append(i_new)
+    # 绘图
+    plt.plot(i_list)
+    plt.xlabel(r"$t$")
+    plt.ylabel('Percent')
+exp()
+```
+
++++ {"id": "3F442BE28ECB4B7DABB66E087A95EF19", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+
+::::{warning}
+从中我们可以看到病人的增长是指数级的，在短短十天后，已经有3000万人患病！这显然不符合实际情况的，那么问题出在哪里了呢？
+
+:::{admonition,dropdown,tip} 点击查看解释
+实际上，若病人解除的是病人，并不能够使病人再次患病，实际上以上的算法导致了**重复计数现象**的发生。
+解决办法：必须区分已感染者和未感染者。
 :::
-
-1. Create an objective quantitative algorithm or set of algorithms to develop a descriptive roller coaster rating/ranking system based only on roller coaster numerical and descriptive specification data (e.g., speed, duration of ride, steel or wood, drop).
-2. Use your algorithm(s) to develop your "Top 10 Roller Coasters in the World" list. Compare and discuss the rating/ranking results and descriptions from your team's algorithm(s) with at least two other rating/ranking systems found online.
-3. Describe the concept and design for a user-friendly app that uses your algorithm(s) to help a potential roller coaster rider find a roller coaster that she or he would want to ride. NOTE: You DO NOT need to program and/or write code for the app. You are developing the concept and design for the app only.
-4. Write a one-page non-technical News Release describing your new algorithm, results, and app.
-
-
-
 
 ::::
 
- 
-
- 
-
- 
-
- 
 
 
 
-+++ {"id": "59E0309E704E449A84B6FDDACCB11296", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-如何去思考综合评价问题的建模呢？通常有如下五个角度
 
 
-- **评价对象**：评价对象就是综合评价问题中所研究的对象，或称为系统。通常情况下，在一个问题中评价对象是属于同一类的，且个数要大于1，不妨假设一个综合评价问题中有$n$个评价对象，分别记为
 
-$$
-S_{1}, S_{2}, \cdots, S_{n}(n>1)
-$$
 
-- **评价指标**：评价指标是反映评价对象的运行（或发展）状况的基本要素。通常的问题都是有多项指标构成，每一项指标都是从不同的侧面刻画系统所具有某种特征大小的一个度量。一个综合评价问题的评价指标一般可用一个向量$x$表示，称为评价指标问题，其中每一个分量就是从一个侧面反映系统的状态，即称为综合评价的指标体系。不失一般性，设系统有$m$个评价指标，分别记为
+
+
++++ {"id": "066124463FAA4EB380C0720891D4D5D0", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+### SI模型
+
+现在我们将人群分成两个群体：已感染者（病人，**I**nfected）和未感染者（健康者，**S**uspect），该模型称为SI模型，模型假设：
+
+- 在研究时间内，不考虑死亡率和出生率，即总人数$N$不变，病人和健康人的比例分别为$i(t)$和$s(t)$
+- 每个病人在单位时间内有效接触并致病的人数为$\lambda$，且只有接触健康人才会致病，称$\lambda$为日接触率
+
+仿照指数模型里面的建模方法，在时间段$\Delta t$内，病人的增量可以用如下的公式进行计算
 
 $$
-x_{1}, x_{2}, \cdots, x_{m}(m>1)
-$$
+N[i(t+\Delta t)-i(t)]=[\lambda s(t)] N i(t) \Delta t
+$$(si_infectious_model)
 
-- **权重系数**： 每一个综合评价问题都有相应的评价目的，针对某种评价目的，各评价指标之间的相对重要性是不同的，评价指标之间的这种相对重要性的大小，可用权重系数来刻画。当各评价对象和评价指标值都确定以后，综合评价结果就依赖于权重系数的取值了，即**权重系数确定的合理与否，直接关系到综合评价结果的可信度，甚至影响到最后决策的正确性**。因此，权重系数的确定要特别谨慎，应按一定的方法和原则来确定。如果用$w_{j}(j=1,2, \cdots, m)$来表示评价指标$x_j$的权重系数，一般应满足
+其中的$\lambda s(t)$项可以理解为是打折扣以后的传播系数。随着健康人比例的下降，这个系数也会相应下降。
 
-$$
-w_{j} \geq 0, j=1,2, \cdots, m
-$$
-
+取极限$\Delta t  \to 0 $
 
 $$
-\sum_{j=1}^{m} w_{j}=1
+\frac{\mathrm{d}i}{\mathrm{d}t} = \lambda s i
 $$
 
-- **综合模型** 对于多指标（或多因素）的综合评价问题，就是要通过建立一定的数学模型将多个评价指标值综合成为一个整体的综合评价值，作为综合评价的依据，从而得到相应的评价结果。
+因为$i(t) + s(t) = 1$
 
-- **评价者** 评价者是直接参与评价的人，可以是一个人，也可以是一个团体。对于评价目的选择、评价指标体系确定、权重系数的确定和评价模型的建立都与评价者有关。因此，评价者在评价过程中的作用是不可小视的。
-
-
-
-
-+++ {"id": "24517C7CBD624E21B47BDC06B82FC6B9", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-目前国内外综合评价方法有数十种之多，其中主要使用的评价方法有
- - 主成分分析法
- - 因子分析
- - **TOPSIS**
- - 秩和比法
- - 灰色关联法
- - **熵权法**
- - **层次分析法**
- - 模糊评价法
- - 物元分析法
- - 聚类分析法
- - 价值工程法
- - 神经网络法等
-
-方法多样，各自有其适用场景。本次课程，我们重点展开讲其中较为常用的**TOPSIS、熵权法和层次分析法**。
-
-
-在展开这三个模型之前，我们首先来看一下数据的预处理方法。
-
-+++ {"id": "ACE84F13C16C4779A409CA53BED19880", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-## 数据预处理方法
-
-+++ {"id": "33CF15E4A13C4BB4A36E563BD911FC31", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-一般情况下，在综合评价指标中，有的指标比较重要，有的影响微乎其微，另外各指标值可能属于不同类型、不同单位或不同数量级，从而使得各指标之间存在着不可公度性，给综合评价带来了诸多不便。为了尽可能地反映实际情况，消除由于各项指标间的这些差别带来的影响，避免出现不合理的评价结果，就需要对评价指标进行一定的预处理，包括
-
-1. [**指标的筛选**](content:choose_1)
-1. [**指标的一致化处理**](content:choose_2)
-1. [**无量纲化处理**](content:choose_3)
-1. [**定性数据定量化**](content:choose_4)
-
-下面分别介绍。
-
-+++ {"id": "D87331E1D43940508293B385D33A5C90", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-(content:choose_1)=
-### 评价指标的筛选
-
-要根据综合评价的目的，针对具体的评价对象、评价内容收集有关指标信息，采用适当的筛选方法对指标进行筛选，合理地选取主要指标，剔除次要指标，以简化评价指标体系。常用的评价指标筛选方法主要有专家调研法、**最小均方差法、极大极小离差法**等。我们重点来看后两种方法。
-
-+++ {"id": "42BA1EAD22B042708410745BA2879078", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-#### 最小均方差法
-
-对于$n$个评价对象$S_{1}, S_{2}, \cdots, S_{n}$，每个评价对象有$m$个指标，其观测值分别为
+所以上式可以变形为
 
 $$
-a_{i j}(i=1,2, \cdots, n ; j=1,2, \cdots, m)
+\frac{\mathrm{d}i}{\mathrm{d}t} = \lambda  i(1-i)
 $$
 
-```{hint}
-最小均方差法的出发点是： 如果$n$个评价对象关于某项指标的观测值都差不多，那么不管这个评价指标重要与否，对于这$n$个评价对象的评价结果所起的作用将是很小的。因此，在评价过程中就可以删除这样的评价指标。
+结合初始条件，我们得到了SI模型的微分方程
+
+$$
+\begin{cases}
+\dfrac{\mathrm{d}i}{\mathrm{d}t} = \lambda  i(1-i)\\
+\quad \\ 
+i(0) = i_0
+\end{cases}
+$$
+
+
+
+```{tip}
+实际上，这里的SI模型就是我们之前讲到过的人口增长的logistic模型，请你思考如何证明？
 ```
 
-最小均方差法的筛选过程如下：
-
-- 首先求出第$j$项指标的平均值和均方差
+这里我们重点考虑用差分方法求解这个方程。在公式{eq}`si_infectious_model`中，消去$N$，再将$i(t)$移到等式的右边，我们得到如下的欧拉前向法递推公式
 
 $$
-\mu_{j}=\frac{1}{n} \sum_{i=1}^{n} a_{i j}
+i(t+\Delta t)  = i(t) +  \lambda i(t)s(t)\Delta t
 $$
 
-$$
-s_{j}=\sqrt{\frac{1}{n} \sum_{i=1}^{n}\left(a_{i j}-\mu_{j}\right)^{2}}, \quad j=1,2, \cdots, m
-$$
-
-- 求出最小均方差
-
-$$
-{S}_{j_{0}}=\min _{1 \leq j \leq m}\left\{{s}_{j}\right\}
-$$
-
-- 如果最小均方差$S_{j_{0}} \approx 0$，则可删除与$S_{j_{0}}$对应的指标 。考察完所有指标，即可得到最终的评价指标体系。
-
-``` {Warning}
-注意：最小均方差法只考虑了指标的差异程度，也有可能将重要的指标删除。你能否举一个例子?
-```
-
-+++ {"id": "138906245A6A41D6901811AD53E9BE1D", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-#### 极大极小离差法
-
-+++ {"id": "491D9CE19BE04CC5A77CAB1445A2FF66", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-对于$n$个评价对象$S_{1}, S_{2}, \cdots, S_{n}$，每个评价对象有$m$个指标，其观测值分别为
-
-$$
-a_{i j}(i=1,2, \cdots, n ; j=1,2, \cdots, m)
-$$
-
-极大极小离差法的筛选过程如下：
-- 求出第$j$项指标的最大离差
-
-$$
-d_{j}=\max _{1 \leq i,k \leq n}\left\{\left|a_{i j}-a_{k j}\right|\right\}, j=1,2, \cdots, m
-$$
-
-- 求出最小离差
-
-$$
-d_{j_{0}}=\min _{1 \leq j \leq n}\left\{d_{j}\right\}
-$$
-
-- 如果最小离差$d_{j_{0}} \approx 0$，则可删除与$d_{j_{0}}$对应的指标$x_{j_{0}}$，考察完所有指标，即可得到最终的评价指标体系。
-
-其他几个常用的评价指标筛选方法还有条件广义方差极小法、极大不相关法等，这里限于篇幅不再展开。
-
-(content:choose_2)=
-### 指标的一致化处理
-
-所谓一致化处理就是将评价指标的类型进行统一。
-
-一般来说，在评价指标体系中，可能会同时存在极大型指标、极小型指标、居中型指标和区间型指标，它们都具有不同的特点。
-
-若指标体系中存在不同类型的指标，必须在综合评价之前将评价指标的类型做一致化处理。
-
-例如，将各类指标都转化为极大型指标，或极小型指标。一般的做法是将非极大型指标转化为极大型指标。
-
-+++ {"id": "9666E50DDCB64883BBC824C3B3B624F4", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-#### 极小型指标化为极大型指标
-
-对极小型指标$x_j$，将其转化为极大型指标时，只需对指标$x_j$取倒数：
-
-$$
-x_{j}^{\prime}=\frac{1}{x_{j}}
-$$
-
-或做平移变换：
-
-$$
-x_{j}^{\prime}=M_{j}-x_{j}
-$$
-
-其中,$M_{j}=\max _{1 \leq i \leq n}\left\{a_{i j}\right\}$,即$n$个评价对象第$j$项指标值$a_{ij}$最大者。
-
-当然，其他能改变单调性的转换方法也是可行的。
-
-+++ {"id": "9877ADF4BCF44D1D801366411DBFAC22", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-#### 居中型指标化为极大型指标
-
-对居中型指标$x_j$,令$M_{j}=\max _{1 \leq i \leq n}\left\{a_{i j}\right\}, \quad m_{j}=\min _{1 \leq i \leq n}\left\{a_{i j}\right\}$,取
-
-$$
-x_{j}^{\prime}=\left\{\begin{array}{ll}
-{\frac{2\left(x_{j}-m_{j}\right)}{M_{j}-m_{j}},} & {m_{j} \leq x_{j} \leq \frac{M_{j}+m_{j}}{2}} \\
-{\frac{2\left(M_{j}-x_{j}\right)}{M_{j}-m_{j}},} & {\frac{M_{j}+m_{j}}{2} \leq x_{j} \leq M_{j}}
-\end{array}\right.
-$$
-
-就可以将$x_j$转化为极大型指标。
-
-+++ {"id": "E30ABB18FC2146C1AAF2868CE9BEF0E9", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-#### 区间型指标化为极大型指标
-
-对区间型指标$x_j$， $x_j$是取值介于区间$\left[b_{j}^{(1)}, b_{j}^{(2)}\right]$,内时为最好，指标值离该区间越远就越差。令
-
-$$
-M_{j}=\max _{1 \leq i \leq n}\left\{a_{i j}\right\}, \quad m_{j}=\min _{\| \leq i \leq n}\left\{a_{i j}\right\}, \quad c_{j}=\max \left\{b_{j}^{(1)}-m_{j}, M_{j}-b_{j}^{(2)}\right\}
-$$
-
-就可以将区间型指标$x_j$转化为极大型指标。
-
-$$
-x_{j}'=\left\{\begin{array}{lll}
-{1-\dfrac{b_{j}^{(1)}-x_{j}}{c_{j}},} & {x_{j} < b_{j}^{(1)}} \\
-{1,} & {b_{j}^{(1)} \leq x_{j} \leq b_{j}^{(2)}} \\
-{1-\dfrac{x_{j}-b_{j}^{(2)}}{c_{j}},} & {x_{j} > b_{j}^{(2)}}
-\end{array}\right.
-$$
-
-
-
-+++ {"id": "306F6FB12C8F4767A5AE374EB2DB7E69", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-
-(content:choose_3)=
-### 指标的无量纲化处理
-
-+++ {"id": "ABD711F3126C453DAEC7060738A2D77E", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-**所谓无量纲化，也称为指标的规范化，是通过数学变换来消除原始指标的单位及其数值数量级影响的过程。**
-
-因此，就有指标的实际值和评价值之分。一般地，将指标无量纲化处理以后的值称为指标评价值。
-
-
-无量纲化过程就是将指标实际值转化为指标评价值的过程。
-
-对于$n$个评价对象$S_{1}, S_{2}, \cdots, S_{n}$，每个评价对象有$m$个指标，其观测值分别为
-
-$$
-a_{i j}(i=1,2, \cdots, n ; j=1,2, \cdots, m)
-$$
-
-#### 标准样本变换法
-
-令
-
-$$
-a_{i j}^{*}=\frac{a_{i j}-\mu_{j}}{s_{j}}(1 \leq i \leq n, 1 \leq j \leq m)
-$$
-
-其中样本均值$\mu_{j}=\frac{1}{n} \sum_{i=1}^{n} a_{i j}$,样本均方差$s_{j}=\sqrt{\frac{1}{n} \sum_{i=1}^{n}\left(a_{i j}-\mu_{j}\right)^{2}}$,称为标准观测值。
-
-+++ {"id": "669FE474FC2A40048306B83E43EC536F", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-#### 比例变换法
-
-对于极大型指标，令
-
-$$
-a_{i j}^{*}=\frac{a_{i j}}{\max _{1 \leq i \leq n} a_{i j}}\left(\max _{1 \leq i \leq n} a_{i j} \neq 0,1 \leq i \leq n, 1 \leq j \leq m\right)
-$$
-
-对极小型指标，令
-
-$$
-a_{i j}^{*}=\frac{\min a_{i j}}{a_{i j}}(1 \leq i \leq n, 1 \leq j \leq m)
-$$
-
-或
-
-$$
-a_{i j}^{*}=1-\frac{a_{i j}}{\max _{1 \leq i \leq n} a_{i j}}\left(\max _{1 \leq i \leq n} a_{i j} \neq 0,1 \leq i \leq n, 1 \leq j \leq m\right)
-$$
-
-该方法的优点是这些变换前后的属性值成比例。但对任一指标来说，变换后的$a_{i j}^{*} = 1$和$a_{i j}^{*}= 0$不一定同时出现。
-
-+++ {"id": "6745CF6D810A4E9F8C8D110C2108DA8D", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-#### 向量归一化法
-
-对于极大型指标，令
-
-$$
-a_{i j}^{*}=\frac{a_{i j}}{\sqrt{\sum_{i=1}^{n} a_{i j}^{2}}}(i=1,2, \cdots, n, 1 \leq j \leq m)
-$$
-
-
-对于极小型指标，令
-
-$$
-a_{i j}^{*}=1-\frac{a_{i j}}{\sqrt{\sum_{i=1}^{n} a_{i j}^{2}}}(i=1,2, \cdots, n, 1 \leq j \leq m)
-$$
-
-#### 极差变换法
-对于极大型指标
-
-$$
-a_{i j}^{*}=\frac{a_{i j}-\min _{1 \leq i \leq n} a_{i j}}{\max _{1 \leq i \leq n} a_{i j}-\min _{1 \leq i \leq n} a_{i j}}(1 \leq i \leq n, 1 \leq j \leq m)
-$$
-
-对于极小型直指标
-
-$$
-a_{i j}^{*}=\frac{\max _{1 \leq i \leq n} a_{i j}-a_{i j}}{\max _{1 \leq i \leq n} a_{i j}-\min _{1 \leq i \leq n} a_{i j}}(1 \leq i \leq n, 1 \leq j \leq m)
-$$
-
-
-其特点为经过极差变换后，均有$0 \leq a_{i j}^{*} \leq 1$，且最优指标值$a_{i j}^{*}=1$，最劣指标值$a_{i j}^{*}=0$。该方法的缺点是变换前后的各指标值不成比例。
-
-
-#### 功效系数法
-
-令，
-
-$$
-a_{i j}^{*}=c+\frac{a_{i j}-\min _{1 \leq i \leq n} a_{i j}}{\max _{1 \leq i \leq n} a_{i j}-\min _{1 \leq i \leq n} a_{i j}} \times d(1 \leq i \leq n, 1 \leq j \leq m)
-$$
-
-其$c,d$均为确定的常数，$c$表示“平移量”，表示指标实际基础值， $d$表示“旋转量”，即表示“放大”或“缩小”倍数
-
-+++ {"id": "942B6E5BAAA44EDBB0C2B3D83708130A", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-(content:choose_4)=
-### 定性指标的定量化
-
-在综合评价工作中，有些评价指标是定性指标，即只给出定性的描述，例如，质量很好、性能一般、可靠性高等。对于这些指标，在进行综合评价时，必须先通过适当的方式进行赋值，使其量化。一般来说，对于指标最优值可赋值1，对于指标最劣值可赋值0。对极大型定性指标常按以下方式赋值。
-
-
-对于极大型定性指标而言，如果指标能够分为很低、低、一般、高和很高五个等级，则可以分别取量化值为0，0.1，0.3，0.5，0.7，1，对应关系如下表所示。介于两个等级之间的可以取两个分值之间的适当数值作为量化值。极小型指标同理。
-
-| 等级   | 很低 | 低  | 一般 | 高  | 很高 |
-|--------|------|-----|------|-----|------|
-| 量化值 | 0    | 0.3 | 0.5  | 0.7 | 0.9  |
-
-+++ {"id": "E52755BE77324EFDB83C4A31E444BC83", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-
-
-下面我们通过几个例子来学习三种常用的评价模型。分别是TOPSIS方法，熵权法和层次分析法。
-
-+++ {"id": "6C63D4B497784E8987CE6EFD53D26D35", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-## TOPSIS方法
-
-C.L.Hwang 和 K.Yoon 于1981年首次提出 TOPSIS (全称：Technique for Order Preference by Similarity to an Ideal Solution)。
-
-TOPSIS 法是一种常用的组内综合评价方法，能充分利用原始数据的信息，其结果能精确地反映各评价方案之间的差距。
-
-基本过程为基于归一化后的原始数据矩阵，采用余弦法找出有限方案中的**最优方案和最劣方案**，然后分别计算各评价对象与最优方案和最劣方案间的距离，获得各评价对象与最优方案的相对接近程度，以此作为评价优劣的依据。
-
-
-该方法对数据分布及样本含量没有严格限制，数据计算简单易行。
-
-+++ {"id": "9FE701D789E04FF98A64E8C3156EDE47", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-为了客观地评价我国研究生教育的实际状况和各研究生院的教学质量，国务院学位委员会办公室组织过一次研究生院的评估。为了取得经验，先选5所研究生院，收集有关数据资料进行了试评估，下表是所给出的部分数据：
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q36cu5oq77.png?imageView2/0/w/500/h/500)
-
-+++ {"id": "3A31289AD661495B9182B3D455B5D45B", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-**Step1**: 指标的筛选，经过观察，该数据不需要进行指标的筛选。
-
-**Step2**: 指标的一致化处理。通过分析，我们知道：
-
-- 人均专著，越多越好（极大型指标）
-- 科研经费，越多越好（极大型指标）
-- 逾期毕业率，越小越好（极小型指标）
-- 生师比，过大过小都不好（区间型指标）
-
-设研究生院的生师比最佳区间为$[5,6]$，在最佳区间内生师比得分为1 ，如果生师比小于2或者大于12都是0分，在其他的区间都按照线性关系进行变换。
+同样地，我们可以通过当前时刻的病人人数和致病参数$\lambda$，计算得到$\Delta t$时间后的病人人数，将以上思想在Python中进行实现，代码如下：
 
 ```{code-cell} ipython3
 ---
-tags: ["remove-input",]
+id: CA48ADEF8B21475282D682DA7C4C6966
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
 ---
+def SI():
+    # 输入计算参数
+    deltaT = 0.01
+    lamb = 2
+    i_list = []
+    s_list = []
+    i0 = 0.08; # 初始有8%的人患病
+    i_list.append(i0)
+    s_list.append(1 - i0)
+    Tot_Time =5
+    TotStep = int(Tot_Time/deltaT)
+    ## 递推地求解差分方程
+    for i in range(TotStep):
+        i_new = i_list[-1] + lamb * i_list[-1] * deltaT * s_list[-1]
+        i_list.append(i_new)
+        s_list.append(1- i_new)
+    Time = [i * deltaT for i in range(TotStep + 1)]
+    ## 可视化传染过程
+    plt.plot(Time,i_list,label = 'i(t)')
+    plt.plot(Time,s_list,label = 's(t)')
+    plt.xlabel(r"$t$")
+    plt.ylabel('Percent')
+    plt.legend()
+SI()
+```
+
++++ {"id": "3ECF3BBA0A404040951137021E4379BA", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+从SI模型我们可以看到，病人比例不再会出现"指数爆炸"的情况，在$t \rightarrow \infty$时最大患病比例为1。在SI模型中，病人数量的增长曲线是一个典型的S型曲线，又称为Logistic曲线，该曲线在生物学上经常被用来描述物种的增长模式。
 
 
-import numpy as np
+```{warning}
+然而，SI模型的结论告诉我们，**无论$\lambda$多么小，最终人群都会患病**，这显然也是不符合实际情况的。这主要是因为病人患病后无法被治愈。
+```
+
+
+### SIS模型
+
+现在我们继续将人群分成两个群体：已感染者（病人，**I**nfected）和未感染者（健康者，**S**uspect），但是病人可以被治愈。
+
+
+该模型称为SIS模型，模型假设：
+
+- 在研究时间内，不考虑死亡率和出生率，即总人数$N$不变，病人和健康人的比例分别为$i(t)$和$s(t)$
+- 每个病人在单位时间内有效接触并致病的人数为$\lambda$，且只有接触健康人才会致病，称$\lambda$为日接触率
+- **病人每天治愈的比例为$\mu$，称为日治愈率**
+
+在时间段$\Delta t$内，病人的增量可以用如下的公式进行计算
+
+$$
+N[i(t+\Delta t)-i(t)]=[\lambda s(t)] N i(t) \Delta t - \mu N i(t) \Delta t
+$$(sis_infectious_model)
+
+其中新加入的 $\mu N i(t) \Delta t$代表 $ \Delta t$时间内治愈的病人数。
+
+
+
+取极限$\Delta t  \to 0 $
+
+$$
+\frac{\mathrm{d}i}{\mathrm{d}t} = \lambda  i(1-i) - \mu i 
+$$
+
+结合初始条件，我们得到了SIS模型的微分方程
+
+$$
+\begin{cases}
+\dfrac{\mathrm{d}i}{\mathrm{d}t} = \lambda  i(1-i)  - \mu i \\
+\quad \\ 
+i(0) = i_0
+\end{cases}
+$$
+
+这个模型难以求出解析解，我们继续采用差分近似的方法求解。在公式{eq}`sis_infectious_model`中消去$N$，再将$i(t)$移到等式的右边，我们得到如下的递推公式
+
+$$
+i(t+\Delta t)  = i(t) +  \lambda i(t)s(t)\Delta t - \mu i(t) \Delta t
+$$
+
+同样地，我们可以通过当前时刻的病人人数和致病参数$\lambda$,以及治愈参数$\mu$，计算得到$\Delta t$时间后的病人人数，将以上思想在Python中进行实现，代码如下：
+
+
+```{code-cell} ipython3
+---
+id: 0C1AE6A1B99248F080A91AFF706C147F
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
 import matplotlib.pyplot as plt
-plt.style.use('science')
-x_list = np.linspace(0,14,100)
-y_list = []
-import seaborn as sns
-sns.set(font_scale=1.5)
-for x in x_list:
-    if x <= 2:
-        y_list.append(0)
-    elif x>2 and x<=5:
-        y_list.append( (x-2)*1/3 )
-    elif x>5 and x<=6:
-        y_list.append(1)
-    elif x>6 and x<=12:
-        y_list.append( 1 - (x-6)*1/6 )
-    elif x>12:
-        y_list.append(0)
-plt.figure(figsize=(8,6))
-plt.plot(x_list,y_list)
-plt.xlabel('$x$');
-plt.ylabel('$y$');
+def SIS():
+    i0 = 0.01; # 初始有1%的人感染
+    lamb = 2
+    s0 =  1- i0;
+    mu = 1.2;
+    i_list = []
+    s_list = []
+    i_list.append(i0)
+    s_list.append(s0)
+    TotTime = 100
+    TimeStep = 0.01
+    TotStep = int(TotTime/TimeStep)
+    ## 递推地求解差分方程
+    for i in range(TotStep):
+        i_new = i_list[-1] + lamb * s_list[-1] * i_list[-1]*TimeStep - mu *  i_list[-1]*TimeStep
+        i_list.append(i_new)
+        s_list.append(1-i_new)
+    Time = [TimeStep * i for i in range(TotStep+1)]
+    ## 可视化传染过程
+    plt.plot(Time,i_list)
+    plt.plot(Time,s_list)
+    plt.xlabel("Time")
+    plt.ylabel("Percent")
+    plt.legend(["i(t)","s(t)"])
+SIS()
+```
+
+可以看到，病人的人数和健康人的人数会稳定在一个固定值，并非所有的人都会患病，这个稳定值与 $\lambda$和$\mu$的取值有关。
+
+
+我们也可以知道，SI模型可以看做是SIS模型在$\mu = 0$时候的特例。
+
+
+
+### SIR 模型
+
+有的传染病具有免疫性，病人治愈后即移出系统，称为移出者。
+
+我们将人群分成三个群体：已感染者（病人，**I**nfected）、未感染者（健康者，**S**uspect）和免疫者（**R**emoved），病人被治愈后永久免疫。
+
++++ {"id": "3367E235EFC2485E9590263987D83232", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+在时间段$\Delta t$内，病人的增量可以用如下的公式进行计算
+
+$$
+N[i(t+\Delta t)-i(t)]=[\lambda s(t)] N i(t) \Delta t - \mu N i(t) \Delta t
+$$
+
+健康者的增量为
+
+$$
+N[s(t+\Delta t)-s(t)]=-[\lambda s(t)] N i(t) \Delta t
+$$
+
+取极限$\Delta t  \to 0 $，得到如下的微分方程
+
+$$
+\begin{cases}
+\dfrac{\mathrm{d}i}{\mathrm{d}t} = \lambda  si  - \mu i \\
+\quad \\ 
+\dfrac{\mathrm{d}s}{\mathrm{d}t} =  - \lambda  si\\
+\quad \\
+i(0) = i_0,s(0) = s_0
+\end{cases}
+$$
+
+
+
+
+```{code-cell} ipython3
+---
+id: 08F1F209DFA14DD191FB7C00CC496B2B
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+def SIR():
+    i0 = 0.01; # 初始有1%的人感染
+    r0 = 0;# 初始没有人免疫
+    lamb = 1.8
+    s0 =  1- i0;
+    mu = 0.7;
+    i_list = []
+    s_list = []
+    r_list = []
+    i_list.append(i0)
+    s_list.append(s0)
+    r_list.append(r0)
+    TotTime = 20
+    TimeStep = 0.01
+    TotStep = int(TotTime/TimeStep)
+    ## 递推地求解差分方程
+    for i in range(TotStep):
+        i_new = i_list[-1] + lamb * s_list[-1] * i_list[-1]*TimeStep - mu *  i_list[-1]*TimeStep
+        s_new = s_list[-1] - lamb * s_list[-1] * i_list[-1]*TimeStep
+        i_list.append(i_new)
+        s_list.append(s_new)
+        r_list.append(1-i_new-s_new)
+    Time = [TimeStep * i for i in range(TotStep+1)]
+    ## 可视化传染过程
+    plt.plot(Time,i_list)
+    plt.plot(Time,s_list)
+    plt.plot(Time,r_list)
+    plt.xlabel("Time")
+    plt.ylabel("Percent")
+    plt.legend(["i(t)","s(t)","r(t)"])
+SIR()
+```
+
+引入免疫者以后，感染人数会先增后减，有一个峰值。传染病最终后消失。
+
+
+
+
+### 计算结果的对比
+
+```{code-cell} ipython3
+---
+id: 2BB0E345E8BB4157848ECF611E0CBB5D
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: [ "hide-input",]
+---
+plt.figure(figsize=(14,10))
+plt.subplot(2,2,1)
+exp()
+plt.subplot(2,2,2)
+SI()
+plt.subplot(2,2,3)
+SIS()
+plt.subplot(2,2,4)
+SIR()
+plt.savefig('test2.pdf')
+```
+
++++ {"id": "80FF3AD7B23848A5810929FE31ADD9A7", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+
+```{admonition} 思考
+观察四个结果图？你能回忆四种模型的区别吗？
+```
+
+
+## 生态学中的猎物（食饵）-捕食者模型
+
++++ {"id": "60F59D6DF9D5447085A789A9B279753A", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+### Volterra 模型
+
+一战期间，人们捕获的鲨鱼比例大幅上升，可以按照尝试，由于战争，人们停止捕捞，应该普通的鱼类和鲨鱼数量都会上升，为什么单单鲨鱼数量上升如此明显呢？ 为了解释这一问题，生物学家D. Ancona 向数学家Volterra求助，Volterra借用微分方程理论，成功地解释这个现象。
+
++++ {"id": "33AFCA905E03415183C5B7D68463A7AE", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+食饵（食用鱼）和捕食者（鲨鱼）在时刻$t$的数量分别记为$x(t),y(t)$，方便起见，你也可以用“大鱼吃小鱼”的比喻来理解这个模型。
+
+```{figure} ../_static/lecture_specific/ode_model/fishes.jpg
+---
+height: 300px
+name: fishes
+---
 
 ```
 
 
 
+因为大海中资源丰富，假设当食饵独立生存时以指数规律增长，增长率为$r$,于是
 
-+++ {"id": "54B01FDFF89E4BD281C3057FE3FA08FB", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+$$
+\dfrac{\mathrm{d}x}{\mathrm{d}t} = rx
+$$
+但是捕食者的存在，使得食饵的增长率减小，设减少率与捕食者的数量成正比，于是$x(t)$满足方程
 
-因此，我们把两个极大型指标保持不变，对极小型指标采用取倒数操作，对区间型指标使用上面介绍的处理方法。处理结果见下图。
+$$
+\dfrac{\mathrm{d}x}{\mathrm{d}t} = x(r-ay) = rx - axy
+\tag{1}
+$$
 
-+++ {"id": "5453C5A9503C4E6D8D7FA5988929AA47", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+比例系数$a$反映捕食者捕食食饵的能力。
+
+捕食者离开食饵无法生存，设它独自存在时死亡率为$d$,即
+
+$$
+\dfrac{\mathrm{d}y}{\mathrm{d}t} = -dy
+$$
+
+而食饵的存在为捕食者提供了食物，相当于使捕食者的死亡率降低，且促使其增长。设增长率与食饵数量成正比，于是$y(t)$满足
+
+$$
+\dfrac{\mathrm{d}y}{\mathrm{d}t} = y (-d + bx) = -dy + bxy
+\tag{2}
+$$
+
+比例系数$b$反映食饵对捕食者的供养能力。
+
++++ {"id": "CD8E6E853C6C454285FE9772739B92A9", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+将以上推导的结果写在一起，得到
+
+$$
+\begin{cases}
+\dfrac{\mathrm{d}x}{\mathrm{d}t} = x(r-ay) = rx - axy \\
+\dfrac{\mathrm{d}y}{\mathrm{d}t} = y (-d + bx) = -dy + bxy
+\end{cases}
+$$
+
++++ {"id": "0CA39930D0E74D6D8F5098018B20BA09", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+这就是自然环境中食饵和捕食者之间的依存和制约的关系。这里没有考虑种群自身的阻滞增长作用，是Volterra提出的最简单的模型。
+
++++ {"id": "BE723BFC62424B61ADB71329ABE5AAF5", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+数值递推公式为
+
+$$
+\begin{cases}
+x(t+\Delta t) = x(t) + \Delta t\left[rx(t) - ax(t)y(t)\right]\\
+y(t+\Delta t) = y(t) + \Delta t\left[-dy(t) + bx(t)y(t)\right]\\
+\end{cases}
+$$
+
+```{code-cell} ipython3
+---
+id: 32F496F78119410D811A3BBA3A97173F
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+
+## Volterra 模型的数值求解示例
+
+# 输入初始参数
+r = 1
+d = 0.5
+a = 0.1
+b = 0.02
+x0 = 5
+y0 = 12
+deltaT = 0.01
+TotTime = 30
+timeStep = TotTime/deltaT
+xlist = []
+ylist = []
+xlist.append(x0)
+ylist.append(y0)
+TimeList = [i*deltaT for i in range(int(timeStep))]
+
+# 递推地求解差分方程
+for time in TimeList:
+    xlist.append(xlist[-1] +deltaT * (r *xlist[-1] - a*xlist[-1]*ylist[-1] ) )
+    ylist.append(ylist[-1] +deltaT * (-d *ylist[-1] + b*xlist[-1]*ylist[-1] ) )
+# 变化过程可视化
+plt.figure(figsize = (20,5))
+plt.plot(TimeList,xlist[:-1],label = 'Small Fish')
+plt.plot(TimeList,ylist[:-1],label = 'Large Fish')
+plt.legend()
+```
+
++++ {"id": "58B7306C0C884924822C5F182EF2E4D8", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+可以猜测，$x(t),y(t)$是周期函数，与此相应地，相轨线$y(x)$是封闭曲线。
+
+```{code-cell} ipython3
+---
+id: 879A6A5FDDCF40BC8953EBE9B6832F21
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+# 绘制相轨线
+plt.plot(xlist,ylist)
+```
+
++++ {"id": "5127B12B853A4B438B24ED9FC17DA033", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
 
-![Image Name](https://cdn.kesci.com/upload/image/q36dpsx5kl.png?imageView2/0/w/400/h/400)
 
-+++ {"id": "F19D1268E9B6406C8E87C799B6FA7EDB", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
-**Step3**:无量纲处理。以 "人均专著" 属性为例，我们使用向量归一化方法：
+在数值解中我们看到，$x(t),y(t)$一个周期的平均值为$\overline x=25,\overline y = 10$, 这个数值与稳定平衡点刚好相等。
+
+$$
+\overline x = x_0 = \frac{d}{b}, \quad \overline y = y_0 = \frac{r}{a}
+$$
+
++++ {"id": "D4D47A23CEF94AC990356B48A6F7361D", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+当然这也是能够通过解析方法来证明的
+
+$$
+x(t)=\frac{1}{b}\left(\frac{\dot{y}}{y}+d\right)
+$$
+
+$$
+\bar{x}=\frac{1}{T} \int_{0}^{T} x(t) \mathrm{d} t=\frac{1}{T}\left[\frac{\ln y(T)-\ln y(0)}{b}+\frac{d T}{b}\right]=\frac{d}{b}
+$$
+
+类似的，我们有
+
+$$
+\bar{y}=\frac{r}{a}
+$$
+
++++ {"id": "6AA3D0BA6F4C446F8A34A8139830E3F8", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+注意到，$r,d,a,b$在生态学上的意义，上述结果表明，
+
+- 捕食者的数量(用一个周期内的平均值$\overline y$代替)与食饵增长率$r$成正比，与他掠食食饵的能力$a$成反比；
+- 食饵的数量（用一个周期内的平均值$\overline x$代替）与捕食者死亡率$d$成正比，与他供养捕食者的能力$b$成反比。
+
+
+
+
++++ {"id": "3624D00365114E3D9C278E079D4E6A30", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+Volterra用这个模型来解释生物学家D'Ancona提出的问题：
+
+我们在上面的模型中引入人为捕捞的影响，引入捕捞量系数$e$，相当于食饵增长率由$r$下降为$r-e$，而捕食者死亡率由$d$上升为$d+e$,用$\overline {x_1},\overline {y_1}$表示这种情况下食用鱼（食饵）和鲨鱼（捕食者）的平均数量，则套用上面的公式可知
+
+$$
+\overline {x_1} = \dfrac{d+e}{b}  \quad \overline {y_1} = \dfrac{r-e}{a}
+$$
+
+显然，$\overline {x_1} > x_1,  {y_1} < \overline {y_1}$
+
+战争期间捕获量下降，即捕获系数变为$e'<e$，于是食用鱼和鲨鱼的数量变为
+
+$$
+\overline {x_1} = \dfrac{d+e'}{b}  \quad \overline {y_1} = \dfrac{r-e'}{a}
+$$
+
+显然，$\overline {x_2} < \overline {x_1},  \overline {y_2} > \overline {y_1}$，这正说明战争期间鲨鱼的比例会有明显的增加。
+
++++ {"id": "7D28D34789C1455C89F16ABC11F0EDA6", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+### 加入logistic项的Volterra模型
+
++++ {"id": "21F99F184EFB41B393975D6A1AF76F9C", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
+尽管Volterra模型可以解释一些现象，但是它作为近似反映现实对象的一个数学模型，必然存在不少局限性．
+比如，许多生态学家指出，多数食饵－捕食者系统都观察不到Volterra模型 显示的那种周期震荡，而是趋向某种平衡状态，即系统存在稳定平衡点．实际上， 只要在Volterra模型中加入考虑自身阻滞作用的logistic项，就可以模拟这一现象。
+
++++ {"id": "A6E93BB17AC244F482D84D62C8A41475", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+
 
 $$
 \begin{aligned}
-&0.1 / \sqrt{0.1^{2}+0.2^{2}+0.4^{2}+0.9^{2}+1.2^{2}}=0.0637576713063384\\
-&0.2 / \sqrt{0.1^{2}+0.2^{2}+0.4^{2}+0.9^{2}+1.2^{2}}=0.12751534261266767\\
-&0.4 / \sqrt{0.1^{2}+0.2^{2}+0.4^{2}+0.9^{2}+1.2^{2}}=0.2550306852253334\\
-&\begin{array}{l}
-{0.9 / \sqrt{0.1^{2}+0.2^{2}+0.4^{2}+0.9^{2}+1.2^{2}}=0.5738190417570045} \\
-{1.2 / \sqrt{0.1^{2}+0.2^{2}+0.4^{2}+0.9^{2}+1.2^{2}}=0.7650920556760059}
-\end{array}
+&\dot{x}_{1}(t)=r_{1} x_{1}\left(1-\frac{x_{1}}{N_{1}}-\sigma_{1} \frac{x_{2}}{N_{2}}\right)\\
+&\dot{x}_{2}(t)=r_{2} x_{2}\left(-1+\sigma_{2} \frac{x_{1}}{N_{1}}-\frac{x_{2}}{N_{2}}\right)
 \end{aligned}
 $$
 
-+++ {"id": "2AE3ECF7344E47508C1C330E4F54906C", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-使用同样的向量归一化方法，我们可以对其他三个指标也进行无量纲化处理，得到如下表所示的结果
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q37a7zebvn.png?imageView2/0/w/400/h/400)
-
-+++ {"id": "7DCFC168B7F94FAD972A815649AE6975", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-**Step4**: 选出其中的最优方案和最劣方案。
-
-![Image Name](https://cdn.kesci.com/upload/image/q37a9tyx43.png?imageView2/0/w/400/h/400)
-
-+++ {"id": "68A912042FCF42999CA931326EADC3B4", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-**Step5**: 计算每一个学校，与最优方案以及最劣方案之间的距离
-
-$$
-\begin{array}{l}
-{D_{i}^{+}=\sqrt{\sum_{j=1}^{m} w_{j}\left(Z_{j}^{+}-z_{i j}\right)^{2}}} \\
-{D_{i}^{-}=\sqrt{\sum_{j=1}^{m} w_{j}\left(Z_{j}^{-}-z_{i j}\right)^{2}}}
-\end{array}
-$$
-
-然后使用如下的评价函数将其综合起来
-
-$$
-C_{i}=\frac{D_{i}^{-}}{D_{i}^{+}+D_{i}^{-}}
-$$
-
-
-```{admonition} 思考
-如果理想中最好的大学是真实存在的，其得分$C_i$应该等于几，为什么？如果是理想中最差的大学真实存在呢？
-```
-
-
-+++ {"id": "62892C8559F2411DBD8B2FC10CC193FC", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-**Step6**: 最终评价结果如下
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q37aduhn3h.png?imageView2/0/w/640/h/640)
-
-
-当然，直接看结果可能不够直观，我们来通过一张雷达图解释这个评价的结果。
-
-
 ```{code-cell} ipython3
 ---
-id: 951D5B72403641A5B2A8895C107F5791
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: ["remove-input"]
----
-import plotly.graph_objects as go
-
-categories = ['人均专著','生师比','科研经费','逾期毕业率']
-
-fig = go.Figure()
-
-fig.add_trace(go.Scatterpolar(
-      r=[0.063758,0.597022,0.344901,0.275343],
-      theta=categories,
-      fill='toself',
-      name='院校 A'
-))
-fig.add_trace(go.Scatterpolar(
-      r=[0.127, 0.597,0.413,0.231],
-      theta=categories,
-      fill='toself',
-      name='院校 B'
-))
-
-fig.add_trace(go.Scatterpolar(
-      r=[0.255,0.497,0.482,0.193],
-      theta=categories,
-      fill='toself',
-      name='院校 C'
-))
-
-
-fig.add_trace(go.Scatterpolar(
-      r=[0.573,0.199,0.689,0.562],
-      theta=categories,
-      fill='toself',
-      name='院校 D'
-))
-
-fig.add_trace(go.Scatterpolar(
-      r=[0.765,0,0.027,0.718],
-      theta=categories,
-      fill='toself',
-      name='院校 E'
-))
-
-
-fig.update_layout(
-  polar=dict(
-    radialaxis=dict(
-      visible=True,
-#       range=[0, 5]
-    )),
-  showlegend=True
-)
-
-fig
-```
-
-
-
-
-
-
-上面是通过举例来进行TOPSIS方法的实现，关于TOPSIS方法的更详细理论推导，参考[这里](https://wiki.mbalib.com/wiki/TOPSIS%E6%B3%95)。
-
-在实际论文撰写的过程中，最好理论性强一些，而不是像我们上面一样简单地代入数据计算。
-
-+++ {"id": "41106E86CD5445E3B34D05879D27F884", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-
-
-``` {admonition} 思考
-上面的TOPSIS方法的权重已经给出，请思考，如果实际建模的时候没有给出权重，应该如何选取？
-```
-+++ {"id": "31421B0BEEDE4E79A5DB42C115C07DF4", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-## 熵权法
-
-下面我们来学习一种客观赋权的方法：熵权法（ Entropy Weight Method），它是一种突出局部差异的客观赋权方法。因为它的权重选取仅依赖于数据本身的离散性。
-
-```{tip}
-通俗来说可以这么理解熵权法：熵权法认为离散性越大的变量，其在评价中的重要性越突出。
-```
-
-
-我们通过一个例子来看。
-
-+++ {"id": "DABD010B7D5048708C57CFD72A602290", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-某医院为了提高自身的护理水平，对拥有的11个科室进行了考核，考核标准包括9项整体护理，并对护理水平较好的科室进行奖励。下表是对各个科室指标考核后的评分结果。
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q37bu55zpt.png?imageView2/0/w/640/h/640)
-
-
-+++ {"id": "8E6649A244EF440E88324C4B9E579067", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-但是由于各项护理的难易程度不同，因此需要对9项护理进行赋权，以便能够更加合理的对各个科室的护理水平进行评价。根据原始评分表，对数据进行归一化后可以得到下列数据归一化表
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q37bvhlzaq.png?imageView2/0/w/640/h/640)
-
-
-+++ {"id": "AFED973E0D2F4CB8A0B8CDBB39D144CD", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-
-``` {admonition} 思考
-这里我们用了什么归一化的方法？
-```
-
-
-
-计算第$j$项指标下第$i$个样本值所占比重
-
-$$
-p_{i j}=\frac{x_{i j}}{\displaystyle \sum_{i=1}^{n} x_{i j}}, \quad i=1, \cdots, n, j=1, \cdots, m
-$$
-
-计算第$j$个指标的熵值(熵值的计算方法是信息论中的定义，这里我们直接采用)
-
-$$
-e_{j}=-k \sum_{i=1}^{n} p_{i j} \ln \left(p_{i j}\right), \quad j=1, \cdots, m
-$$
-
-其中，
-
-$$
-k=1 / \ln (n)>0
-$$
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q37c01lxpn.png?imageView2/0/w/640/h/640)
-
-
-+++ {"id": "8F952F3F206D463899247285B6ED510B", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-可以发现，熵值越小的变量，离散程度越大。接下来，我们计算信息熵冗余度，并将其归一化得到权重
-
-+++ {"id": "8797F1B6E5D741CA8E42A88ED4395431", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-
-
-$$
-d_{j}=1-e_{j}, \quad j=1, \cdots, m
-$$
-
-$$
-w_{j}=\frac{d_{j}}{\displaystyle\sum_{j=1}^{m} d_{j}}, \quad j=1, \cdots, m
-$$
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q37c2m8er3.png?imageView2/0/w/640/h/640)
-
-
-
-加权求和计算指标综合评分
-
-$$
-s_{i}=\sum_{j=1}^{m} w_{j} x_{i j}, \quad i=1, \cdots, n
-$$
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q37c42bx6w.png?imageView2/0/w/640/h/640)
-
-+++ {"id": "C04FD0DA81EF45FFB24DB7CC32B79435", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-
-
-上面是一个特殊的案例，接下来我们来总结熵权法的一般步骤。
-
-**熵权法步骤**
-
-- 对$n$个样本，$m$个指标的数据集
-
-$$
-\{x_{ij}|i = 1,2,\cdots,n, \quad j = 1,2,\cdots,m\}
-$$
-
-- 对指标进行归一化处理：异质指标同质化
-- 计算第$j$项指标下第$i$个样本值所占比重
-
-
-$$
-p_{i j}=\frac{x_{i j}}{\displaystyle\sum_{i=1}^{n} x_{i j}}, \quad i=1, \cdots, n, j=1, \cdots, m
-$$
-
--  计算第$j$个指标的熵值
-
-
-$$
-e_{j}=-k \sum_{i=1}^{n} p_{i j} \ln \left(p_{i j}\right), \quad j=1, \cdots, m
-$$
-
-其中，
-
-
-$$
-k=1 / \ln (n)>0
-$$
-
-
--  计算信息熵冗余度，并将其归一化得到权重
-
-
-$$
-d_{j}=1-e_{j}, \quad j=1, \cdots, m
-$$
-
-$$
-w_{j}=\frac{d_{j}}{\displaystyle\sum_{j=1}^{m} d_{j}}, \quad j=1, \cdots, m
-$$
-
-- 计算指标综合评分
-
-$$
-s_{i}=\sum_{j=1}^{m} w_{j} x_{i j}, \quad i=1, \cdots, n
-$$
-这里的$x_{ij}$是标准化以后的数据。
-
-+++ {"id": "2F35B23D07344329ADF3116B626BA5C2", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
-
-
-```{admonition} 思考
-1. 熵权法是客观赋权，这里的**客观**就一定是优于主观的吗？经过熵权法计算得到的权重，应用中会不会有什么问题？
-2. 熵权法中用的是熵来衡量变量的离散程度，除此之外之外，你还可以思考方差是不是也能达到类似的效果？
-```
-
-
-## 层次分析法
-
-AHP (Analytic Hierarchy Process)层次分析法是美国运筹学家Saaty教授于二十世纪80年代提出的一种实用的多方案或多目标的决策方法。其主要特征是，它合理地将定性与定量的决策结合起来，按照思维、心理的规律把决策过程层次化、数量化。 该方法自1982年被介绍到我国以来，以其定性与定量相结合地处理各种决策因素的特点，以及其系统灵活简洁的优点，迅速地在我国社会经济各个领域内，如能源系统分析、城市规划、经济管理、科研评价等，得到了广泛的重视和应用。
-
-层次分析法的基本思路：先分解后综合首先将所要分析的问题层次化，根据问题的性质和要达到的总目标，将问题分解成不同的组成因素，按照因素间的相互关系及隶属关系，将因素按不同层次聚集组合，形成一个多层分析结构模型，最终归结为最低层（方案、措施、指标等）相对于最高层（总目标）相对重要程度的权值或相对优劣次序的问题。 运用层次分析法建模，大体上可按下面四个步骤进行： 
-
-- 建立递阶层次结构模型； 
-- 构造出各层次中的所有判断矩阵； 
-- 层次单排序及一致性检验； 
-- 层次总排序及一致性检验。
-
-我们一样通过一个案例来学习层次分析法。
-
-+++ {"id": "B2E2B3FDC6404E0B8A1A4AD6E9004D79", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-人们在日常生活中经常会碰到多目标决策问题，例如假期某人想要出去旅游，现有三个目的地（方案）：
-
-- 风光绮丽的杭州（P1）
-- 迷人的北戴河（P2）
-- 山水甲天下的桂林（P3）
-
-假如选择的标准和依据（行动方案准则）有5个：景色，费用，饮食，居住和旅途。则常规思维的方式如下：
-
-
-```{figure} ../_static/lecture_specific/evaluation_model/ahp2.png
----
-width: 700px
-name: ahp_2
-align: center
----
-
-```
-
-+++ {"id": "EF93C66E657041D087A8656204483561", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-通过相互比较确定各准则对于目标的权重，即构造判断矩阵。在层次分析法中，为使矩阵中的各要素的重要性能够进行定量显示，引进了矩阵判断标度（1～9标度法） :
-
-```{figure} ../_static/lecture_specific/evaluation_model/ahp.png
----
-width: 700px
-name: ahp_matrix
-align: center
----
-
-```
-
-
-
-+++ {"id": "B9AB0BE5A77F416B8067FBCCF8F5F8F2", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-构造判断矩阵
-
-+++ {"id": "522775E32E864457ACC1DB9F66C07DF3", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q37b0ivv9d.png?imageView2/0/w/960/h/960)
-
-
-我们以其中的一个判断矩阵（景色）为例，介绍判断矩阵的构建方法。对于有三个城市的景色对比来说，在$B_1$矩阵中，第$i$行第$j$列表示第$i$个城市，相比比第$j$个城市，按照1-9标度法得到的比较值。
-
-$$
-B_1 = \left[\begin{matrix} 
-\dfrac{w_1}{w_1} & \dfrac{w_1}{w_2} &\dfrac{w_1}{w_3} \\
-\dfrac{w_2}{w_1} & \dfrac{w_2}{w_2} &\dfrac{w_2}{w_3}  \\
-\dfrac{w_3}{w_1} & \dfrac{w_3}{w_2} &\dfrac{w_3}{w_3} 
-\end{matrix}  \right]
-$$
-
-比如，
-
-$$
-B_1 = \left[\begin{matrix} 
-1 & 2 &5 \\
-1/2 &1 &2 \\
-1/5 & 1/2& 1
-\end{matrix}  \right]
-$$
-
-- 可以肯定的是，对角线元素都是1，因为自己比自己的重要性肯定是相等的
--  第一行第二列的2则表示杭州相比北戴河，景色要稍微好一些（程度为2）
--  第一行第三列的5则表示杭州相比桂林，景色要明显好一些（程度为5）
--  第二行第三列的2则表示北戴河相比桂林，景色要稍微好一些（程度为2）
--  沿对角线对称位置的元素互为倒数也就是$a_{ij} a_{ji} = 1$
-
-
-如果我们设每一个城市景色的重要性为$w = [w_1,w_2,w_3]$的话，上述的$B_1$矩阵有一个非常有趣的性质为
-
-$$
-B_1 w = 3w
-$$
-
-我们后续将通过这个性质求解$w = [w_1,w_2,w_3]$，也就是每一个城市在景色上的得分。
-
-
-```{admonition} 思考
-- 请你尝试证明上面的$B_1 w = 3w$
-- 对于更一搬的$n\times n$的判断矩阵而言，请证明$A w = nw$
-```
-
-
-
-
-
-
-
-+++ {"id": "224DC946B89949DF8040D3491473566B", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-### 层次单排序和总排序
-
-+++ {"id": "B9A3C85283E943F485808C2B29302763", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-所谓层次单排序是指，对于上层某因素而言，本层次因素重要性的排序。
-具体计算方法为：对于判断矩阵$B$，计算满足
-
-$$
-BW=\lambda_{max} W
-$$
-
-的特征根与特征向量。
-
-式中，$\lambda_{max}$ 为矩阵$B$的最大特征跟根，$W$为对应于$\lambda_{max}$的特征向量，$W$的分量$w_i$即为相应元素单排序的权值。
-
-下面介绍使用python求解矩阵的特征值与特征向量的方法：
-
-```{code-cell} ipython3
----
-id: 64E2A731671C41E1801B64DA43D2C4EB
+id: 959202B742D043E5AD5E8290917BE651
 jupyter: {}
 slideshow:
   slide_type: slide
 tags: []
 ---
-## 矩阵的输入
-A = [[1,2,5],[1/2,1,2],[1/5,1/2,1]]
-A
+
+## 加入logistic项的Volterra模型
+
+# 输入初始参数
+r1 = 0.2
+r2 = 0.1
+N1 = 50
+N2 = 60
+sigma1 = 1.2
+sigma2 = 2.5
+x0 = 25
+y0 = 2
+deltaT = 0.01
+TotTime = 50
+timeStep = TotTime/deltaT
+xlist = []
+ylist = []
+xlist.append(x0)
+ylist.append(y0)
+TimeList = [i*deltaT for i in range(int(timeStep))]
+
+# 递推地求解差分方程
+for time in TimeList:
+    xlist.append(xlist[-1] +deltaT * (r *xlist[-1])*(1 - xlist[-1]/N1 - sigma1 * ylist[-1]/N2))
+    ylist.append(ylist[-1] +deltaT * (r *ylist[-1])*(-1 +sigma2* xlist[-1]/N1 -  ylist[-1]/N2))
+
+# 结果可视化
+plt.figure(figsize = (20,5))
+plt.plot(TimeList,xlist[:-1])
+plt.plot(TimeList,ylist[:-1])
 ```
 
-```{code-cell} ipython3
----
-id: 951D5B72403641A5B2A8895C107F5791
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: []
----
-# 调用 np.linalg.eig方法计算矩阵的特征值和特征向量，其中lamb是特征值，v是特征向量
-import numpy as np
-lamb,v = np.linalg.eig(A)      
-print(lamb)
-```
++++ {"id": "B468BFEC66E84BDEB80CF7010CB129BB", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
-```{code-cell} ipython3
----
-id: B0488A42B9FE4386A660CA1F49A095F2
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: []
----
-lambda_max = max(abs(lamb))                    # 提取最大的特征值
-loc = np.where(lamb == lambda_max)             # 获取最大特征值的索引
-```
 
-```{code-cell} ipython3
----
-id: 6EE6BF5FAD10488E8F1D2F978B8AA946
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: []
----
-weight = abs(v[0:len(A),loc[0][0]])            # 获取最大特征值对应的特征向量
-weight = weight/sum(weight)  # 归一化
-weight
-```
+## 练习
 
-对于其他的判断矩阵也可以执行类似的操作。最终的计算结果如下图{numref}`Figure {number}<ahp_3>`
++++ {"id": "706290F2BC0741EB880F143F2CB7B101", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
 
 
 
-+++ {"id": "74723C7BE6444F1F87FDB83A1236A775", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-```{figure} ../_static/lecture_specific/evaluation_model/ahp3.png
----
-width: 600px
-name: ahp_3
-align: center
----
-AHP计算结果图
-```
-
-
-
-进行层次总排序即可得到最终的打分结果
-
-+++ {"id": "2531C143D0964F02804E8F3A2AEC7628", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+```{admonition} 练习作业
+考虑种群竞争模型
 
 $$
-W=W^{(3)} W^{(2)}=\left(\begin{array}{ccccc}
-{0.595} & {0.082} & {0.429} & {0.633} & {0.166} \\
-{0.277} & {0.236} & {0.429} & {0.193} & {0.166} \\
-{0.129} & {0.682} & {0.142} & {0.175} & {0.668}
-\end{array}\right)\left(\begin{array}{c}
-{0.263} \\
-{0.475} \\
-{0.055} \\
-{0.099} \\
-{0.110}
-\end{array}\right)=\left(\begin{array}{c}
-{0.300} \\
-{0.246} \\
-{0.456}
-\end{array}\right)
+\left\{
+\begin{aligned}
+& \dfrac{\mathrm{d}x_1}{\mathrm{d}t}=r_{1} x_{1}\left(1-\frac{x_{1}}{N_{1}}-\sigma_{1} \frac{x_{2}}{N_{2}}\right)\\
+& \dfrac{\mathrm{d}x_2}{\mathrm{d}t}=r_{2} x_{2}\left(1-\sigma_{2} \frac{x_{1}}{N_{1}}-\frac{x_{2}}{N_{2}}\right)
+\end{aligned}\right.
 $$
 
-+++ {"id": "8F4796E9A3FB490482BAD2565F24C066", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
+取$r_1 = 0.2, r_2 = 0.3, \sigma_1 = 1.2,\sigma_2 = 0.5,N_1 = 100,N_2 = 70, x_1(0) = 30,x_2(0) = 40$,使用本节课程学到的数值方法研究两个种群的发展模式。
 
-决策结果是首选旅游地为$P_3$ ,其次为$P_1$，再次$P_2$
-
-
-+++ {"id": "6A8F7F73101248C6AFBECC332CCDF0C6", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-### 判断一致性
-
-+++ {"id": "CBFDF5CA17104F848490ACA973898058", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-判断矩阵通常是不一致的，但是为了能用它的对应于特征根的特征向量作为被比较因素的权向量，其不一致程度应在容许的范围内.如何确定这个范围？ 
-
-```{admonition} 思考
-为什么说判断矩阵通常是不一致的？你是否能举个例子
 ```
 
 
 
-一致性指标：
-
-$$
-C I=\frac{\lambda-n}{n-1}
-$$
-
-$$
-C R=\frac{C I}{R I}
-$$
 
 
-![Image Name](https://cdn.kesci.com/upload/image/q37bi9mx9r.png?imageView2/0/w/960/h/960)
-
-+++ {"id": "02867057725941B2969540A7F2538239", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-当$CR<0.1$时，认为层次排序是具有满意的一致性的，我们可以接受该分析结果。
-
-```{code-cell} ipython3
----
-id: 9E552255CA724B178B51658A06E7BF62
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: []
----
-A = [[1,2,5],[1/2,1,2],[1/5,1/2,1]]
-# 调用 np.linalg.eig方法计算矩阵的特征值和特征向量，其中lamb是特征值，v是特征向量
-lamb,v = np.linalg.eig(A)      
-lambda_max = max(abs(lamb))                    # 提取最大的特征值
-loc = np.where(lamb == lambda_max)             # 获取最大特征值的索引
-weight = abs(v[0:len(A),loc[0][0]])            # 获取最大特征值对应的特征向量
-weight = weight/sum(weight) 
-RI_list = [0 ,0 ,0.58,0.9,1.12,1.24,1.32,1.41,1.45]   
-RI = RI_list[len(A)-1]                        # 计算RI
-CI = (lambda_max - len(A))/(len(A)-1)         # 计算CI
-CR = CI / RI                                   # 计算CR
-print('最大特征值 lambda_max=',lambda_max)
-print('最大特征值对应的特征向量 w=',weight)
-print('CI=',CI)
-print('RI=',RI)
-print('CR=',CR)
-```
-
-+++ {"id": "01C6DEF4826A4A67A8CE1C71BF1835D8", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-
-### 案例：企业的资金使用
-
-
-![Image Name](https://cdn.kesci.com/upload/image/q37bozvxls.png?imageView2/0/w/960/h/960)
-
-+++ {"id": "3E0308B43B3542D28CD12D6C9EDF87E8", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-构造判断矩阵
-
-$$
-A=\left(\begin{array}{ccc}{1} & {1 / 5} & {1 / 3} \\ {5} & {1} & {3} \\ {3} & {1 / 3} & {1}\end{array}\right)
-$$
-
-$$
-B_{1}=\left(\begin{array}{ccccc}{1} & {2} & {3} & {4} & {7} \\ {1 / 3} & {1} & {3} & {2} & {5} \\ {1 / 5} & {1 / 3} & {1} & {1 / 2} & {1} \\ {1 / 4} & {1 / 2} & {2} & {1} & {3} \\ {1 / 7} & {1 / 5} & {1 / 2} & {1 / 3} & {1}\end{array}\right) \quad B_{2}=\left(\begin{array}{cccc}{1} & {1 / 7} & {1 / 3} & {1 / 5} \\ {7} & {1} & {5} & {3} \\ {3} & {1 / 5} & {1} & {1 / 3} \\ {5} & {1 / 2} & {3} & {1}\end{array}\right) \quad B_{3}=\left(\begin{array}{cccc}{1} & {1} & {3} & {3} \\ {1} & {1} & {3} & {3} \\ {1 / 3} & {1 / 3} & {1} & {1} \\ {1 / 3} & {1 / 3} & {1} & {1}\end{array}\right)
-$$
-
-
-
-```{code-cell} ipython3
----
-id: 55371E8661FD469B88EE88B33FA8C100
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: []
----
-# 层次分析法函数
-import numpy as np
-def AHP(A):
-    lamb,v = np.linalg.eig(A)                      # 调用 np.linalg.eig方法计算矩阵的特征值和特征向量，其中lamb是特征值，v是特征向量
-    lambda_max = max(abs(lamb))                    # 提取最大的特征值
-    loc = np.where(lamb == lambda_max)             # 获取最大特征值的索引
-    weight = abs(v[0:len(A),loc[0][0]])            # 获取最大特征值对应的特征向量
-    weight = weight/sum(weight) 
-    RI_list = [0 ,0 ,0.58,0.9,1.12,1.24,1.32,1.41,1.45]   
-    RI = RI_list[len(A)-1]                        # 计算RI
-    CI = (lambda_max - len(A))/(len(A)-1)         # 计算CI
-    CR = CI / RI                                   # 计算CR
-    print('最大特征值 lambda_max=',lambda_max)
-    print('最大特征值对应的特征向量 w=',weight)
-    print('CI=',CI)
-    print('RI=',RI)
-    print('CR=',CR)
-    return weight,CI,RI,CR
-```
-
-```{code-cell} ipython3
----
-id: 4909AF969BA842DBA64349A1BD8A9ACD
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: []
----
-A = np.array([[1, 1/5, 1/3],
-            [5,  1,    3],
-            [3, 1/3,   1]])            # 输入判断矩阵
-weight,CI,RI,CR = AHP(A)
-```
-
-```{code-cell} ipython3
----
-id: 60A6F03D5B714D59A6A5B32130BBD720
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: []
----
-B1 = np.array([[1, 2, 3, 4, 7],
-             [1/3, 1, 3, 2, 5],
-             [1/5, 1/3, 1, 1/2, 1],
-             [1/4, 1/2, 2, 1, 3],
-             [1/7, 1/5, 1/2, 1/3, 1]])     # 输入判断矩阵
-weight,CI,RI,CR = AHP(B1)
-```
-
-```{code-cell} ipython3
----
-id: 95DB3AB087874CA99621B93567F7EA1C
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: []
----
-B2 = np.array([[1, 1/7, 1/3, 1/5],
-              [7,  1, 5 , 3],
-              [3, 1/5, 1, 1/3],
-              [5, 1/2, 3 , 1]])             # 输入判断矩阵
-weight,CI,RI,CR = AHP(B2)
-```
-
-```{code-cell} ipython3
----
-id: D73DD91A65EA45098F1E10C3EAFE9A77
-jupyter: {}
-slideshow:
-  slide_type: slide
-tags: []
----
-B3 = np.array([[1,1,3,3],
-             [1,1,3,3],
-             [1/3, 1/3, 1, 1],
-              [1/3,1/3,1,1]])     # 输入判断矩阵
-weight,CI,RI,CR = AHP(B3)
-```
-
-+++ {"id": "98F66DA17FA343968C5A0D7D3428B44B", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-
-最后经过层次总排序即可得到最终的打分排名结果
-
-![Image Name](https://cdn.kesci.com/upload/image/q37bsjooi.png?imageView2/0/w/960/h/960)
-
-+++ {"id": "5C4E0688BF014CE88ED6FEC0A9F48CC5", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-## 评价模型总结
-
-+++ {"id": "C4D1B3BAA2B04FA699AFA18990E81489", "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false, "jupyter": {}}
-
-评价问题的流程：
-1. 筛选指标
-2. 指标一致化和无量纲化
-3. 确定权重
-4. 使用合适的综合评价方法，加权综合求评分,得到结果
-
-
-``` {tip}
-- 优先选择客观方法，但也具有其局限性
-- 如果选用了主观方法（AHP）,需要做一致性检验和敏感性分析
-```
 
 

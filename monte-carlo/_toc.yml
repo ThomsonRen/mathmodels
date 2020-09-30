@@ -1,0 +1,28 @@
+# - file: README
+
+- file: docs/index
+  numbered: true
+
+- part: 数学建模基础课
+  chapters:
+  - file: docs/monte-carlo
+
+
+
+
+
+
+# - file: myintro
+#   numbered: true
+
+# - part: Get started
+#   chapters:
+#   - file: start/overview
+#   - file: start/build
+
+# - part: Reference and test pages
+#   chapters:
+#   - file: test_pages/test
+#     sections:
+#       - file: test_pages/layout_elements
+#       - file: test_pages/equations
