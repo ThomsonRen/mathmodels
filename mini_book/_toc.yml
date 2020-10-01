@@ -3,14 +3,34 @@
 - file: docs/index
   numbered: true
 
+
+- part: 预备知识
+  chapters:
+  - file: docs/matrix-and-lg
+
+
 - part: 数学建模基础课
   chapters:
   - file: docs/LP
   - file: docs/evaluation_model
   - file: docs/prediction_model
   - file: docs/ode_model
+
+- part: 数学建模高阶课
+  chapters:
   - file: docs/monte-carlo
   - file: docs/markov-chain
+
+
+- part: 数据可视化
+  chapters:
+  - file: docs/matplotlib
+  - file: docs/seaborn-1
+  - file: docs/seaborn-2
+
+
+
+
 
 
 

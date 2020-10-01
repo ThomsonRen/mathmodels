@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>5. 蒙特卡洛模拟 &#8212; 数学建模系列课程</title>
+    <title>1. 蒙特卡洛模拟 &#8212; 数学建模系列课程</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -38,7 +38,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="6. 马氏链模型" href="markov-chain.html" />
+    <link rel="next" title="2. 马氏链模型" href="markov-chain.html" />
     <link rel="prev" title="4. 微分方程模型" href="ode_model.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,10 +74,22 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <p class="caption">
  <span class="caption-text">
+  预备知识
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="matrix-and-lg.html">
+   1. 矩阵和线性代数基础回顾
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
   数学建模基础课
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="LP.html">
    1. 规划模型
@@ -98,14 +110,43 @@
    4. 微分方程模型
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模高阶课
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   5. 蒙特卡洛模拟
+   1. 蒙特卡洛模拟
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="markov-chain.html">
-   6. 马氏链模型
+   2. 马氏链模型
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数据可视化
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="matplotlib.html">
+   1. Matplotlib
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seaborn-1.html">
+   2. Seaborn-1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seaborn-2.html">
+   3. Seaborn-2
   </a>
  </li>
 </ul>
@@ -212,49 +253,49 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   5.1. 蒙特卡洛模拟简介
+   1.1. 蒙特卡洛模拟简介
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id3">
-   5.2. 数学原理
+   1.2. 数学原理
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id4">
-   5.3. 案例求解
+   1.3. 案例求解
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     5.3.1. 圆周率求解
+     1.3.1. 圆周率求解
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id6">
-     5.3.2. 定积分求解
+     1.3.2. 定积分求解
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     5.3.3. 整数规划求解
+     1.3.3. 整数规划求解
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id8">
-   5.4. 数学建模实例
+   1.4. 数学建模实例
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id9">
-   5.5. 总结：蒙特卡洛模拟建模方法
+   1.5. 总结：蒙特卡洛模拟建模方法
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id10">
-   5.6. 优缺点分析
+   1.6. 优缺点分析
   </a>
  </li>
 </ul>
@@ -268,9 +309,9 @@
               <div>
                 
   <div class="section" id="id1">
-<h1><span class="section-number">5. </span>蒙特卡洛模拟<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">1. </span>蒙特卡洛模拟<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id2">
-<h2><span class="section-number">5.1. </span>蒙特卡洛模拟简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.1. </span>蒙特卡洛模拟简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><strong>蒙特卡罗（Monte Carlo）模拟</strong>其实是对<strong>一种思想的泛指</strong>，只要在解决问题时，利用大量随机样本，然后对这些样本进行概率分析，从而来预测结果的方法，都可以称为蒙特卡洛方法。</p>
 <div class="figure align-default" id="monte-carlo-1">
 <a class="reference internal image-reference" href="../_images/monte-carlo-demo.jpg"><img alt="../_images/monte-carlo-demo.jpg" src="../_images/monte-carlo-demo.jpg" style="height: 300px;" /></a>
@@ -300,15 +341,15 @@
 </div>
 </div>
 <div class="section" id="id3">
-<h2><span class="section-number">5.2. </span>数学原理<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.2. </span>数学原理<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>蒙特卡洛模拟通过抓住事件的特征，利用数学方法进行模拟，是一种数字模拟实验。它是一个以概率模型为基础，按照这个模型所描绘的过程，通过模拟实验的结果，作为问题的近似解。</p>
 <p>当所求解问题是某种随机事件出现的概率，或者是某个随机变量的期望值时，通过某种“实验”的方法，以这种事件出现的频率估计这一随机事件的概率，或者得到这个随机变量的某些数字特征，并将其作为问题的解。</p>
 <p>通常蒙特卡洛方法通过构造符合一定规则的随机数来解决数学上的各种问题。对于那些由于计算过于复杂而难以得到解析解或者根本没有解析解的问题，蒙特卡洛方法是一种有效的求出数值解的方法。蒙特卡洛常见的应用有<strong>蒙特卡洛积分、非线性规划。</strong></p>
 </div>
 <div class="section" id="id4">
-<h2><span class="section-number">5.3. </span>案例求解<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.3. </span>案例求解<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id5">
-<h3><span class="section-number">5.3.1. </span>圆周率求解<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.3.1. </span>圆周率求解<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>一个正方形内部相切一个圆，圆的面积是<span class="math notranslate nohighlight">\(C\)</span>，正方形的面积<span class="math notranslate nohighlight">\(S\)</span>，圆和正方形的面积之比是<span class="math notranslate nohighlight">\(\pi/4\)</span></p>
 <div class="math notranslate nohighlight">
 \[
@@ -381,7 +422,7 @@
 </div>
 </div>
 <div class="section" id="id6">
-<h3><span class="section-number">5.3.2. </span>定积分求解<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.3.2. </span>定积分求解<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>考虑估计<span class="math notranslate nohighlight">\(\theta=\int_{0}^{1} g(x) d x\)</span>，若<span class="math notranslate nohighlight">\(X_{1}, \cdots, X_{m}\)</span>为均匀分布<span class="math notranslate nohighlight">\(U(0,1)\)</span>总抽取的样本，则由强大数定律知</p>
 <div class="math notranslate nohighlight">
 \[
@@ -413,7 +454,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.33363538594533976
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.33416713184579255
 </pre></div>
 </div>
 </div>
@@ -440,7 +481,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.33389
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.33354
 </pre></div>
 </div>
 </div>
@@ -452,7 +493,7 @@
 \]</div>
 </div>
 <div class="section" id="id7">
-<h3><span class="section-number">5.3.3. </span>整数规划求解<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.3.3. </span>整数规划求解<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>求解整数规划 <span class="math notranslate nohighlight">\(\max f=x+y+z\)</span></p>
 <p>约束条件<span class="math notranslate nohighlight">\(x^2+y^2+z^2\leq10000\)</span></p>
 <p>首先由均值不等式</p>
@@ -504,7 +545,7 @@ x+y+z =\sqrt{30000}\approx173.2
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>maxf: 173 xmax: 61 ymax: 56 zmax: 56
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>maxf: 173 xmax: 58 ymax: 56 zmax: 59
 </pre></div>
 </div>
 </div>
@@ -513,7 +554,7 @@ x+y+z =\sqrt{30000}\approx173.2
 </div>
 </div>
 <div class="section" id="id8">
-<h2><span class="section-number">5.4. </span>数学建模实例<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.4. </span>数学建模实例<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>接下来，我们用蒙特卡洛模拟来研究餐厅的排队现象。</p>
 <div class="figure align-default" id="canting">
 <a class="reference internal image-reference" href="../_images/canting.jpg"><img alt="../_images/canting.jpg" src="../_images/canting.jpg" style="height: 300px;" /></a>
@@ -768,7 +809,7 @@ x+y+z =\sqrt{30000}\approx173.2
 </div>
 </div>
 <div class="section" id="id9">
-<h2><span class="section-number">5.5. </span>总结：蒙特卡洛模拟建模方法<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.5. </span>总结：蒙特卡洛模拟建模方法<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p><strong>（1）构造或描述概率过程</strong>
 对于本身就具有随机性质的问题，如求解圆周率问题，主要是正确描述和模拟这个概率过程，对于本来不是随机性质的确定性问题，比如计算定积分，就必须事先构造一个人为的概率过程，它的某些参量正好是所要求问题的解。即要将不具有随机性质的问题转化为随机性质的问题。</p>
 <p><strong>（2）进行随机模拟</strong>
@@ -778,7 +819,7 @@ x+y+z =\sqrt{30000}\approx173.2
 一般说来，构造了概率模型并能从中抽样后，即实现模拟实验后，我们就要确定一个随机变量，作为所要求的问题的解，我们称它为无偏估计。建立各种估计量，相当于对模拟实验的结果进行考察和登记，从中得到问题的解。</p>
 </div>
 <div class="section" id="id10">
-<h2><span class="section-number">5.6. </span>优缺点分析<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.6. </span>优缺点分析<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>蒙特卡洛模拟的特点：随机采样得到的近似解，随着随机采样数值增多，得到正确结果的概率越大</p>
 <p>借助计算机技术，蒙特卡洛模拟方法有两大优点</p>
 <ul class="simple">
@@ -821,7 +862,7 @@ x+y+z =\sqrt{30000}\approx173.2
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="ode_model.html" title="previous page"><span class="section-number">4. </span>微分方程模型</a>
-    <a class='right-next' id="next-link" href="markov-chain.html" title="next page"><span class="section-number">6. </span>马氏链模型</a>
+    <a class='right-next' id="next-link" href="markov-chain.html" title="next page"><span class="section-number">2. </span>马氏链模型</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

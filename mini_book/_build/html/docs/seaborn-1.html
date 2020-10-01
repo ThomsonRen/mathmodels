@@ -1,0 +1,1307 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>2. Seaborn-1 &#8212; 数学建模系列课程</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. Seaborn-2" href="seaborn-2.html" />
+    <link rel="prev" title="1. Matplotlib" href="matplotlib.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.jpeg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">数学建模系列课程</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  预备知识
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="matrix-and-lg.html">
+   1. 矩阵和线性代数基础回顾
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模基础课
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="LP.html">
+   1. 规划模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="evaluation_model.html">
+   2. 评价模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="prediction_model.html">
+   3. 预测模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ode_model.html">
+   4. 微分方程模型
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模高阶课
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="monte-carlo.html">
+   1. 蒙特卡洛模拟
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov-chain.html">
+   2. 马氏链模型
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数据可视化
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="matplotlib.html">
+   1. Matplotlib
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. Seaborn-1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seaborn-2.html">
+   3. Seaborn-2
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  作业解答
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="answers.html">
+   1. 作业解答
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/docs/seaborn-1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/docs/seaborn-1.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/seaborn-1.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#seaborn">
+   2.1. seaborn 简介
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   2.2. 使用散点图发现数据之间的关联
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2.3. 数据的汇总和不确定性的展示
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   2.4. 绘制子数据集
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   2.5. 使用多张图展示数据之间的相互关系
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   2.6. 绘制离散形式的变量
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     2.6.1. 分类散点图
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     2.6.2. 分类分布统计图
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#boxplots">
+     2.6.3. Boxplots
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#violinplots">
+     2.6.4. Violinplots
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="seaborn-1">
+<h1><span class="section-number">2. </span>Seaborn-1<a class="headerlink" href="#seaborn-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="seaborn">
+<h2><span class="section-number">2.1. </span>seaborn 简介<a class="headerlink" href="#seaborn" title="Permalink to this headline">¶</a></h2>
+<p><strong>Seaborn是一种基于matplotlib</strong>的图形可视化python library。它提供了一种高度交互式界面，便于用户能够做出各种有吸引力的统计图表。</p>
+<p>Seaborn其实是在<strong>matplotlib的基础上进行了更高级的API封装</strong>，从而使得作图更加容易，在大多数情况下使用seaborn就能做出很具有吸引力的图，而使用matplotlib就能制作具有更多特色的图。</p>
+<p><strong>应该把Seaborn视为matplotlib的补充，而不是替代物。</strong> 同时它能高度兼容numpy与pandas数据结构以及scipy与statsmodels等统计模式。掌握seaborn能很大程度帮助我们更高效的观察数据与图表，并且更加深入了解它们。</p>
+<p>其有如下特点：</p>
+<ul class="simple">
+<li><p>基于matplotlib aesthetics绘图风格，增加了一些绘图模式</p></li>
+<li><p>增加调色板功能，利用色彩丰富的图像揭示您数据中的模式</p></li>
+<li><p>运用数据子集绘制与比较单变量和双变量分布的功能</p></li>
+<li><p>运用聚类算法可视化矩阵数据</p></li>
+<li><p>灵活运用处理时间序列数据</p></li>
+<li><p>利用网格建立复杂图像集</p></li>
+</ul>
+<p>官方网站：http://seaborn.pydata.org
+在接下来的一段时间内，我们将带大家深入地了解各类seaborn绘图函数。</p>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">2.2. </span>使用散点图发现数据之间的关联<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>散点图是数据可视化中最常用的图像。它直观地向我们展示了数据之间的分布关系，如果数据之间存在线性或者其他相关关系，很容易通过散点图观察出来。</p>
+<p>除了之前提到的<code class="docutils literal notranslate"><span class="pre">plt.scatter()</span></code>，使用seaborn也可以绘制散点图。对用的命令是<code class="docutils literal notranslate"><span class="pre">scatterplot()</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>  <span class="c1"># 导入 seaborn 并且命名为sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;darkgrid&quot;</span><span class="p">)</span> <span class="c1"># 设置绘图格式为darkgrid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tips</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;tips&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#tips = pd.read_csv(&quot;../_static/lecture_specific/seaborn/tips.csv&quot;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tips</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1"># 查看数据的前五行</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>total_bill</th>
+      <th>tip</th>
+      <th>sex</th>
+      <th>smoker</th>
+      <th>day</th>
+      <th>time</th>
+      <th>size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16.99</td>
+      <td>1.01</td>
+      <td>Female</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10.34</td>
+      <td>1.66</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>21.01</td>
+      <td>3.50</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>23.68</td>
+      <td>3.31</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>24.59</td>
+      <td>3.61</td>
+      <td>Female</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tips</span><span class="p">[</span><span class="s1">&#39;total_bill&#39;</span><span class="p">],</span><span class="n">tips</span><span class="p">[</span><span class="s1">&#39;tip&#39;</span><span class="p">])</span> <span class="c1"># 使用plt.scatter 方法绘制两列数据的散点图</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Total bill&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;tip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;tip&#39;)
+</pre></div>
+</div>
+<img alt="../_images/seaborn-1_5_1.png" src="../_images/seaborn-1_5_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">tips</span><span class="o">.</span><span class="n">total_bill</span><span class="p">,</span><span class="n">tips</span><span class="o">.</span><span class="n">tip</span><span class="p">)</span> <span class="c1"># 使用sns.scatterplot 方法绘制两列数据的散点图</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Total Bill&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Total Bill&#39;)
+</pre></div>
+</div>
+<img alt="../_images/seaborn-1_6_1.png" src="../_images/seaborn-1_6_1.png" />
+</div>
+</div>
+<p>除此之外，我们还可以通过在 <code class="docutils literal notranslate"><span class="pre">relplot()</span></code>中指定<code class="docutils literal notranslate"><span class="pre">kind=&quot;scatter&quot;</span></code>获取同样的效果。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sns.relplot(x=&quot;total_bill&quot;, y=&quot;tip&quot;, data=tips);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>相比于<code class="docutils literal notranslate"><span class="pre">scatterplot</span></code>，<code class="docutils literal notranslate"><span class="pre">relplot</span></code>的集成度更高，在使用方法上也更为方便。例如，如果我们想给散点图加上第三个维度，就直接可以通过一个参数<code class="docutils literal notranslate"><span class="pre">hue</span></code>进行传递即可。该参数将会给不同的类别赋以不同的颜色。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sns.relplot(x=&quot;total_bill&quot;, y=&quot;tip&quot;, hue=&quot;smoker&quot;, data=tips)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>除此之外，我们还可以继续修改散点的形状，只需要引入<code class="docutils literal notranslate"><span class="pre">style</span></code>参数</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tip&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;smoker&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x12c837690&gt;
+</pre></div>
+</div>
+<img alt="../_images/seaborn-1_12_1.png" src="../_images/seaborn-1_12_1.png" />
+</div>
+</div>
+<p>结合<code class="docutils literal notranslate"><span class="pre">hue</span></code>和<code class="docutils literal notranslate"><span class="pre">style</span></code>两个参数，我们就可以实现四维数据的绘图。需要注意的是，人眼的形状的敏感性不如颜色，因此该方法应该慎用，因为第四个维度不容易被观察到。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tip&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;smoker&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_14_0.png" src="../_images/seaborn-1_14_0.png" />
+</div>
+</div>
+<p>在上面的案例中，<code class="docutils literal notranslate"><span class="pre">hue</span></code>参数接受到的是离散的类别数据，而如果我们给它传入一个数值形式的数据，那么<code class="docutils literal notranslate"><span class="pre">relplot</span></code>将会用连续变化的色谱来区分该数据。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tip&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_16_0.png" src="../_images/seaborn-1_16_0.png" />
+</div>
+</div>
+<p>当然了，除了散点的颜色的形状，我们还可以修改散点的大小，只需要指定<code class="docutils literal notranslate"><span class="pre">size</span></code>参数即可。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tip&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_18_0.png" src="../_images/seaborn-1_18_0.png" />
+</div>
+</div>
+<p>下面是一个综合使用以上参数，得到的一个五维的散点图。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tip&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_20_0.png" src="../_images/seaborn-1_20_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">2.3. </span>数据的汇总和不确定性的展示<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fmri</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;fmri&quot;</span><span class="p">)</span>
+<span class="c1"># fmri = pd.read_csv(&quot;/home/kesci/input/Seaborn_Demo6897/fmri.csv&quot;)</span>
+<span class="n">fmri</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>subject</th>
+      <th>timepoint</th>
+      <th>event</th>
+      <th>region</th>
+      <th>signal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>s13</td>
+      <td>18</td>
+      <td>stim</td>
+      <td>parietal</td>
+      <td>-0.017552</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>s5</td>
+      <td>14</td>
+      <td>stim</td>
+      <td>parietal</td>
+      <td>-0.080883</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>s12</td>
+      <td>18</td>
+      <td>stim</td>
+      <td>parietal</td>
+      <td>-0.081033</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>s11</td>
+      <td>18</td>
+      <td>stim</td>
+      <td>parietal</td>
+      <td>-0.046134</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>s10</td>
+      <td>18</td>
+      <td>stim</td>
+      <td>parietal</td>
+      <td>-0.037970</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fmri</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_23_0.png" src="../_images/seaborn-1_23_0.png" />
+</div>
+</div>
+<p>此外，不确定度还可以用标准差来衡量，只需要设置<code class="docutils literal notranslate"><span class="pre">ci='sd'</span></code>即可</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="s2">&quot;sd&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fmri</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_25_0.png" src="../_images/seaborn-1_25_0.png" />
+</div>
+</div>
+<p>如果我们关掉数据汇总，那么绘制出来的图像会非常奇怪。这是因为在某一个时间，会有多个测量数据。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fmri</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_27_0.png" src="../_images/seaborn-1_27_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">2.4. </span>绘制子数据集<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>同<code class="docutils literal notranslate"><span class="pre">scatterplot()</span></code>一样，我们可以通过修改<code class="docutils literal notranslate"><span class="pre">hue</span></code>,<code class="docutils literal notranslate"><span class="pre">style</span></code>,<code class="docutils literal notranslate"><span class="pre">size</span></code>,来增加更多的绘图维度，用法也是非常一致的，这意味着我们可以非常简单地在两种方法之间进行替换。</p>
+<p>例如，如果我们引入<code class="docutils literal notranslate"><span class="pre">hue</span></code>参数，对event进行分类。即可得到如下的数据汇总图。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;event&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fmri</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_31_0.png" src="../_images/seaborn-1_31_0.png" />
+</div>
+</div>
+<p>我们继续加入另一个<code class="docutils literal notranslate"><span class="pre">style</span></code>参数，可以把region也考虑进去。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;region&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;event&quot;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fmri</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_33_0.png" src="../_images/seaborn-1_33_0.png" />
+</div>
+</div>
+<p>为了突出显示，我们还可以修改线型。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;region&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;event&quot;</span><span class="p">,</span>
+            <span class="n">dashes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">markers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fmri</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_35_0.png" src="../_images/seaborn-1_35_0.png" />
+</div>
+</div>
+<p>下面我们考虑另一个数据集</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dots</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;dots&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;align == &#39;dots&#39;&quot;</span><span class="p">)</span>
+
+<span class="c1"># dots = pd.read_csv(&#39;/home/kesci/input/Seaborn_Demo6897/dots.csv&#39;,encoding = &#39;utf-8&#39;)</span>
+<span class="c1"># dots = dots[dots[&quot;align&quot;] == &#39;dots&#39;]</span>
+<span class="n">dots</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>align</th>
+      <th>choice</th>
+      <th>time</th>
+      <th>coherence</th>
+      <th>firing_rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>dots</td>
+      <td>T1</td>
+      <td>-80</td>
+      <td>0.0</td>
+      <td>33.189967</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>dots</td>
+      <td>T1</td>
+      <td>-80</td>
+      <td>3.2</td>
+      <td>31.691726</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>dots</td>
+      <td>T1</td>
+      <td>-80</td>
+      <td>6.4</td>
+      <td>34.279840</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>dots</td>
+      <td>T1</td>
+      <td>-80</td>
+      <td>12.8</td>
+      <td>32.631874</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>dots</td>
+      <td>T1</td>
+      <td>-80</td>
+      <td>25.6</td>
+      <td>35.060487</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>上面的例子我们用的是离散变量作为参数<code class="docutils literal notranslate"><span class="pre">hue</span></code>和<code class="docutils literal notranslate"><span class="pre">chioce</span></code>的值，实际上，他们也可以使用连续变量。比如下面的例子</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;firing_rate&quot;</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;coherence&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;choice&quot;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">dots</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_39_0.png" src="../_images/seaborn-1_39_0.png" />
+</div>
+</div>
+<p>请注意，当<code class="docutils literal notranslate"><span class="pre">style</span></code>的可能性增多时，肉眼可能不太能够区分不同的线型，因此该方法需要在变量取值范围较小的情况下使用。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">cubehelix_palette</span><span class="p">(</span><span class="n">light</span><span class="o">=.</span><span class="mi">8</span><span class="p">,</span> <span class="n">n_colors</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;firing_rate&quot;</span><span class="p">,</span>
+           <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;coherence&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">&quot;choice&quot;</span><span class="p">,</span>
+           <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span>
+           <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">dots</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_41_0.png" src="../_images/seaborn-1_41_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">2.5. </span>使用多张图展示数据之间的相互关系<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>下面我们学习如何使用多张子图，分析与展示数据之间的相关性。使用的参数主要是<code class="docutils literal notranslate"><span class="pre">col</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tip&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;smoker&quot;</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_44_0.png" src="../_images/seaborn-1_44_0.png" />
+</div>
+</div>
+<p>此外，我们还可以通过<code class="docutils literal notranslate"><span class="pre">row</span></code>参数，进一步地扩大子图的规模</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tip&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;smoker&quot;</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="n">row</span> <span class="o">=</span> <span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_46_0.png" src="../_images/seaborn-1_46_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="s2">&quot;region&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="s2">&quot;event&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fmri</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_47_0.png" src="../_images/seaborn-1_47_0.png" />
+</div>
+</div>
+<p>以上的一系列可视化方法，称为小倍数绘图（ “lattice” plots or “small-multiples”），在研究大规模数据集的时候尤为重要，因为使用该方法，可以把复杂的数据根据一定的规律展示出来，并且借助可视化，使人的肉眼可以识别这种规律。</p>
+<p>需要注意的是，有的时候，简单的图比复杂的图更能帮助我们发现和解决问题。</p>
+<p><strong>课堂练习</strong></p>
+<p>使用iris数据集，进行数据可视化。要求以<code class="docutils literal notranslate"><span class="pre">sepal_length</span></code>为横轴，以<code class="docutils literal notranslate"><span class="pre">sepal_width</span></code>为纵轴，以花的种类为颜色标准，绘制散点图。你可以使用如下的代码导入iris数据集。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;iris&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">2.6. </span>绘制离散形式的变量<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>在上一节中，我们学习了如何使用<code class="docutils literal notranslate"><span class="pre">relplot()</span></code>描述数据集中多变量之间的关系，其中我们主要关心的是两个数值型变量之间的关系。本节我们进一步地，讨论离散型（ categorical）变量的绘制方法。</p>
+<p>在seaborn中，我们有很多可视化离散型随机变量的方法。类似于<code class="docutils literal notranslate"><span class="pre">relplot()</span></code>之于<code class="docutils literal notranslate"><span class="pre">scatterplot()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">lineplot()</span></code>的关系, 我们有一个<code class="docutils literal notranslate"><span class="pre">catplot()</span></code>方法，该方法提高了我们一个从更高层次调用各类函数的渠道，例如<code class="docutils literal notranslate"><span class="pre">swarmplot()</span></code>,<code class="docutils literal notranslate"><span class="pre">boxplot()</span></code>,<code class="docutils literal notranslate"><span class="pre">violinplot()</span></code>等。</p>
+<p>在详细地学习这些方法之前，对他们做一个系统地分类是非常有必要的，他们按照绘制内容可以分成如下三类：</p>
+<ul class="simple">
+<li><p>Categorical <strong>scatterplots:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">stripplot()</span></code> (with kind=”strip”; the default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">swarmplot()</span></code> (with kind=”swarm”)</p></li>
+</ul>
+</li>
+<li><p>Categorical <strong>distribution plots:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">boxplot()</span></code> (with kind=”box”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">violinplot()</span></code> (with kind=”violin”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">boxenplot()</span></code> (with kind=”boxen”)</p></li>
+</ul>
+</li>
+<li><p>Categorical <strong>estimate plots:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">pointplot()</span></code> (with kind=”point”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">barplot()</span></code> (with kind=”bar”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">countplot()</span></code> (with kind=”count”)</p></li>
+</ul>
+</li>
+</ul>
+<p>以上三个类别代表了绘图的不同角度，在实践中，我们要根据要解决的问题，合理地选择使用其中哪种方法。</p>
+<p>如果不知道哪种方法比较好，可以都尝试一遍，选择可视化效果更好的一个。</p>
+<p>在本教程中，我们主要使用<code class="docutils literal notranslate"><span class="pre">catplot()</span></code>函数进行绘图，如前所述，该函数是基于其他许多函数基础上一个更高层次的调用渠道。</p>
+<p>因此如果有针对其中任何一种方法的疑问，都可以在对应的方法的详细介绍中找到解释。</p>
+<p>首先，我们需要导入需要的库<code class="docutils literal notranslate"><span class="pre">seaborn</span></code>和<code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;ticks&quot;</span><span class="p">,</span> <span class="n">color_codes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">2.6.1. </span>分类散点图<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">catplot()</span></code>中的默认绘图方法是<code class="docutils literal notranslate"><span class="pre">scatterplot</span></code>，在<code class="docutils literal notranslate"><span class="pre">catplot()</span></code>中。如果我们只有一个类别，那么散点图绘制的时候，许多数据点会重叠（overlap）在一起，数据区分度和美观性都不强。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tips</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;tips&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_62_0.png" src="../_images/seaborn-1_62_0.png" />
+</div>
+</div>
+<p>为了解决这一问题，实际上有两类绘制散点图的方法。</p>
+<p>方法一： 我们可以考虑采用<code class="docutils literal notranslate"><span class="pre">stripplot()</span></code>，该方法通过给每一个数据点一个在<code class="docutils literal notranslate"><span class="pre">x</span></code>轴上的小扰动，使得数据点不会过分重叠。<code class="docutils literal notranslate"><span class="pre">stripplot()</span></code>是<code class="docutils literal notranslate"><span class="pre">catplot()</span></code>的默认参数。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_64_0.png" src="../_images/seaborn-1_64_0.png" />
+</div>
+</div>
+<p>我们可以吧<code class="docutils literal notranslate"><span class="pre">jitter</span></code>参数关掉，观察一下效果。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_66_0.png" src="../_images/seaborn-1_66_0.png" />
+</div>
+</div>
+<p>方法二： 使用<code class="docutils literal notranslate"><span class="pre">swarmplot()</span></code>，该方法通过特定算法将数据点在横轴上分隔开，进一步提高区分度，防止重叠。该方法对于小数据集尤其适用，调用该方法只需要在<code class="docutils literal notranslate"><span class="pre">catplot()</span></code>中指定参数<code class="docutils literal notranslate"><span class="pre">kind=&quot;swarm&quot;</span></code>即可。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;swarm&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_68_0.png" src="../_images/seaborn-1_68_0.png" />
+</div>
+</div>
+<p>类似于<code class="docutils literal notranslate"><span class="pre">relplot()</span></code>,<code class="docutils literal notranslate"><span class="pre">catplot()</span></code>也可以通过添加颜色进一步增加绘图的维度，对应的参数为<code class="docutils literal notranslate"><span class="pre">hue</span></code>。需要注意的是，<code class="docutils literal notranslate"><span class="pre">catplot()</span></code>暂时不支持<code class="docutils literal notranslate"><span class="pre">sytle</span></code>和<code class="docutils literal notranslate"><span class="pre">size</span></code>参数。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;swarm&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_70_0.png" src="../_images/seaborn-1_70_0.png" />
+</div>
+</div>
+<p>不像数值型的数据，有的时候，我们对于离散型的类别数据很难得到一个排序的标准。当然，seaborn会尽可能地按照合理的方法给他们排序，如果需要的话也可以人为指定排序。</p>
+<p>当我们想要指定绘制顺序的时候，可以使用<code class="docutils literal notranslate"><span class="pre">order</span></code>参数。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;smoker&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tip&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Yes&quot;</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_73_0.png" src="../_images/seaborn-1_73_0.png" />
+</div>
+</div>
+<p>有的时候，我们想要把散点图横着画，尤其是在类别比较多的时候，这时我们可以对调<code class="docutils literal notranslate"><span class="pre">x</span></code>和<code class="docutils literal notranslate"><span class="pre">y</span></code>参数，达到该效果。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;swarm&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_75_0.png" src="../_images/seaborn-1_75_0.png" />
+</div>
+</div>
+<p><strong>课堂练习：</strong></p>
+<p>使用上面的方法，对tips数据集进行分析，绘制一个吸烟和吃饭时间（午饭or晚饭）与tip的关系图。你可以自定<code class="docutils literal notranslate"><span class="pre">x</span></code>,<code class="docutils literal notranslate"><span class="pre">y</span></code>轴和染色方法。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">2.6.2. </span>分类分布统计图<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>如前所述，类别形式的散点图受限于数据集的大小，当数据量很大时，即使是使用<code class="docutils literal notranslate"><span class="pre">swarmplot</span></code>或者<code class="docutils literal notranslate"><span class="pre">stripplot</span></code>也无法使数据点分开。此时，我们考虑使用基于数据分布的绘图方法，而不再采用散点图。</p>
+</div>
+<div class="section" id="boxplots">
+<h3><span class="section-number">2.6.3. </span>Boxplots<a class="headerlink" href="#boxplots" title="Permalink to this headline">¶</a></h3>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/q7dvvvog7u.jpg?imageView2/0/w/960/h/960" /></p>
+<p>箱形图（Box-plot）又称为盒须图、盒式图或箱线图，是一种用作显示一组数据分散情况资料的统计图。因形状如箱子而得名。在各种领域也经常被使用，常见于品质管理。</p>
+<p>箱线图似乎是原始的，但它们具有占用较少空间的优势，这在比较许多组或数据集之间的分布时非常有用。</p>
+<p>箱线图是一种基于五位数摘要（“最小”，第一四分位数（Q1），中位数，第三四分位数（Q3）和“最大”）显示数据分布的标准化方法。</p>
+<ul class="simple">
+<li><p><strong>中位数（Q2 / 50th百分位数）</strong>：数据集的中间值；</p></li>
+<li><p><strong>第一个四分位数（Q1 / 25百分位数）</strong>：最小数（不是“最小值”）和数据集的中位数之间的中间数；</p></li>
+<li><p><strong>第三四分位数（Q3 / 75th Percentile）</strong>：数据集的中位数和最大值之间的中间值（不是“最大值”）；</p></li>
+<li><p><strong>四分位间距（IQR）</strong>：第25至第75个百分点的距离；</p></li>
+<li><p><strong>离群值</strong></p></li>
+<li><p><strong>“最大”</strong>：Q3 + 1.5 * IQR</p></li>
+<li><p><strong>“最低”</strong>：Q1 -1.5 * IQR</p></li>
+</ul>
+<p>基于分布的绘图方法中最简单的就是箱线图了，关于箱线图的理论已经在之前的讲义中进行了介绍，这里不再展开。箱线图的调用方法也很简单，直接<code class="docutils literal notranslate"><span class="pre">kind</span> <span class="pre">=</span> <span class="pre">&quot;box&quot;</span></code>就行。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_83_0.png" src="../_images/seaborn-1_83_0.png" />
+</div>
+</div>
+<p>当然了，我们还可以加入<code class="docutils literal notranslate"><span class="pre">hue</span></code>参数，增加数据的绘图维度。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;smoker&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_85_0.png" src="../_images/seaborn-1_85_0.png" />
+</div>
+</div>
+<p>有一个和箱线图很像的图，叫<code class="docutils literal notranslate"><span class="pre">boxenplot()</span></code>，它会绘制一个跟箱线图很像的图片，但是展示了更多箱线图无法展示的信息，尤其适用于数据集比较大的情况。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diamonds</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;diamonds&quot;</span><span class="p">)</span>
+
+<span class="c1"># diamonds = pd.read_csv(&#39;/home/kesci/input/Seaborn_Demo6897/diamonds.csv&#39;)</span>
+
+<span class="n">diamonds</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>carat</th>
+      <th>cut</th>
+      <th>color</th>
+      <th>clarity</th>
+      <th>depth</th>
+      <th>table</th>
+      <th>price</th>
+      <th>x</th>
+      <th>y</th>
+      <th>z</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.23</td>
+      <td>Ideal</td>
+      <td>E</td>
+      <td>SI2</td>
+      <td>61.5</td>
+      <td>55.0</td>
+      <td>326</td>
+      <td>3.95</td>
+      <td>3.98</td>
+      <td>2.43</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.21</td>
+      <td>Premium</td>
+      <td>E</td>
+      <td>SI1</td>
+      <td>59.8</td>
+      <td>61.0</td>
+      <td>326</td>
+      <td>3.89</td>
+      <td>3.84</td>
+      <td>2.31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.23</td>
+      <td>Good</td>
+      <td>E</td>
+      <td>VS1</td>
+      <td>56.9</td>
+      <td>65.0</td>
+      <td>327</td>
+      <td>4.05</td>
+      <td>4.07</td>
+      <td>2.31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.29</td>
+      <td>Premium</td>
+      <td>I</td>
+      <td>VS2</td>
+      <td>62.4</td>
+      <td>58.0</td>
+      <td>334</td>
+      <td>4.20</td>
+      <td>4.23</td>
+      <td>2.63</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.31</td>
+      <td>Good</td>
+      <td>J</td>
+      <td>SI2</td>
+      <td>63.3</td>
+      <td>58.0</td>
+      <td>335</td>
+      <td>4.34</td>
+      <td>4.35</td>
+      <td>2.75</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#diamonds = sns.load_dataset(&quot;diamonds&quot;)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;boxen&quot;</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">diamonds</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_88_0.png" src="../_images/seaborn-1_88_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="violinplots">
+<h3><span class="section-number">2.6.4. </span>Violinplots<a class="headerlink" href="#violinplots" title="Permalink to this headline">¶</a></h3>
+<p>接下来我们看小提琴图<code class="docutils literal notranslate"><span class="pre">violinplot()</span></code>，它结合了箱线图<a class="reference external" href="https://mathisonian.github.io/kde/">核密度估计</a>的思想</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;violin&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_91_0.png" src="../_images/seaborn-1_91_0.png" />
+</div>
+</div>
+<p>该方法用到了kernel density estimate （KDE）,进而提供了更为丰富的数据分布信息。另一方面，由于KDE的引入，该方法也有更多的参数可以修改，例如<code class="docutils literal notranslate"><span class="pre">bw.</span></code>和<code class="docutils literal notranslate"><span class="pre">cut</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;violin&quot;</span><span class="p">,</span> <span class="n">bw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_93_0.png" src="../_images/seaborn-1_93_0.png" />
+</div>
+</div>
+<p>此外，如果数据的<code class="docutils literal notranslate"><span class="pre">hue</span></code>参数只有两个类别，一种非常高效的方法是给定<code class="docutils literal notranslate"><span class="pre">split=True</span></code>,仅绘制具有对称性的图像的一半。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;violin&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_95_0.png" src="../_images/seaborn-1_95_0.png" />
+</div>
+</div>
+<p>当然了，小提琴图的内部绘制也可以修改，如果我们想要展示原始数据点而不是分位数等统计数据，我们可以指定<code class="docutils literal notranslate"><span class="pre">inner=&quot;stick&quot;</span></code>,那么所有的原始数据点会被绘制在图中。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;violin&quot;</span><span class="p">,</span> <span class="n">inner</span><span class="o">=</span><span class="s2">&quot;stick&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_97_0.png" src="../_images/seaborn-1_97_0.png" />
+</div>
+</div>
+<p>我们还可以把<code class="docutils literal notranslate"><span class="pre">swarmplot()</span></code>或者<code class="docutils literal notranslate"><span class="pre">striplot()</span></code>放置在<code class="docutils literal notranslate"><span class="pre">boxplot</span></code>或者<code class="docutils literal notranslate"><span class="pre">violinplot</span></code>中，从而实现总体与局部的整体展示。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;violin&quot;</span><span class="p">,</span> <span class="n">inner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_99_0.png" src="../_images/seaborn-1_99_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;total_bill&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/seaborn-1_100_0.png" src="../_images/seaborn-1_100_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="matplotlib.html" title="previous page"><span class="section-number">1. </span>Matplotlib</a>
+    <a class='right-next' id="next-link" href="seaborn-2.html" title="next page"><span class="section-number">3. </span>Seaborn-2</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

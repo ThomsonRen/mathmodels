@@ -74,6 +74,18 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <p class="caption">
  <span class="caption-text">
+  预备知识
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="matrix-and-lg.html">
+   1. 矩阵和线性代数基础回顾
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
   数学建模基础课
  </span>
 </p>
@@ -98,14 +110,43 @@
    4. 微分方程模型
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模高阶课
+ </span>
+</p>
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="monte-carlo.html">
-   5. 蒙特卡洛模拟
+   1. 蒙特卡洛模拟
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="markov-chain.html">
-   6. 马氏链模型
+   2. 马氏链模型
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数据可视化
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="matplotlib.html">
+   1. Matplotlib
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seaborn-1.html">
+   2. Seaborn-1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seaborn-2.html">
+   3. Seaborn-2
   </a>
  </li>
 </ul>
@@ -460,7 +501,7 @@ S_{x y}=\sum_{i}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x11ff53890&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x12bfabe10&gt;
 </pre></div>
 </div>
 <img alt="../_images/prediction_model_8_1.png" src="../_images/prediction_model_8_1.png" />
@@ -650,7 +691,7 @@ R2为： 0.8961318172850157
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x121061690&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x12d193e50&gt;
 </pre></div>
 </div>
 <img alt="../_images/prediction_model_23_1.png" src="../_images/prediction_model_23_1.png" />
@@ -695,7 +736,7 @@ y(x, w)=w_{0}+w_{1} x+w_{2} x^{2}=\sum_{j=0}^{2} w_{j} x^{j}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1238305d0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x12f94a450&gt;]
 </pre></div>
 </div>
 <img alt="../_images/prediction_model_26_1.png" src="../_images/prediction_model_26_1.png" />
@@ -804,7 +845,7 @@ f_2(x) = ax^2 + b
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x123d94e10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x12fb66110&gt;
 </pre></div>
 </div>
 <img alt="../_images/prediction_model_34_1.png" src="../_images/prediction_model_34_1.png" />
@@ -910,7 +951,7 @@ S_{2}=\sqrt{\frac{\sum_{t=6}^{11}\left(\hat{y}_{t}^{(1)}-y_{t}\right)^{2}}{11-5}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x123e77750&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x12ff39810&gt;
 </pre></div>
 </div>
 <img alt="../_images/prediction_model_39_1.png" src="../_images/prediction_model_39_1.png" />
@@ -954,7 +995,7 @@ S_{2}=\sqrt{\frac{\sum_{t=6}^{11}\left(\hat{y}_{t}^{(1)}-y_{t}\right)^{2}}{11-5}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x123ed8d50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x12ffe0e50&gt;
 </pre></div>
 </div>
 <img alt="../_images/prediction_model_42_1.png" src="../_images/prediction_model_42_1.png" />
@@ -1062,7 +1103,7 @@ M_{t}^{(1)}-M_{t}^{(2)}=\frac{N-1}{2} b_{t}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x123878210&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x12f979c50&gt;
 </pre></div>
 </div>
 <img alt="../_images/prediction_model_48_1.png" src="../_images/prediction_model_48_1.png" />
