@@ -20,6 +20,7 @@
   chapters:
   - file: docs/monte-carlo
   - file: docs/markov-chain
+  - file: docs/queue-model
 
 
 - part: 数据可视化

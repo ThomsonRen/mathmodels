@@ -1,0 +1,1314 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>3. 排队论模型 &#8212; 数学建模系列课程</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Matplotlib" href="matplotlib.html" />
+    <link rel="prev" title="2. 马氏链模型" href="markov-chain.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.jpeg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">数学建模系列课程</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  预备知识
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="matrix-and-lg.html">
+   1. 矩阵和线性代数基础回顾
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模基础课
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="LP.html">
+   1. 规划模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="evaluation_model.html">
+   2. 评价模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="prediction_model.html">
+   3. 预测模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ode_model.html">
+   4. 微分方程模型
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模高阶课
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="monte-carlo.html">
+   1. 蒙特卡洛模拟
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov-chain.html">
+   2. 马氏链模型
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   3. 排队论模型
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数据可视化
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="matplotlib.html">
+   1. Matplotlib
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seaborn-1.html">
+   2. Seaborn-1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seaborn-2.html">
+   3. Seaborn-2
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/docs/queue-model.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/docs/queue-model.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/queue-model.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   3.1. 泊松分布
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     3.1.1. 二项分布和泊松分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     3.1.2. 泊松分布案例
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     3.1.3. 指数分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     3.1.4. 关于泊松分布和指数分布的关系
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   3.2. 排队系统的数学模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     3.2.1. 输入过程
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     3.2.2. 服务机构及服务规则
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     3.2.3. 排队与服务规则
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kendall">
+     3.2.4. 排队模型的符号表示:kendall符号
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     3.2.5. 排队系统的主要指标
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     3.2.6. 常用的概率分布
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id13">
+       3.2.6.1. 定长分布
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id14">
+       3.2.6.2. 均匀分布
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id15">
+       3.2.6.3. 正态分布
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id16">
+       3.2.6.4. 泊松分布
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id17">
+       3.2.6.5. 负指数分布
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id18">
+       3.2.6.6. 爱尔朗分布
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     3.2.7. 单服务台系统理论推导
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     3.2.8. 多服务台系统理论推导
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id21">
+   3.3. 使用蒙特卡洛方法模拟排队系统
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id22">
+   3.4. 作业
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1><span class="section-number">3. </span>排队论模型<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>排队论是我们每个人都很熟悉的现象。因为人或物或是信息为了得到某种服务必须排队。</p>
+<ul class="simple">
+<li><p>有一类排队是有形的，例如在售票处等待买票的排队，加油站前汽车等待加油的排队等；</p></li>
+<li><p>还有一类排队是无形的，例如电话交换机接到的电话呼叫信号的排队，等待计算机中心处理机处理的信息的排队等。</p></li>
+</ul>
+<p>为了叙述的方便，<strong>排队者</strong>无论是人、物、或信息，以后<strong>统称为“顾客”</strong>。<strong>服务者</strong>无论是人，或事物， 例如一台电子计算机也可以是排队系统中的服务者，我们以后<strong>统称为“服务员”</strong>。</p>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/q768d7cnmr.jpg?imageView2/0/w/960/h/960" /></p>
+<p>排队论是研究排队系统在不同的条件下（最主要的是顾客到达的随机规律和服务时间的随机规律）产生的排队现象的随机规律性。也就是要建立反映这种随机性的数学模型。研究的最终目的是为了运用这些规律，对实际的排队系统的设计与运行做出最优的决策。</p>
+<p>排队论中的数学模型是根据概率和随机过程的理论建立起来的，我们先来讨论泊松过程，然后在此基础上研究排队系统的结构及其主要的数学模型，最后研究排队系统的优化问题。</p>
+<div class="section" id="id2">
+<h2><span class="section-number">3.1. </span>泊松分布<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="section-number">3.1.1. </span>二项分布和泊松分布<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="admonition- admonition">
+<p class="admonition-title">二项分布引入</p>
+<p>如果一个牛仔一枪打中靶子的概率是<span class="math notranslate nohighlight">\(p\)</span>,如果我们让他开十枪，如果每次击中一次目标就能获得一分，问他一共能获得几分？</p>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/q768iziig6.jpg?imageView2/0/w/960/h/960" /></p>
+</div>
+<p>虽然我们不能在牛仔射击前准确地预测得出具体的分数<span class="math notranslate nohighlight">\(k\)</span>，但是可以求出<span class="math notranslate nohighlight">\(k\)</span>的概率分布，比如得九分的情况对应于：射失一发。根据组合数性质，它的概率是</p>
+<div class="math notranslate nohighlight">
+\[
+P(k=9) = C_{10}^{9}p^9(1-p)
+\]</div>
+<p>同理，得<span class="math notranslate nohighlight">\(k\)</span>分的概率就是</p>
+<div class="math notranslate nohighlight">
+\[
+P(k) = C_{n}^{k}p^k(1-p)^{n-k}
+\]</div>
+<p>对于一个神枪手（<span class="math notranslate nohighlight">\(p=1\)</span>）来说，他得十分的概率就是1.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>二项分布和泊松分布的不同在于，前者研究的对象是<span class="math notranslate nohighlight">\(n\)</span>个离散的对象(10次射击)，而后者考察的是一段连续的时间。因为泊松分布就是在二项分布的基础上化离散为连续。</p>
+</div>
+<p>我们把单位时间划分为<span class="math notranslate nohighlight">\(n\)</span>个细小的时间片，假设在每个时间片内牛仔都在射击，击中的概率为<span class="math notranslate nohighlight">\(p\)</span>，只不过这次他发射的不是子弹，而是顾客。 “命中目标”就代表向服务台成功发射一名顾客，如果没有命中就表示顾客没能成功来到。单位时间内平均顾客的到达速度可以表示为</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda = np
+\]</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>如果<span class="math notranslate nohighlight">\(n\)</span>不是无穷大，那么会出现某个时间片内出现两个顾客同时进入系统的情况，这样的话就和我们的假设【每个时间片内只能出现一个顾客或者不出现】不同了。所以<span class="math notranslate nohighlight">\(n\)</span>必须趋向无穷。 这也是为什么泊松分布的前提是<span class="math notranslate nohighlight">\(n\)</span>很大了（另一个前提是<span class="math notranslate nohighlight">\(p\)</span>很小）。</p>
+</div>
+<p>这样一来我们就能用二项分布的公式来表示单位时间内到来<span class="math notranslate nohighlight">\(k\)</span>个顾客的概率了。在单位时间，我们执行<span class="math notranslate nohighlight">\(n\)</span>次独立的“发射试验”，把顾客发射到系统的概率是<span class="math notranslate nohighlight">\(p\)</span>，那么单位时间到来<span class="math notranslate nohighlight">\(k\)</span>个顾客的概率就是</p>
+<div class="math notranslate nohighlight">
+\[
+P(k) = C_{n}^{k}p^k(1-p)^{n-k}
+\]</div>
+<p>把这个组合数展开</p>
+<div class="math notranslate nohighlight">
+\[
+P(k)=\frac{n(n-1) \dots(n-k+1)}{k !} p^{k}(1-p)^{n-k}
+\]</div>
+<p>上下同乘<span class="math notranslate nohighlight">\((1-p)^{k}\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+P(k)=\frac{n(n-1) \ldots(n-k+1)}{k !} \frac{p^{k}(1-p)^{n}}{(1-p)^{k}}
+\]</div>
+<p>把<span class="math notranslate nohighlight">\(p^k\)</span>拆成<span class="math notranslate nohighlight">\(k\)</span>个<span class="math notranslate nohighlight">\(p\)</span>连乘的形式放在左边分子上，</p>
+<div class="math notranslate nohighlight">
+\[
+P(k)=\frac{n p(n p-p) \ldots(n p-k p+p)}{k !} \frac{(1-p)^{n}}{(1-p)^{k}}
+\]</div>
+<p>调整<span class="math notranslate nohighlight">\((1-p)^n\)</span>,因为<span class="math notranslate nohighlight">\(p \to 0\)</span> , 所以</p>
+<div class="math notranslate nohighlight">
+\[
+(1-p)^{-\frac{1}{p}} \rightarrow e
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P(k)=\frac{n p(n p) \ldots(n p)}{k !} \frac{e^{-n p}}{(1)^{k}}
+\]</div>
+<p>令<span class="math notranslate nohighlight">\(np=\lambda\)</span>,那么我们有</p>
+<div class="math notranslate nohighlight">
+\[
+P(k)=\frac{\lambda^{k}}{k !} e^{-\lambda}
+\]</div>
+<p>这就是我们熟悉的泊松分布公式，其中<span class="math notranslate nohighlight">\(\lambda\)</span>的物理意义就是单位时间内顾客到达的数量，也就是平均到达率，是一个常数。</p>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">3.1.2. </span>泊松分布案例<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>我们知道，在日常生活中，大量时间是有规律可循的，例如</p>
+<ul class="simple">
+<li><p>某医院平均每小时出生3个婴儿</p></li>
+<li><p>某公司平均每10分钟接到一个电话</p></li>
+<li><p>某超市平均每天销售4包A品牌奶粉</p></li>
+<li><p>某网站平均每分钟有2次访问</p></li>
+</ul>
+<p>它们的特点就是，我们可以预估这些事件发生的总数，但是没法具体知道具体的发生时间。比如我们提出这样的一问题：<strong>已知医院平均每小时出生3个婴儿，请问下一个小时，会出生几个？</strong></p>
+<p>有可能一下子出生6个，也要可能一个都没有。尽管我们不能做出明确的预测，但是从概率意义上，我们能够对他们的发生概率进行描述。</p>
+<p>在本例中，到达速度<span class="math notranslate nohighlight">\(\lambda = 3\)</span>，我们来看下下个小时出生0个婴儿的概率</p>
+<div class="math notranslate nohighlight">
+\[
+P(0) = \frac{3^0}{0!}e^{-3} = 4.98\%
+\]</div>
+<p>在接下来的一个小时中，至少出生两个婴儿的概率</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}P(k\geq2) &amp;=1-P(k=1)-P(k=0)\\&amp; =  1- \frac{3^1}{1!}e^{-3} - \frac{3^0}{0!}e^{-3}\\&amp; = 1 - 4e^{-3}\\&amp;=80.09\%\end{aligned}
+\end{split}\]</div>
+<p>我们还可以看下泊松分布的图像。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">Lambda</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">k</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)]</span>
+<span class="n">pk</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="n">k</span><span class="p">:</span>
+    <span class="n">pk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Lambda</span> <span class="o">**</span> <span class="n">kk</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">kk</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Lambda</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">pk</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;BarContainer object of 12 artists&gt;
+</pre></div>
+</div>
+<img alt="../_images/queue-model_4_1.png" src="../_images/queue-model_4_1.png" />
+</div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">思考</p>
+<ul class="simple">
+<li><p>泊松分布峰值表示的是什么意思？</p></li>
+<li><p>在这个案例中，为什么会出现<span class="math notranslate nohighlight">\(n=2\)</span>和<span class="math notranslate nohighlight">\(n=3\)</span>两个最大概率？</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">3.1.3. </span>指数分布<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>我们在排队论中，经常见到的另一个分布较指数分布。指数分布可以从泊松分布推导出来，我们来看下面的例子。</p>
+<p>我们设<span class="math notranslate nohighlight">\(X\)</span>为前后两次婴儿出生的间隔时间，显然<span class="math notranslate nohighlight">\(X\)</span>也是随机变量。</p>
+<p>以上次婴儿出生的时刻为0时刻，<span class="math notranslate nohighlight">\([0,t]\)</span>时间段内不发生新出生的概率可以用泊松分布来衡量，这时候单位时间不再是1了，而是<span class="math notranslate nohighlight">\(t\)</span>，也就是<span class="math notranslate nohighlight">\(\lambda t = np\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+P(X&gt;t) = P(k=0) = e^{-\lambda t}
+\]</div>
+<p>反过来，在时间间隔<span class="math notranslate nohighlight">\([0,t]\)</span>内发生事件的概率，就是1减去上面的值：</p>
+<div class="math notranslate nohighlight">
+\[
+P(X \leq t) = 1- e^{-\lambda t}
+\]</div>
+<p>根据概率论知识，我们知道，分布函数是概率密度函数从负无穷到正无穷上的积分。对上述的分布函数进行求导，得到</p>
+<div class="math notranslate nohighlight">
+\[
+f(t) = \lambda e^{-\lambda t}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">Lambda</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">pk</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">tt</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+    <span class="n">pk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Lambda</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Lambda</span> <span class="o">*</span> <span class="n">tt</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">pk</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x11d6a53d0&gt;]
+</pre></div>
+</div>
+<img alt="../_images/queue-model_8_1.png" src="../_images/queue-model_8_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">3.1.4. </span>关于泊松分布和指数分布的关系<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>在一个<strong>满足马尔科夫过程</strong>的排队系统中，随机变量<span class="math notranslate nohighlight">\(X\)</span>（单位时间内顾客到达数），满足泊松分布：<span class="math notranslate nohighlight">\(X \sim P(X)\)</span>，概率分布函数为</p>
+<div class="math notranslate nohighlight">
+\[
+P(x=k)=\frac{\lambda^{k}}{k !} e^{-\lambda}
+\]</div>
+<p>注意：泊松分布中的<span class="math notranslate nohighlight">\(\lambda\)</span>，表征的是单位时间内平均到达的顾客数。</p>
+<p>在一个<strong>满足马尔科夫过程</strong>的排队系统中，随机变量<span class="math notranslate nohighlight">\(T\)</span>（顾客相继到达时间间隔），满足负指数分布，</p>
+<div class="math notranslate nohighlight">
+\[
+T \sim f(t)=\lambda e^{-\lambda t}
+\]</div>
+<p>注意：负指数分布中的<span class="math notranslate nohighlight">\(\lambda\)</span>，表征也的是单位时间内平均到达的顾客数。有时候，为了方便起见，我们常常做如下变换</p>
+<div class="math notranslate nohighlight">
+\[
+\mu = \frac{1}{\lambda} 
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T \sim f(t)=\frac{1}{\mu}  e^{-\frac{1}{\mu} t}
+\]</div>
+<p>我们可以这么理解：<strong>泊松分布和负指数分布，是从两个角度，对同一个现象进行的描述。</strong></p>
+<ul class="simple">
+<li><p>泊松分布关注的是单位时间内到达（或者离去）的顾客个数</p></li>
+<li><p>负指数分布关注的是顾客到达（或者离去）的时间间隔</p></li>
+</ul>
+<p>实际上，对于计算机模拟来说，后者更直观。我们来看一下程序实现。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x1</span><span class="p">)),</span><span class="n">x1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time&#39;)
+</pre></div>
+</div>
+<img alt="../_images/queue-model_10_1.png" src="../_images/queue-model_10_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">lambda1</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">size</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">lambda1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+
+<span class="n">cumulativeTime</span> <span class="o">=</span> <span class="p">[</span><span class="n">t1</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="n">t1</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">cumulativeTime</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cumulativeTime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">time</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cumulativeTime</span><span class="p">,[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">cumulativeTime</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time&#39;)
+</pre></div>
+</div>
+<img alt="../_images/queue-model_11_1.png" src="../_images/queue-model_11_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">3.2. </span>排队系统的数学模型<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>尽管排队系统是多种多样的，但所有的排队系统都是由<strong>输入过程、排队规则、服务规则</strong>三个基本部分组成。</p>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/q2yb3b8s60.png?imageView2/0/w/500/h/500" /></p>
+<div class="section" id="id8">
+<h3><span class="section-number">3.2.1. </span>输入过程<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>输入过程是描述顾客来源以及顾客到达排队系统的规律。一般从以下几个方面对输入过程进行描述：</p>
+<ul class="simple">
+<li><p>顾客源中顾客的数量是有限还是无限；</p></li>
+<li><p>顾客到达的方式是单个还是成批；</p></li>
+<li><p>顾客的到达<strong>是否相互独立</strong>（以前到达的顾客对以后顾客的到达没有影响，则称顾客的到达是相互独立的，否则就是相互关联的）；</p></li>
+<li><p>顾客相继到达的<strong>间隔时间分布是确定型的还是随机型的</strong>（如果是随机分布，就需要指导单位时间内的顾客到达数或者顾客相继到达时间间隔的概率分布）；</p></li>
+<li><p>输入的过程是平稳的还是非平稳的（若相继到达的时间间隔分布参数（如均值、方差）都是和时间无关的，则称输入过程是平稳的，否则是非平稳的）。</p></li>
+</ul>
+<p><strong>在下面的讨论中，我们都假设顾客的到达是相互独立的，输入过程是平稳的。</strong></p>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">3.2.2. </span>服务机构及服务规则<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>指服务机构服务设施的个数、排列方式及服务方式，一般从一下几个方面进行描述：</p>
+<ul class="simple">
+<li><p><strong>服务台（员）的个数</strong> ：服务机构可以有一个或者多个服务台</p></li>
+<li><p><strong>服务台的情况</strong> ：单队伍-单服务台、单队伍-多服务台、多队伍-多服务台、串联多服务台以及混合多服务台等多种形式；</p></li>
+<li><p><strong>服务台的服务方式</strong> ：对顾客是单个服务还是成批服务，本课程我们只考虑单个服务的情况</p></li>
+<li><p><strong>服务时间</strong>：同输入过程一样，对顾客的服务时间也分为确定型的还是随机型的，如果是随机分布，需要知道单位时间内服务的顾客数或者是顾客顾客相继服务的时间间隔的概率分布。</p></li>
+<li><p>在排队论中，<em>一般假设顾客相继到达的时间间隔和服务时间至少有一个是随机的</em>。</p></li>
+</ul>
+<p>服务员对顾客服务过程，服务机构可以是一个服务员或多个服务员的。对顾客可以单独进行服务，也可以对成批顾客进行服务，<strong>在我们这里仅介绍对顾客单独进行服务。</strong></p>
+<p>设<span class="math notranslate nohighlight">\(C\)</span>为服务机构服务员个数，当<span class="math notranslate nohighlight">\(C=1\)</span>时，为单服务系统，当<span class="math notranslate nohighlight">\(C \geq 2\)</span>，为多服务系统。</p>
+<p>和输入过程一样，服务时间都是随机的，且我们假设，设<span class="math notranslate nohighlight">\(\xi_n\)</span>表示服务员为<span class="math notranslate nohighlight">\(n\)</span>个顾客提供服务所需的时间，<span class="math notranslate nohighlight">\(\xi\)</span>的概率分布是已知的可以根据原始资料判断得到的，主要有的分布为负指数分布(定长分布，一般独立分布等).</p>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">3.2.3. </span>排队与服务规则<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>顾客排队和等待的规则，排队规则一般有<strong>等待制，损失制和混合制</strong>。</p>
+<ul class="simple">
+<li><p>所谓等待制就是当一个顾客到达时，若所有服务台均被占用时，该顾客便排队等待服务，服务台按照下面的规则对顾客进行服务：</p>
+<ol class="simple">
+<li><p>先到先服务（FCFS）</p></li>
+<li><p>后到先服务（FCLS）</p></li>
+<li><p>随机服务（SIRO）</p></li>
+<li><p>有优先权的服务（PR）。</p></li>
+</ol>
+</li>
+<li><p>损失制也称即时制(系统容量<span class="math notranslate nohighlight">\(D=C\)</span>)就是服务台被占用时顾客便即时离去，永不再来。</p></li>
+<li><p>混合制是等待制和损失制系统的结合，一般是指允许排队，但又不允许队列无限长。具体来讲，分为以下三种：</p>
+<ol class="simple">
+<li><p>队长有限，即等待的空间是有限的</p></li>
+<li><p>等待时间有限，即顾客在系统中的等待时间不超过某一给定值<span class="math notranslate nohighlight">\(T\)</span>，当等待时间超过<span class="math notranslate nohighlight">\(T\)</span>时，顾客自动离去，不再回来</p></li>
+<li><p>逗留时间有限（等待时间和服务时间之和）</p></li>
+</ol>
+</li>
+</ul>
+</div>
+<div class="section" id="kendall">
+<h3><span class="section-number">3.2.4. </span>排队模型的符号表示:kendall符号<a class="headerlink" href="#kendall" title="Permalink to this headline">¶</a></h3>
+<p>一般表示法 <span class="math notranslate nohighlight">\(A/B/C/D/E/F\)</span></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A\)</span>:顾客来到时间间隔的分布类型</p></li>
+<li><p><span class="math notranslate nohighlight">\(B\)</span>:服务时间的分布类型</p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span>:服务员个数</p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span>:系统容量</p></li>
+<li><p><span class="math notranslate nohighlight">\(E\)</span>:顾客源个数</p></li>
+<li><p><span class="math notranslate nohighlight">\(F\)</span>:服务规则(如先到先服务<span class="math notranslate nohighlight">\(FCFS\)</span>,后到先服务<span class="math notranslate nohighlight">\(FCLS\)</span>)</p></li>
+</ul>
+<p>例”<span class="math notranslate nohighlight">\(M/M/1/k/\infty/FCFS\)</span>”表示顾客到达间隔时间和服务时间均服从负指数分布，一个服务台，系统至多容纳<span class="math notranslate nohighlight">\(k\)</span>个顾客,潜在的顾客数不限，先来先服务的排队系统。</p>
+<p>有时候，我们略去后三项，得到先来先服务的等待排队模型的三参数表示法即A/B/C，
+<span class="math notranslate nohighlight">\(M/M/c\)</span>  顾客到达间隔时间和服务时间均服从负指数分布，<span class="math notranslate nohighlight">\(C\)</span>个服务台的等待制排队模型。
+<span class="math notranslate nohighlight">\(M/G/1\)</span>  顾客到达间隔服从负指数分布，服务时间是<span class="math notranslate nohighlight">\(G\)</span>分布,单个服务台的等待制排队模型。</p>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">3.2.5. </span>排队系统的主要指标<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>研究排队问题的目的，是研究排队系统的运行效率估计服务质量，确定系统参数最优值，以决定系统的结构是否合理，设计改进措施等，所以必须确定用来判断系统运行优劣的基本数量指标，这些数量指标通常是</p>
+<ul class="simple">
+<li><p><strong>队长</strong>:是指系统中顾客(包括排队等待和正在接受服务的)的数目，它的期望值为<span class="math notranslate nohighlight">\(L_S\)</span>，而排队长度仅指，其期望记为<span class="math notranslate nohighlight">\(L_q\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+系统中的顾客数(队长) = 等待服务的顾客数+正被服务的顾客数
+\]</div>
+<p>所以<span class="math notranslate nohighlight">\(L_S,L_q\)</span>越大，说明服务效率越低。</p>
+<div class="math notranslate nohighlight">
+\[
+逗留时间=等待时间+服务时间
+\]</div>
+<ul class="simple">
+<li><p><strong>忙期</strong>:是指服务台连续繁忙的时间，即顾客从到达空闲服务台算起到服务台再次变为空闲时止的这段时间。这是服务台最关心数量指标，它直接关系到服务员工作强度，与忙期相对应的是闲期，这是指服务台连续保持空闲的时间长度；显然，在排队系统中忙期与闲期，是交替出现的。</p></li>
+</ul>
+<p>排队系统除了上述三个主要数量指标外，另外服务台的利用率(即服务员忙碌的时间在总时间中所占比例)、顾客损失率在排队论的研究中也是很重要的指标。</p>
+<div class="math notranslate nohighlight">
+\[
+服务机构的工作强度 = \frac{用于服务顾客的时间}{总时间}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+顾客损失率 = \frac{没有得到服务的顾客的个数}{总顾客数}
+\]</div>
+</div>
+<div class="section" id="id12">
+<h3><span class="section-number">3.2.6. </span>常用的概率分布<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h4><span class="section-number">3.2.6.1. </span>定长分布<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<p>定长分布简单来说就是，每一个顾客的服务时间都是定值。</p>
+</div>
+<div class="section" id="id14">
+<h4><span class="section-number">3.2.6.2. </span>均匀分布<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<p>在概率论和统计学中，均匀分布也叫矩形分布，它是对称概率分布，在相同长度间隔的分布概率是等可能的。 均匀分布由两个参数<span class="math notranslate nohighlight">\(a\)</span>和<span class="math notranslate nohighlight">\(b\)</span>定义，它们是数轴上的最小值和最大值，通常缩写为<span class="math notranslate nohighlight">\(U(a,b)\)</span>。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x)=\begin{cases}
+\dfrac{1}{b-a}, a&lt;x&lt;b\\
+0 , else
+\end{cases}
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">uniform</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span> 
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;classic&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">t_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">300</span><span class="p">)]</span>
+<span class="n">ft</span> <span class="o">=</span> <span class="p">[</span><span class="n">uniform</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span>  <span class="n">t_list</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_list</span><span class="p">,</span> <span class="n">ft</span><span class="p">,</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(t)$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="c1">#plt.text(4, 0.6, r&#39;$f(t)=\lambda e^{-\lambda t}, \quad t&gt;0$&#39;,fontsize = 20)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 1.2)
+</pre></div>
+</div>
+<img alt="../_images/queue-model_22_1.png" src="../_images/queue-model_22_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id15">
+<h4><span class="section-number">3.2.6.3. </span>正态分布<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>正态分布（Normal distribution），也称“常态分布”，又名高斯分布（Gaussian distribution），最早由A.棣莫弗在求二项分布的渐近公式中得到。C.F.高斯在研究测量误差时从另一个角度导出了它。P.S.拉普拉斯和高斯研究了它的性质。是一个在数学、物理及工程等领域都非常重要的概率分布，在统计学的许多方面有着重大的影响力。
+正态曲线呈钟型，两头低，中间高，左右对称因其曲线呈钟形，因此人们又经常称之为钟形曲线。</p>
+<div class="math notranslate nohighlight">
+\[
+f(x)=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{(x-\mu)^{2}}{2 \sigma^{2}}\right)
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">t_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1200</span><span class="p">)]</span>
+<span class="n">ft</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>       <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_list</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_list</span><span class="p">,</span> <span class="n">ft</span><span class="p">,</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(t)$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/queue-model_24_0.png" src="../_images/queue-model_24_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id16">
+<h4><span class="section-number">3.2.6.4. </span>泊松分布<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<p>泊松分布又叫泊松流，在排队论中成为最简单流。</p>
+<p>设<span class="math notranslate nohighlight">\(N(t)\)</span>表示在时间区间内<span class="math notranslate nohighlight">\([t_0,t_0 + \Delta t)\)</span>内到达的顾客数，是随机变量。
+当<span class="math notranslate nohighlight">\(N(t)\)</span>满足下列三个条件时，我们说顾客的到达符合泊松分布</p>
+<ol class="simple">
+<li><p>平稳性：在时间区间<span class="math notranslate nohighlight">\([t_0,t_0 + \Delta t)\)</span>内到达的顾客数，只与时间区间长度<span class="math notranslate nohighlight">\(\Delta t\)</span>有关而与起点<span class="math notranslate nohighlight">\(t_0\)</span>无关</p></li>
+<li><p>无后效性：在时间区间<span class="math notranslate nohighlight">\([t_0,t_0 + \Delta t)\)</span>内到达的顾客数，与<span class="math notranslate nohighlight">\(t_0\)</span>以前的顾客数独立</p></li>
+<li><p>普通性：在充分短的时间内<span class="math notranslate nohighlight">\(\Delta t\)</span>内，到达两个或者两个以上顾客的概率极小，可以忽略不计。</p></li>
+</ol>
+<p>根据概率论的知识，满足以上三个条件的时候，可以推出在<span class="math notranslate nohighlight">\(t\)</span>时间段内有<span class="math notranslate nohighlight">\(n\)</span>个顾客到达服务系统的概率为</p>
+<div class="math notranslate nohighlight">
+\[
+P_{n}(t)=\frac{(\lambda t)^{n}}{n !} e^{-\lambda t} \quad n=0,1,2, \cdots
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(t \geq 0\)</span> 代表时间长度。 <span class="math notranslate nohighlight">\(\lambda&gt;0\)</span>为常数，表示单位时间到达的顾客数，即为到达率。</p>
+<p>由于泊松流与实际生活中排队系统到达情况的相似性，目前排队论中的理论推导基本都是基于泊松流进行推导的。本课程的后续推导也将基于最简单流（泊松流）。</p>
+</div>
+<div class="section" id="id17">
+<h4><span class="section-number">3.2.6.5. </span>负指数分布<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<p>在概率论中，当顾客的到达服从泊松分布时，顾客到达的间隔时间必定服从负指数分布，负指数分布的概率密度函数为</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(t)=\left\{\begin{array}{cc}
+{\lambda e^{-\lambda t},} &amp; {t \geq 0} \\
+{0,} &amp; {t&lt;0}
+\end{array}\right.
+\end{split}\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\lambda&gt;0\)</span>与泊松分布一样，表示单位时间到达的顾客数，即为到达率。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Lambda</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">t_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
+<span class="n">ft</span> <span class="o">=</span> <span class="p">[</span><span class="n">Lambda</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Lambda</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_list</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_list</span><span class="p">,</span> <span class="n">ft</span><span class="p">,</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(t)$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$f(t)=\lambda e^{-\lambda t}, \quad t&gt;0$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/queue-model_27_0.png" src="../_images/queue-model_27_0.png" />
+</div>
+</div>
+<p>我们可以这么理解：<strong>泊松分布和负指数分布，是从两个角度，对同一个现象进行的描述。</strong></p>
+<ul class="simple">
+<li><p>泊松分布关注的是单位时间内到达（或者离去）的顾客个数</p></li>
+<li><p>负指数分布关注的是顾客到达（或者离去）的时间间隔</p></li>
+</ul>
+</div>
+<div class="section" id="id18">
+<h4><span class="section-number">3.2.6.6. </span>爱尔朗分布<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<p>设<span class="math notranslate nohighlight">\(v_1,v_2,\cdots, v_k\)</span>是<span class="math notranslate nohighlight">\(k\)</span>个相互独立的随机变量，服从相同参数<span class="math notranslate nohighlight">\(k\lambda\)</span>的负指数分布，那么其求和后</p>
+<div class="math notranslate nohighlight">
+\[
+T = v_1 + v_2 + \cdots + v_k 
+\]</div>
+<p>的概率分布为</p>
+<div class="math notranslate nohighlight">
+\[
+f_{k}(t)=\frac{k \lambda(k \lambda t)^{k-1}}{(k-1) !} e^{-k \lambda t} \quad, \quad t \geq 0, \quad k \geq 0, \quad \lambda \geq 0
+\]</div>
+<p>上面的分布称为<span class="math notranslate nohighlight">\(k\)</span>阶爱尔朗分布。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;classic&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline 
+<span class="k">def</span> <span class="nf">Erlang</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Lambda</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">k</span><span class="o">*</span><span class="n">Lambda</span><span class="o">*</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">Lambda</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">Lambda</span><span class="o">*</span><span class="n">t</span><span class="p">))</span>
+    <span class="n">den</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+    <span class="k">return</span>  <span class="n">num</span><span class="o">/</span><span class="n">den</span>
+
+<span class="n">Lambda</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">t_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span> <span class="o">*</span> <span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+    <span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">Erlang</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">Lambda</span><span class="p">,</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_list</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_list</span><span class="p">,</span><span class="n">f_list</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;k=&#39;</span> <span class="o">+</span>  <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$f_k(t)$&quot;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$f_k(t)$&#39;)
+</pre></div>
+</div>
+<img alt="../_images/queue-model_30_1.png" src="../_images/queue-model_30_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>当<span class="math notranslate nohighlight">\(k=1\)</span>时，爱尔朗分布就是指数分布</p></li>
+<li><p><span class="math notranslate nohighlight">\(k\)</span>增大时，图形逐渐变为对称的</p></li>
+<li><p><span class="math notranslate nohighlight">\(k \geq 30\)</span>时，近似于正态分布</p></li>
+</ul>
+<p>我们可以根据原始资料，由顾客到达的规律，对<span class="math notranslate nohighlight">\(\lambda\)</span>的经验分布进行估计。</p>
+<p>在后续讨论中，我们主要讨论<span class="math notranslate nohighlight">\(\lambda\)</span>的概率分布为<strong>负指数分布</strong>的情况。</p>
+</div>
+</div>
+<div class="section" id="id19">
+<h3><span class="section-number">3.2.7. </span>单服务台系统理论推导<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>标准<span class="math notranslate nohighlight">\(M/M/1\)</span>模型( <span class="math notranslate nohighlight">\(M/M/1/\infty/\infty\)</span> )是排队模型中最简单的一个模型，它是指顾客的到达符合参数为<span class="math notranslate nohighlight">\(\lambda\)</span>的泊松分布，服务时间服从参数为<span class="math notranslate nohighlight">\(\mu\)</span>的负指数分布，服务台的个数为1，顾客源的数量为无限，系统的容量无限，顾客到达间隔时间和服务时间之间相互独立，排队规则是先到先服务。</p>
+<p>服务时系统的状态转移图如下图</p>
+<p><img alt="状态转移图" src="https://cdn.kesci.com/upload/image/q2yhjoztyk.png?imageView2/0/w/960/h/960" /></p>
+<p>其状态平衡方程为</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left\{\begin{array}{l}
+{\lambda P_{0}=\mu P_{1}} \\
+{\lambda P_{n-1}+\mu P_{n+1}=\lambda P_{n}+\mu P_{n}(n \geq 1)}
+\end{array}\right.
+\end{split}\]</div>
+<p>其中，</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P_i\)</span>:系统中排队长度为<span class="math notranslate nohighlight">\(i\)</span>的概率</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lambda\)</span>:顾客到达速率</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span>:服务速率</p></li>
+</ul>
+<p>因为所有可能的状态概率求和为1</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{n=0}^{\infty} P_{n}=1
+\]</div>
+<p>结合幂级数展开</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{1-\rho} = 1+\rho+\rho^2+\rho^3 + \cdots+\rho^n (\rho&lt;1)
+\]</div>
+<p>可以得到</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp;P_{0}=1-\rho\\
+&amp;\mathrm{P}_{\mathrm{n}}=(1-\rho) \rho^{n}, \quad n \geq 1
+\end{aligned}
+\end{split}\]</div>
+<p>其中</p>
+<div class="math notranslate nohighlight">
+\[
+\rho=\frac{\lambda}{\mu}
+\]</div>
+<p>为单位时间顾客平均到达率与平均服务率的比值，反映了服务机构的忙碌或利用的程度。</p>
+<p>系统中顾客(包括排队等待和正在接受服务的)的数目定义为平均队长<span class="math notranslate nohighlight">\(L_s\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+L_{s} &amp;=\sum_{n=0}^{\infty} n P_{n}=\sum_{n=1}^{\infty} n(1-\rho) \rho^{n} \\
+&amp;=\left(\rho+2 \rho^{2}+3 \rho^{3}+\cdots\right)-\left(\rho^{2}+2 \rho^{3}+3 \rho^{4}+\cdots\right) \\
+&amp;=\rho+\rho^{2}+\rho^{3}+\cdots \\
+&amp;=\frac{\rho}{1-\rho}=\frac{\lambda}{\mu-\lambda}, 0&lt;\rho&lt;1
+\end{aligned}
+\end{split}\]</div>
+<p>在队列中排队等待的顾客数定义为平均排队长</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+L_{q} &amp;=\sum_{n=1}^{\infty}(n-1) P_{n}=\sum_{n=1}^{\infty} n P_{n}-\sum_{n=1}^{\infty} P_{n}=L_{s}-\rho \\
+&amp;=\frac{\rho^{2}}{(1-\rho)}=\frac{\rho \lambda}{\mu-\lambda}=\frac{\lambda^{2}}{\mu(\mu-\lambda)}
+\end{aligned}
+\end{split}\]</div>
+<p>正在预期接受服务的顾客数</p>
+<div class="math notranslate nohighlight">
+\[
+L=0 P_{0}+1\left(P_{1}+P_{2}+\ldots+P_{n}+\ldots\right)=1-P_{0}=1-(1-\rho)=\rho
+\]</div>
+<p>我们可以验证</p>
+<div class="math notranslate nohighlight">
+\[
+L_{s}=L_{q}+L
+\]</div>
+<p>其他指标的计算方法为
+从顾客到达时刻算起到他接受服务完毕为止所需要的时间，即是顾客在系统中所花费的总时间定义为平均逗留时间</p>
+<div class="math notranslate nohighlight">
+\[
+W_s = \dfrac{L_s}{\lambda}
+\]</div>
+<p>从顾客到达时间算起到他开始接受服务时止的这段时间定义为平均等待时间</p>
+<div class="math notranslate nohighlight">
+\[
+W_q = \dfrac{L_q}{\lambda}
+\]</div>
+<p>每个顾客的平均服务时间为<span class="math notranslate nohighlight">\(d\dfrac{1}{\mu}\)</span>,因此</p>
+<div class="math notranslate nohighlight">
+\[
+W_s = W_q + \dfrac{1}{\mu}
+\]</div>
+<div class="admonition-m-m-1 admonition">
+<p class="admonition-title"><span class="math notranslate nohighlight">\(M/M/1\)</span>模型计算案例</p>
+<p>已知顾客到达快餐定的频率为平均6分钟一个人，服务员对顾客的平均服务时间为4分钟一个人，到达时间和服务时间都服从负指数分布。请回答以下问题</p>
+<ol class="simple">
+<li><p>服务员空闲的概率</p></li>
+<li><p>排队等待服务员服务的平均顾客数</p></li>
+<li><p>顾客在快餐店的平均逗留时间</p></li>
+<li><p>服务员平均每小时将为多少顾客提供服务</p></li>
+</ol>
+</div>
+<p>根据题意，该模型是标准的<span class="math notranslate nohighlight">\(M/M/1\)</span>模型</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda = 10 人/小时, \mu = 15人/小时, \rho = \dfrac{2}{3}
+\]</div>
+<p>(1)</p>
+<div class="math notranslate nohighlight">
+\[
+P_{0}=1-\rho=1-\frac{2}{3}=\frac{1}{3}
+\]</div>
+<p>(2)</p>
+<div class="math notranslate nohighlight">
+\[
+L_{q}=\frac{\rho 2}{1-\rho}=\frac{\left(\frac{2}{3}\right)^{2}}{1-\frac{2}{3}}=\frac{4}{3}(人)
+\]</div>
+<p>(3)</p>
+<div class="math notranslate nohighlight">
+\[
+L_{s}=\frac{\rho}{1-\rho}=\frac{\frac{2}{3}}{1-\frac{2}{3}}=2 (人)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+W_{s}=\frac{L_{s}}{\lambda}=\frac{2}{10}=\frac{1}{5} (小时) = 12 （分钟）
+\]</div>
+<p>(4) 如果服务员一直繁忙，平均每小时服务15人，由(1)知，其繁忙率为<span class="math notranslate nohighlight">\(\dfrac{2}{3}\)</span>，因此平均每小时服务10人。</p>
+</div>
+<div class="section" id="id20">
+<h3><span class="section-number">3.2.8. </span>多服务台系统理论推导<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>标准<span class="math notranslate nohighlight">\(M/M/c\)</span>模型( <span class="math notranslate nohighlight">\(M/M/c/\infty/\infty\)</span> )是指顾客的到达符合参数为<span class="math notranslate nohighlight">\(\lambda\)</span>的泊松分布，服务时间服从参数为<span class="math notranslate nohighlight">\(\mu\)</span>的负指数分布，服务台的个数为<span class="math notranslate nohighlight">\(c\)</span>，顾客源的数量为无限，系统的容量无限，顾客到达间隔时间和服务时间之间相互独立，排队规则是先到先服务。其生灭过程如下图所示</p>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/q30r1rz097.png?imageView2/0/w/960/h/960" /></p>
+<p>状态平衡方程</p>
+<div class="math notranslate nohighlight">
+\[
+{\lambda P_{0}=\mu P_{1}} 
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\lambda P_{n-1}+(n+1) \mu P_{n+1}=(\lambda+n \mu) P_{n},( 1 \leq n &lt; c )
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+{c \mu P_{n+1}+\lambda P_{n-1}=(\lambda+c \mu) P_{n}, (n \geq c)}
+\]</div>
+<p>得到每个状态的概率为（具体推导过程略）</p>
+<div class="math notranslate nohighlight">
+\[
+P_{0}=\left[\sum_{k=0}^{c-1} \frac{1}{k !}\left(\frac{\lambda}{\mu}\right)^{k}+\frac{1}{c !} \frac{1}{1-\rho}\left(\frac{\lambda}{\mu}\right)^{c}\right]^{-1}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P_{n}={\dfrac{1}{n !}\left(\dfrac{\lambda}{\mu}\right)^{n} P_{0},(n &lt; c)} 
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P_{n}= {\dfrac{1}{c ! c^{n-c}}\left(\dfrac{\lambda}{\mu}\right)^{n} P_{0},(n \geq c)}
+\]</div>
+<p>其中</p>
+<div class="math notranslate nohighlight">
+\[
+\rho = \frac{\lambda}{c\mu}
+\]</div>
+<p>其他指标：</p>
+<p>平均排队长</p>
+<div class="math notranslate nohighlight">
+\[
+L_q=\sum_{n=c+1}^{\infty}(n-c) P_{n}=\frac{(c \rho)^{c} \rho}{c !(1-\rho)^{2}} P_{0}
+\]</div>
+<p>平均队长</p>
+<div class="math notranslate nohighlight">
+\[
+L_{s}=L_{q}+\frac{\lambda}{\mu}
+\]</div>
+<p>平均逗留时间</p>
+<div class="math notranslate nohighlight">
+\[
+W_{s}=\frac{L_{s}}{\lambda}
+\]</div>
+<p>平均等待时间</p>
+<div class="math notranslate nohighlight">
+\[
+W_{q}=\frac{L_{q}}{\lambda}
+\]</div>
+<div class="admonition-m-m-c admonition">
+<p class="admonition-title"><span class="math notranslate nohighlight">\(M/M/c\)</span>模型计算案例</p>
+<p>某银行有三个出纳员，顾客的到达服从泊松分布，平均每小时达到30人，顾客排成一队。出纳员对顾客的服务时间服从负指数分布，平均每小时可以服务12人。试求</p>
+<ol class="simple">
+<li><p>三名出纳员都忙的概率以及该银行的主要运行指标</p></li>
+<li><p>若所有的顾客都排成三队，顾客平均每小时到达10人，计算该银行的主要运行指标。</p></li>
+<li><p>对比以上两个指标，你能得到什么结论？</p></li>
+</ol>
+</div>
+<p><strong>解</strong>：</p>
+<p>(1) 根据题意，这是标准的<span class="math notranslate nohighlight">\(M/M/c\)</span>模型，<span class="math notranslate nohighlight">\(c=3\)</span>
+<span class="math notranslate nohighlight">\(\lambda = 30（人/小时）， \mu = 12 （人/小时）, \dfrac{\lambda}{\mu} =\dfrac{5}{2}, \rho = \dfrac{\lambda}{c\mu} = \dfrac{5}{6}\)</span>
+则有，</p>
+<div class="math notranslate nohighlight">
+\[
+P_{0}=\left[\frac{\left(\frac{5}{2}\right)^{0}}{0 !}+\frac{\left(\frac{5}{2}\right)^{1}}{1 !}+\frac{\left(\frac{5}{2}\right)^{2}}{2 !}+\frac{\left(\frac{5}{2}\right)^{3}}{3 !} \times \frac{1}{1-\frac{5}{6}}\right]^{-1}=0.0449
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P(n \geq 3)=\frac{\left(\frac{5}{2}\right)^{3}}{3 !} \times 0.0449=0.117
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+L_{q}=\frac{\left(\frac{5}{2}\right)^{3} \times \frac{5}{6}}{6 \times\left(1-\frac{5}{6}\right)} \times 0.0449=3.51
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+L_{s}=L_{q}+\frac{\lambda}{\mu}=3.51+2.5=6.01
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+W_{s}=\frac{L_{s}}{\lambda}=\frac{6.01}{30}=0.2
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+W_{q}=\frac{L_{q}}{\lambda}=\frac{3.51}{30}=0.12
+\]</div>
+<p>(2) 该模型为三个标准的<span class="math notranslate nohighlight">\(M/M/1\)</span>模型</p>
+<p><span class="math notranslate nohighlight">\(\lambda = 10（人/小时）， \mu = 12 （人/小时）,  \rho = \dfrac{\lambda}{\mu} = \dfrac{5}{6}\)</span></p>
+<p>则有，</p>
+<div class="math notranslate nohighlight">
+\[
+P_{0}=1-\rho=\frac{1}{6} \quad P(n \geq 1)=1-P_{0}=\frac{5}{6}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+L_{s}=\frac{\lambda}{\mu-\lambda}=\frac{10}{12-10}=5
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+L_{q}=L_{s}-\rho=\frac{25}{6}=4.17
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+W_{s}=\frac{L_{s}}{\lambda}=\frac{5}{10}=0.5
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+W_{q}=W_{s}-\frac{1}{\mu}=0.5-\frac{1}{12}=0.417
+\]</div>
+<p>(3) 比较前两问的结果，不难发现。单队列的排队系统比多队列的排队系统空闲概率低，而且单队列排队长度也比多队列长，逗留时间和等待时间也都比多队列长。可见，排队方式对排队系统的运行指标影响还是很大的。</p>
+</div>
+</div>
+<div class="section" id="id21">
+<h2><span class="section-number">3.3. </span>使用蒙特卡洛方法模拟排队系统<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MM1</span><span class="p">(</span><span class="n">Lambda</span><span class="p">,</span><span class="n">mu</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Lambda</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">mu</span><span class="o">*</span><span class="p">(</span><span class="n">mu</span><span class="o">-</span><span class="n">Lambda</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lambda1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">size</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">lambda1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+<span class="n">t1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.10212935e-02, 3.43839234e-02, 1.29425173e-02, 2.01574293e+00,
+       3.95923649e-01, 3.22628334e+00, 1.70463916e+00, 4.25268837e+00,
+       4.55862480e-01, 4.31614420e-01, 1.42269905e+00, 5.73886243e-01,
+       2.06740966e-01, 4.75452345e-01, 5.22357603e+00, 6.39296630e-02,
+       6.46127855e-01, 3.31902899e-01, 6.98067147e-01, 1.16354280e+00,
+       1.04606194e+00, 8.64788050e-01, 7.03505707e-01, 8.98148161e-01,
+       2.58326490e-01, 4.69089519e-03, 5.12110382e-01, 2.42954509e+00,
+       1.99818737e+00, 9.34847305e-01, 1.15755473e+00, 1.14478155e+00,
+       1.46014726e+00, 2.35911260e-01, 1.53193837e+00, 1.76439019e+00,
+       2.37476992e-01, 1.03869171e+00, 2.11131490e+00, 2.14333449e+00,
+       2.80335931e+00, 8.56025764e-01, 8.24063105e-02, 2.28144937e+00,
+       6.11857097e-02, 6.17268493e-01, 3.03412026e-02, 3.24593257e-01,
+       1.91594459e+00, 2.12231848e+00, 1.76803533e+00, 3.72430193e-01,
+       5.73168975e-02, 2.25615938e-01, 1.83498365e+00, 4.78744373e+00,
+       2.70892795e-02, 3.33056281e-01, 4.96121040e-01, 1.05155331e+00,
+       4.52219100e-01, 4.24980577e-01, 2.60805661e-01, 8.46397824e-02,
+       6.37362470e-01, 1.22309442e-01, 4.27705180e-02, 7.28221600e-02,
+       7.25408754e-02, 7.14602420e-01, 2.23580267e+00, 5.54002169e-01,
+       9.89219842e-01, 1.23331017e-01, 1.05967584e-01, 1.21897755e-01,
+       6.53529921e-01, 3.85327807e-01, 2.70863147e+00, 2.57864039e+00,
+       4.67989241e+00, 4.55947197e-01, 9.33862626e-02, 1.51347234e+00,
+       2.27435536e-01, 1.65519675e+00, 4.97866770e-01, 2.49638529e-01,
+       5.24998599e-01, 1.75751191e-01, 2.16903860e+00, 1.17398578e-01,
+       2.27149547e+00, 1.86986881e-01, 1.67793339e-01, 3.66569794e-01,
+       7.43543119e-02, 9.99563919e-01, 3.35039944e+00, 1.91955753e-01])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1">#np.random.seed(4)</span>
+<span class="n">lambda1</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">lambdalist</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">)]</span>
+<span class="n">MC</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">QC</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">lambda1</span> <span class="ow">in</span> <span class="n">lambdalist</span><span class="p">:</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="mi">10000</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">lambda1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">mu1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+    
+    <span class="n">ArrTime</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">LeaveTime</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">WaitingTime</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># 累计到达时间</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t1</span><span class="p">:</span>
+        <span class="n">ArrTime</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ArrTime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span>
+        
+    
+    <span class="c1">## 对于第一个顾客来说，可以直接接受服务,不需要等待</span>
+    <span class="n">LeaveTime</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">WaitingTime</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">):</span>
+        <span class="c1"># 更新到达时刻空闲队伍的个数</span>
+        <span class="n">CurrentTime</span> <span class="o">=</span> <span class="n">ArrTime</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">CurrentTime</span> <span class="o">&gt;</span> <span class="n">LeaveTime</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">WaitingTime</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">LeaveTime</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CurrentTime</span><span class="o">+</span><span class="n">t2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">WaitingTime</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LeaveTime</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">CurrentTime</span><span class="p">)</span>
+            <span class="n">LeaveTime</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LeaveTime</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">t2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">MC</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">WaitingTime</span><span class="p">))</span>
+    <span class="n">QC</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MM1</span><span class="p">(</span><span class="n">lambda1</span><span class="p">,</span><span class="n">mu1</span><span class="p">)</span><span class="o">/</span><span class="n">lambda1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">MC</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">QC</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\lambda$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$W_q$&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/queue-model_56_0.png" src="../_images/queue-model_56_0.png" />
+</div>
+</div>
+<p><strong>结合蒙特卡洛模拟，可以避开繁杂的理论推导，直观且容易编程。</strong></p>
+</div>
+<div class="section" id="id22">
+<h2><span class="section-number">3.4. </span>作业<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<div class="admonition- admonition">
+<p class="admonition-title">作业</p>
+<ul class="simple">
+<li><p>某医院手术室根据病人来诊和完成手术时间的记录，经统计分析算出每小时病人平均 到达率为 2.1 人/h，为泊松分布。每次手术平均时间 0.4h/人，即平均服务率是 2.5 人/h，服从负指数分布。求:</p>
+<ul>
+<li><p>(1)病房中病人的平均数(<span class="math notranslate nohighlight">\(L\)</span>)。</p></li>
+<li><p>(2)排队等待手术病人的平均数( <span class="math notranslate nohighlight">\(\left.L_{q}\right)\)</span></p></li>
+<li><p>(3)病人在病房中平均逗留时间(<span class="math notranslate nohighlight">\(W\)</span>)。</p></li>
+<li><p>(4)病人排队等待时间(期望值队 <span class="math notranslate nohighlight">\(\left.W_{q}\right)\)</span></p></li>
+</ul>
+</li>
+<li><p>到达某铁路售票处顾客分两类：一类买南方线路票，到达率为<span class="math notranslate nohighlight">\(\lambda_1\)</span>/小时，另一类买北方线路票，到达率为<span class="math notranslate nohighlight">\(\lambda_2\)</span>/小时，以上均服从泊松分布。该售票处设两个窗口，各窗口服务一名顾客时间均服从参数<span class="math notranslate nohighlight">\(\mu=10\)</span>的指数分布。试比较下列情况时顾客分别等待时间 ：</p>
+<ul>
+<li><p>两个窗口分别售南方票和北方票；</p></li>
+<li><p>每个窗口两种票均出售。（分别比较 <span class="math notranslate nohighlight">\(\lambda_1 = \lambda_2 = 2,4,6,8,10\)</span>时的情形）</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="markov-chain.html" title="previous page"><span class="section-number">2. </span>马氏链模型</a>
+    <a class='right-next' id="next-link" href="matplotlib.html" title="next page"><span class="section-number">1. </span>Matplotlib</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>
