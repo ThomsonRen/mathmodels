@@ -6,7 +6,9 @@
 
 - part: 预备知识
   chapters:
+  - file: docs/contest-intro
   - file: docs/matrix-and-lg
+  - file: docs/anaconda
 
 
 - part: 数学建模基础课
@@ -35,9 +37,10 @@
 
 
 
-# - part: 作业解答
-#   chapters:
-#     - file: docs/answers
+- part: 作业解答
+  chapters:
+    - file: docs/answers
+    
 
 
 
