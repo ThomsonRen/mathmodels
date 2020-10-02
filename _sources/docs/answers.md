@@ -269,7 +269,649 @@ res
 
 
 
+
+
 ## 预测模型
+
+
+
+1. 用如下代码生成一个包含了随机变动的正弦函数曲线，请你使用多项式拟合方法，研究用二次，三次，以及更高次函数拟合的情况，给你你认为的最好的拟合方法。
+
+```{code-cell} ipython3
+---
+id: BD47351FE79E4878BC2EC6CDAAB0D273
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+x = [0.1 * i for i in range(100)]
+y = [np.sin(t) + np.random.random() for t in x]
+plt.scatter(x,y)
+```
+
++++ {"id": "AF30D753C5534F8389449566DB68CA94", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+### 2次
+
+```{code-cell} ipython3
+---
+id: B66CAE98F0F44D098345E0CAE2F26FC6
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+from scipy.optimize import curve_fit  # 导入非线性拟合函数curve_fit
+
+# 定义需要拟合的函数形式，这里使用二次函数的一般式 y = ax^2 + bx + c
+def f2(x, a, b, c):
+    return a * x**2 + b*x + c
+
+
+plt.scatter(x, y)  # 绘制散点图
+popt, pcov = curve_fit(f2, x, y)    # 执行非线性拟合
+# popt数组中，三个值分别是待求参数a,b,c
+y1 = [f2(i, popt[0], popt[1], popt[2]) for i in x]   # 计算得到拟合曲线上的一系列点
+plt.plot(x, y1, 'r')   # 绘制拟合曲线
+```
+
++++ {"id": "BB58ECD77937499DA00AA25DC6A73C12", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+### 3次
+
+```{code-cell} ipython3
+---
+id: A98241D68FE6470D99E48822138AD44A
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+from scipy.optimize import curve_fit  # 导入非线性拟合函数curve_fit
+
+# 定义需要拟合的函数形式，这里使用二次函数的一般式 y = ax^2 + bx + c
+def f2(x, a, b, c,d):
+    return a * x**3 + b*x**2 + c*x +d
+
+
+plt.scatter(x, y)  # 绘制散点图
+popt, pcov = curve_fit(f2, x, y)    # 执行非线性拟合
+# popt数组中，三个值分别是待求参数a,b,c
+y1 = [f2(i, popt[0], popt[1], popt[2], popt[3]) for i in x]   # 计算得到拟合曲线上的一系列点
+plt.plot(x, y1, 'r')   # 绘制拟合曲线
+```
+
++++ {"id": "18D4EA1BA2E4434F8BA4361A413FDD9C", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+### 4次
+
+```{code-cell} ipython3
+---
+id: 92A7A389DAD74874BC11D7221431FCAD
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+from scipy.optimize import curve_fit  # 导入非线性拟合函数curve_fit
+
+# 定义需要拟合的函数形式，这里使用二次函数的一般式 y = ax^2 + bx + c
+def f2(x, a, b, c,d,e):
+    return a * x**4 + b*x**3 + c*x**2 +d*x +e
+
+
+plt.scatter(x, y)  # 绘制散点图
+popt, pcov = curve_fit(f2, x, y)    # 执行非线性拟合
+# popt数组中，三个值分别是待求参数a,b,c
+y1 = [f2(i, popt[0], popt[1], popt[2], popt[3],popt[4]) for i in x]   # 计算得到拟合曲线上的一系列点
+plt.plot(x, y1, 'r')   # 绘制拟合曲线
+```
+
++++ {"id": "65F97070B7B1464D8133CA9DB12388DC", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+四次多项式已经比较能够描述数据的变化趋势。
+
+```{code-cell} ipython3
+---
+id: 2BC31C0E744C41158999EC0DDABF4EC5
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+
+```
+
++++ {"id": "311DB17A9F124CE9918142A76508411C", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+2.给出下面的`interest rate`，`unemployment rate`和`stock index price`的数据，请你通过多元线性回归的方法，通过`interest rate`，`unemployment rate`来预测`stock index price`。给出你所得到的计算公式。你可以调用 `sklearn.linear_model`中的 `LinearRegression` 函数，关于该函数的使用方法，可以参考官方文档。
+![Image Name](https://cdn.kesci.com/upload/image/qgbqq4833c.png?imageView2/0/w/960/h/960)
+
+```{code-cell} ipython3
+---
+id: 0DE7368BBA4B4F79B55495770D00DCE4
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 输入数据
+interest_rate = [2.75,2.5,2.5,2.5,2.5,2.5,
+                2.5,2.25,2.25,2.25,2,2,2,1.75,1.75,
+                1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75,]
+                
+unemployment_rate = [5.3,5.3,5.3,5.3,5.4,5.6,5.5,5.5,5.5,5.6,
+                    5.7,5.9,6,5.9,5.8,6.1,6.2,6.1,6.1,
+                    6.1,5.9,6.2,6.2,6.1]
+                    
+stock_index_price = [1464,1394,1357,1293,1256,1254,1234,1195,1159,
+                    1167,1130,1075,1047,965,943,958,971,949,884,
+                    866,876,822,704,719]
+
+X = [interest_rate,unemployment_rate]
+X = np.array(X).T
+Y = stock_index_price
+```
+
+```{code-cell} ipython3
+---
+id: DC821CCED5D243008F94066F9B5C007E
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+from sklearn.linear_model import LinearRegression  # 导入线性回归函数LinearRegression
+lrModel = LinearRegression()     # 初始化回归模型
+lrModel.fit(np.array(X),Y)  # 输入需要回归的数据
+```
+
+```{code-cell} ipython3
+---
+id: 746647D27B334E59A75F95B6EC4029C9
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+print('截距为：', lrModel.intercept_)  # 输出截距
+print('系数为：', lrModel.coef_)    # 输出系数
+score = lrModel.score(X,Y)
+print('R2为：', score)    # 输出相关系数R2
+```
+
++++ {"id": "4EC72442EF824614ADF1FD4B590C1EC3", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+$$
+S = 345.54 I - 250 U + 1789
+$$
+
++++ {"id": "DE5EFF8DD785478992524CEA17647CAA", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+我们来对比预测值和真实值
+
+```{code-cell} ipython3
+---
+id: 2FA4CCBF837545FFA9977317E49BCC68
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 预测值
+import matplotlib.pyplot as plt
+Predicted_value = 345.54 * np.array(interest_rate) - 250 * np.array(unemployment_rate) + 1789
+plt.plot(Predicted_value,label = 'Predicted_value')
+plt.plot(Y,label = 'Observation')
+plt.legend()
+```
+
++++ {"id": "6A4E2399235C4D49A1AA775A567BA188", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+效果很不错，我们来看一下他们的平均相对误差。
+
+```{code-cell} ipython3
+---
+id: AC041090ABFA480F85BA89AC6DAD436A
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+np.mean((Predicted_value - Y)/Y)
+```
+
++++ {"id": "E2DE3EE41DDC49C49BB076FB1D033C73", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+只有0.2%的误差。
+
+```{code-cell} ipython3
+---
+id: 4765B4D9C7484D2382DA687CA990F2DC
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+
+```
+
+
+
+
+
+## 排队论模型
+
+
+**问题1.** 某医院手术室根据病人来诊和完成手术时间的记录，经统计分析算出每小时病人平均到达率为$2.1人/h$，为泊松分布。每次手术时间$2.5人/h$，服从负指数分布。求:
+- 病房中病人的平均数($L$)。
+- 排队等待手术病人的平均数( $\left.L_{q}\right)$
+- 病人在病房中平均逗留时间($W$)。
+- 病人排队等待时间(期望值队 $\left.W_{q}\right)$
+
+**问题2.** 到达某铁路售票处顾客分两类：一类买南方线路票，到达率为$\lambda_1$/小时，另一类买北方线路票，到达率为$\lambda_2$/小时，以上均服从泊松分布。该售票处设两个窗口，各窗口服务一名顾客时间均服从参数$\mu=10$的指数分布。试比较下列情况时顾客分别等待时间：
+- 两个窗口分别售南方票和北方票；
+- 每个窗口两种票均出售。（分别比较 $\lambda_1 = \lambda_2 = 2,4,6,8,10$时的情形）
+
++++ {"id": "CE24B81AAFE545E281DC332178B0252D", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+### 问题1
+该手术室为 $M / M /1/$系统
+
+$$
+\lambda=2.1 \text { 人/h, } 
+$$
+
+$$
+\mu=2.5 \text { 人/h } 
+$$
+
+$$
+\rho=\frac{\lambda}{\mu}=\frac{2.1}{2.5}=0.84
+$$
+
+(1)病房中病人的平均数: 
+
+$$
+L=\frac{\lambda}{\mu-\lambda}=\left(\frac{2.1}{2.5-2.1}\right)人=5.25 人
+$$
+
+(2)排队等待手术病人的平均数: 
+
+$$
+\quad L_{q} =\frac{\lambda^{2}}{\mu(\mu-\lambda)}=4.41人
+$$
+
+(3)病人在病房中平均逗留的时间: 
+
+$$
+\quad W=\frac{1}{\mu-\lambda}=\left(\frac{1}{2.5-2.1}\right) h=2.5 h
+$$
+
+(4)病人排队等待时间: 
+
+$$
+\quad W_{q}=W_{\rho}=\frac{\lambda}{\mu(\mu-\lambda)}=2.1 h
+$$
+
++++ {"id": "3B841B7108A6455484A4F7EBB8873565", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+### 问题2
+
++++ {"id": "96E30A54D75345FCB084E4EE73CC1E6E", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+如果是分售南方和北方票的话，就是两个$M/M/1$模型，$\mu = 10$，在这个模型中，计算排队时间的公式为
+
+$$
+W_q = \frac{\lambda}{\mu(\mu-\lambda)}
+$$
+
+如果是合并发售南方和北方票的话，就是一个$M/M/2$模型，在这个模型中，$c=2$，计算排队长度的公式为
+
++++ {"id": "F55431B3C39A4EC7873D13019C81BFB1", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+$$
+Wq = \frac{L_q}{\lambda}=\frac{(c \rho)^{c} \rho}{\lambda c !(1-\rho)^{2}} P_{0}
+$$
+
+其中，
+
+$$
+P_{0}=\left[\sum_{k=0}^{c-1} \frac{1}{k !}\left(\frac{\lambda}{\mu}\right)^{k}+\frac{1}{c !} \frac{1}{1-\rho}\left(\frac{\lambda}{\mu}\right)^{c}\right]^{-1}
+$$
+
++++ {"id": "0EAA896866934EDB83421A8391FDA80E", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+带入数据计算得到
+
++++ {"id": "86132925B4C0468581048454A0D50ACB", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+$$
+\begin{array}{|l|l|l|}
+\hline \lambda_{1}=\lambda_{2} \text { 的值 } & \text { (a) 分售南方和北方票 } & \text { (b) 联合售票 } \\
+\hline 2 & 0.025 & 0.004167 \\
+4 & 0.0667 & 0.0190 \\
+6 & 0.15 & 0.05625 \\
+8 & 0.40 & 0.17777 \\
+\hline
+\end{array}
+$$
+
++++ {"id": "AA8F0F5BF05C433694F8444A22071EF7", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+计算代码如下
+
+```{code-cell} ipython3
+---
+id: 3BFC432CBD71413F890FC34C7FCFE07B
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 单队伍
+import numpy as np
+Lambda = 2
+mu = 10
+W_q = Lambda/(mu*(mu-Lambda))
+W_q
+```
+
+```{code-cell} ipython3
+---
+id: FB3EF8BF90E845FFA8CB24EEA57AD2DA
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 多队伍
+import numpy as np
+Lambda = 4
+c = 2
+mu = 10
+rho = Lambda/(c*mu)
+S = 0
+for k in range(c):
+    S = S + 1/np.math.factorial(k)*(Lambda/mu)**k
+P_0 = (S + 1/np.math.factorial(c)/(1-rho)*(Lambda/mu)**c)**(-1)
+W_q = (c*rho)**c * rho/(Lambda *np.math.factorial(c)*(1-rho)**2 ) * P_0
+W_q
+```
+
+## 微分方程模型
+
+```{admonition} 微分方程模型作业
+考虑种群竞争模型
+
+$$
+\left\{
+\begin{aligned}
+& \dfrac{\mathrm{d}x_1}{\mathrm{d}t}=r_{1} x_{1}\left(1-\frac{x_{1}}{N_{1}}-\sigma_{1} \frac{x_{2}}{N_{2}}\right)\\
+& \dfrac{\mathrm{d}x_2}{\mathrm{d}t}=r_{2} x_{2}\left(1-\sigma_{2} \frac{x_{1}}{N_{1}}-\frac{x_{2}}{N_{2}}\right)
+\end{aligned}\right.
+$$
+
+取$r_1 = 0.2, r_2 = 0.3, \sigma_1 = 1.2,\sigma_2 = 0.5,N_1 = 100,N_2 = 70, x_1(0) = 30,x_2(0) = 40$,使用本节课程学到的数值方法研究两个种群的发展模式。
+
+```
+```{code-cell} ipython3
+---
+id: 5B714203E9034C28887497E7E0F671EE
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+r1 = 0.2
+r2 = 0.3
+N1 = 100
+N2 = 70
+sigma1 = 1.2
+sigma2 = 0.5
+x1_0 = 30
+x2_0 = 40
+
+deltaT = 0.01
+TotTime = 40
+
+timeStep = TotTime/deltaT
+
+x1_list = []
+x2_list = []
+x1_list.append(x1_0)
+x2_list.append(x2_0)
+
+TimeList = [i*deltaT for i in range(int(timeStep))]
+
+for time in TimeList:
+    x1_list.append(x1_list[-1] +deltaT * (r1 *x1_list[-1])*(1 - x1_list[-1]/N1 - sigma1 * x2_list[-1]/N2))
+    x2_list.append(x2_list[-1] +deltaT * (r2 *x2_list[-1])*(1 - sigma2* x1_list[-1]/N1 -  x2_list[-1]/N2))
+plt.figure(figsize = (20,5))
+plt.plot(TimeList,x1_list[:-1])
+plt.plot(TimeList,x2_list[:-1])
+```
+
+
+
+
+
+
+
+## 马氏链作业
+
+
+**问题1： ** 在英国，工党成员的第二代加入工党的概率为0.5，加入保守党的概率为0.4，加入自由党的概率为0.1。而保守党成员的第二代加入工党的概率为0.7，加入保守党的概率为0.2，加入自由党的概率为0.1。而自由党成员的第二代加入工党的概率为0.2，加入保守党的概率为0.4，加入自由党的概率为0.4。
+也就是说，其转移概率矩阵为：
+
+|      	|   	|     	| 下一代党派 	|     	|
+|------	|---	|-----	|------	|-----	|
+|      	|   	| 工党   	| 保守党    	| 自由党   	|
+|      	| 工党 	| 0.5 	| 0.4  	| 0.1 	|
+| 上一代党派 	| 保守党	| 0.7 	| 0.2  	| 0.1 	|
+|      	| 自由党 	| 0.2 	| 0.4  	| 0.4 	|
+
+
+- 求自由党成员的第三代加入工党的概率是多少？
+- 在经过较长的时间后，各党成员的后代加入各党派的概率分布是否具有稳定性？
+
+
+
+
+**问题2： ** 社会学的某些调查结果指出：儿童受教育的水平依赖于他们父母受教育的水平。调查过程是将人们划分为三类：$E$ 类，这类人具有初中或初中以下的文化程度；$S$类，这类人具有高中文化程度；$C$ 类，这类人受过高等教育。当父或母（指文化程度较高者）是这三类人中某一类型时，其子女将属于这三种类型中的任一种的概率由下面给出
+
+|      	|   	|     	| 孩子 	|     	|
+|------	|---	|-----	|------	|-----	|
+|      	|   	| $E$   	| $S$    	| $C$   	|
+|      	| $E$ 	| 0.7 	| 0.2  	| 0.1 	|
+| 父母 	| $S$ 	| 0.4 	| 0.4  	| 0.2 	|
+|      	| $C$ 	| 0.1 	| 0.2  	| 0.7 	|
+问：
+- 属于$S$ 类的人们中，其第三代将接受高等教育的概率是多少？
+- 假设不同的调查结果表明，如果父母之一受过高等教育，那么他们的子女总
+可以进入大学，修改上面的转移矩阵。
+- 根据2的解，每一类型人的后代平均要经过多少代，最终都可以接受高
+等教育？
+
++++ {"id": "44432CFB52EF4BE18671A7B7E72F9488", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+### 第一题
+
++++ {"id": "B68F4C03AC0D49FC86155B5D2A76575D", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+本问题的转移概率矩阵为
+
+$$
+P=\left[\begin{array}{cccc}
+{0.5} & {0.4} & {0.1}  \\ 
+{0.7} & {0.2} & {0.1} \\ 
+{0.2} & {0.4} & {0.4}.
+\end{array}\right]
+$$
+
++++ {"id": "11CAD266F34F47F38293CAB908875626", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+自由党成员的第三代加入工党的概率
+
+$$
+p = 0.2 \times 0.5 (自-工-工) + 0.4 \times 0.7 (自-保-工) + 0.4 \times 0.2 (自-自-工) = 0.46
+$$
+接下来考察经过较长的时间后，各党成员的后代概率分布的稳定性。可以通过解析求解和计算机求解两个方法，先来看解析求解
+假设各党成员的概率分布存在稳定解，且其稳定值为$p_1,p_2,p_3$，那么有如下条件成立
+
++++ {"id": "7FE6C094ACAA4A9B8DEB3D5F766C8814", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+$$
+\left\{\begin{array}{l}
+{p_{1}=0.5 p_{1}+0.7 p_{2}+0.2 p_{3}} \\ 
+{p_{2}=0.4 p_{1}+0.2 p_{2}+0.4 p_{3}} \\ 
+{p_{3}=0.1 p_{1}+0.1 p_{2}+0.4 p_{3}} \end{array}\right.
+$$
+
+并且
+
+$$
+p_1+p_2 + p_3 = 1
+$$
+
++++ {"id": "0413C1F2FA77484785139933228EEE47", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+解得
+
+$$
+p_1 =\frac{11}{21}, p_2 =\frac{1}{3} , p_3 = \frac{1}{7}
+$$
+
++++ {"id": "0E7E0750077D451D85F40A4C22252DB4", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+接下来看计算机数值解
+
+```{code-cell} ipython3
+---
+id: BD09198842D745CD8F539AFE5856B334
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 转移概率矩阵
+P = np.array([[0.5,0.4,0.1],[0.7,0.2,0.1],[0.2,0.4,0.4]])
+## 初始状态
+P_0 = [0.5,0.4,0.1]
+##
+for i in range(10):
+    P_0 = np.dot(P_0,P)
+    print(P_0)
+```
+
++++ {"id": "8E207D8A073F43F5B03485AF29CF2691", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+最后稳定在$[p_1,p_2,p_3] = [0.524,0.333,0.143]$,与解析结果一致。
+
++++ {"id": "103155713BA34E36B2F0F3C3F70015F6", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+### 第二题
+
++++ {"id": "B5A3565870F04D5C88AED3D167FB78B8", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+属于$S$ 类的人们中，其第三代将接受高等教育的概率
+
+$$
+p = 0.4 \times 0.1 + 0.4 \times 0.2 + 0.2 \times 0.7 = 0.26
+$$
+
++++ {"id": "E8A1A5C3841E4CD287E44544738EE35B", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+如果父母之一受过高等教育，那么他们的子女总可以进入大学，上面的转移矩阵修改为
+
+
+$$
+P=\left[\begin{array}{cccc}
+{0.7} & {0.2} & {0.1}  \\ 
+{0.4} & {0.4} & {0.2} \\ 
+{0} & {0} & {1}.
+\end{array}\right]
+$$
+
++++ {"id": "A4DAC8E2339A4DE58E8FBB8DA293F8AC", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+假设以后代有95%的概率进入大学为结束标准
+
+```{code-cell} ipython3
+---
+id: EEFF3DEEC98F415A84C07EB750B946EB
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 状态转移矩阵
+P = np.array([[0.7,0.2,0.1],[0.4,0.4,0.2],[0,0,1]])
+P_0 = [0.7,0.2,0.1]
+k = 1
+while P_0[2] < 0.95:
+    P_0 = np.dot(P_0,P)
+    print(P_0)
+    k = k +1
+print('E需要',k,'代')
+```
+
+```{code-cell} ipython3
+---
+id: 5C04D93ECEF94A33837DF00D8DEFFFBC
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 状态转移矩阵
+P = np.array([[0.7,0.2,0.1],[0.4,0.4,0.2],[0,0,1]])
+P_0 = [0.4,0.4,0.2]
+k = 1
+while P_0[2] < 0.95:
+    P_0 = np.dot(P_0,P)
+    print(P_0)
+    k = k +1
+print('S需要',k,'代')
+```
+
+```{code-cell} ipython3
+---
+id: 4B75F96D89CA4F848A97E644A810FF31
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+## 状态转移矩阵
+P = np.array([[0.7,0.2,0.1],[0.4,0.4,0.2],[0,0,1]])
+P_0 = [0,0,1]
+k = 1
+while P_0[2] < 0.95:
+    P_0 = np.dot(P_0,P)
+    print(P_0)
+    k = k +1
+print('C需要',k,'代')
+```
+
+```{code-cell} ipython3
+---
+id: 3719FED22DB840D28FE7EE09040AF932
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+
+
+
 
 
 
