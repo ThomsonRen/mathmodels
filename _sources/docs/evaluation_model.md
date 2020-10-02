@@ -690,6 +690,59 @@ $$
 
 ![Image Name](https://cdn.kesci.com/upload/image/q37c2m8er3.png?imageView2/0/w/640/h/640)
 
+```{code-cell} ipython3
+---
+jupyter: {}
+slideshow:
+  slide_type: slide
+tags: []
+---
+
+
+import warnings
+warnings.filterwarnings('ignore') ## 忽略警告信息
+
+li=[[100,90,100,84,90,100,100,100,100],
+    [100,100,78.6,100,90,100,100,100,100],
+    [75,100,85.7,100,90,100,100,100,100],
+    [100,100,78.6,100,90,100,94.4,100,100],
+    [100,90,100,100,100,90,100,100,80],
+    [100,100,100,100,90,100,100,85.7,100],
+    [100 ,100 ,78.6,100 ,90 , 100, 55.6,    100, 100],
+    [87.5,100,85.7, 100 ,100 ,100, 100 ,100 ,100],
+    [100 ,100, 92.9 , 100 ,80 , 100 ,100 ,100 ,100],
+    [100,90 ,100 ,100,100, 100, 100, 100, 100],
+    [100,100 ,92.9 , 100, 90 , 100, 100 ,100 ,100]]
+
+#转换为矩阵
+li = np.array(li)
+
+#最大最小标准化
+for i in range(li.shape[1]):
+    li[:,i] = (li[:,i] - min(li[:,i]))/(max(li[:,i]) - min(li[:,i]))
+
+#m,n为矩阵行和列数
+m, n = li.shape
+k = 1 / np.log(m)
+yij = li.sum(axis=0)  # axis=0列相加 axis=1行相加
+pij = li / yij
+test = pij * np.log(pij)
+
+#将nan空值转换为0
+test = np.nan_to_num(test)
+
+# 计算每种指标的信息熵
+ej = -k * (test.sum(axis=0))
+#计算每种指标的权重
+wi = (1 - ej) / np.sum(1 - ej)
+print(wi)
+```
+
+
+
+
+
+
 
 
 加权求和计算指标综合评分
@@ -757,6 +810,8 @@ $$
 这里的$x_{ij}$是标准化以后的数据。
 
 +++ {"id": "2F35B23D07344329ADF3116B626BA5C2", "jupyter": {}, "tags": [], "slideshow": {"slide_type": "slide"}, "mdEditEnable": false}
+
+
 
 
 ```{admonition} 思考
