@@ -349,26 +349,27 @@
 <p><strong>定义 1:</strong> 设<span class="math notranslate nohighlight">\(\left\{\xi_{t}, t \in T\right\}\)</span>是一族随机变量，<span class="math notranslate nohighlight">\(T\)</span> 是一个实数集合，若对任意实数 <span class="math notranslate nohighlight">\(t \in T, \xi_{t}\)</span>是一个随机变量，则称<span class="math notranslate nohighlight">\(\left\{\xi_{t}, t \in T\right\}\)</span> 为随机过程。</p>
 <p><span class="math notranslate nohighlight">\(T\)</span> 称为参数集合，参数<span class="math notranslate nohighlight">\(t\)</span>可以看作时间。<span class="math notranslate nohighlight">\(\xi_{t}\)</span> 的每一个可能取值称为随机过程的一个状态。其全体可能取值所构成的集合称为状态空间，记作<span class="math notranslate nohighlight">\(E\)</span>。当参数集合<span class="math notranslate nohighlight">\(T\)</span>为非负整数集时，随机过程又称随机序列。</p>
 <p>本章要介绍的<strong>马氏链就是一类特殊的随机序列</strong>。</p>
-<div class="admonition- admonition">
-<p class="admonition-title">马氏链案例</p>
-<ol class="simple">
-<li><p>在一条自动生产线上检验产品质量，每次取一个，“废品”记为 1，“合格品”记为 0。以<span class="math notranslate nohighlight">\(\xi_n\)</span>表示第<span class="math notranslate nohighlight">\(n\)</span>次检验结果，则<span class="math notranslate nohighlight">\(\xi_n\)</span>是一个随机变量。不断检验，得到一列随机变量<span class="math notranslate nohighlight">\(\xi_1\)</span>,<span class="math notranslate nohighlight">\(\xi_2\)</span>,<span class="math notranslate nohighlight">\(\cdots\)</span>，记为<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span>。它是一个随机序列，其<strong>状态空间</strong><span class="math notranslate nohighlight">\(E=\{0,1\}\)</span>。</p></li>
-<li><p>在<span class="math notranslate nohighlight">\(m\)</span>个商店联营出租照相机的业务中（顾客从其中一个商店租出，可以到<span class="math notranslate nohighlight">\(m\)</span>个商店中的任意一个归还），规定一天为一个时间单位，“<span class="math notranslate nohighlight">\(\xi_{t}=j\)</span> ”表示“第<span class="math notranslate nohighlight">\(t\)</span> 天开始营业时照相机在第<span class="math notranslate nohighlight">\(j\)</span>个商店”，<span class="math notranslate nohighlight">\(j = 1,2,\cdots,m\)</span> 。则<span class="math notranslate nohighlight">\(\{ \xi_n = 1,2,\cdots\}\)</span>是一个随机序列，其状态空间 <span class="math notranslate nohighlight">\(E = \{1,2,\cdots,m\}\)</span>。</p></li>
-<li><p>统计某种商品在<span class="math notranslate nohighlight">\(t\)</span>时刻的库存量，对于不同的<span class="math notranslate nohighlight">\(t\)</span> ，得到一族随机变量，<span class="math notranslate nohighlight">\(\left\{\xi_{t}, t \in[0,+\infty)\right\}\)</span> 是一个随机过程，状态空间<span class="math notranslate nohighlight">\(E = [0,R]\)</span>，其中 <span class="math notranslate nohighlight">\(R\)</span> 为最大库存量。</p></li>
-</ol>
-</div>
 </div>
 <div class="section" id="id4">
 <h2><span class="section-number">2.3. </span>马尔可夫链的定义<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>现实世界中有很多这样的现象：某一系统在已知现在情况的条件下，系统未来时刻的情况只与现在有关，而与过去的历史无直接关系。描述这类随机现象的数学模型称为马氏模型。</p>
-<div class="admonition- admonition">
-<p class="admonition-title">定义</p>
+<div class="admonition">
+<p class="admonition-title"> 定义</p>
 <p>设<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span>是一个随机序列，状态空间<span class="math notranslate nohighlight">\(E\)</span> 为有限或可列集，对于任意的正整数<span class="math notranslate nohighlight">\(n\)</span> ，若<span class="math notranslate nohighlight">\(i, j, i_{k} \in E(k=1, \cdots, n-1)\)</span>，有</p>
 <div class="math notranslate nohighlight" id="equation-markov-definition">
 <span class="eqno">(2.1)<a class="headerlink" href="#equation-markov-definition" title="Permalink to this equation">¶</a></span>\[
 P\left\{\xi_{n+1}=j | \xi_{n}=i, \xi_{n-1}=i_{n-1}, \cdots, \xi_{1}=i_{1}\right\}=P\left\{\xi_{n+1}=j | \xi_{n}=i\right\}
 \]</div>
 <p>则称<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span> 为一个马尔可夫链（简称马氏链），<a class="reference internal" href="#equation-markov-definition">(2.1)</a>式称为马氏性。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>这里的<span class="math notranslate nohighlight">\(|\)</span>表示条件概率，例如<span class="math notranslate nohighlight">\(P(A|B)\)</span>表示<span class="math notranslate nohighlight">\(B\)</span>发生的条件下<span class="math notranslate nohighlight">\(A\)</span>发生的概率。</p>
+</div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">马氏链案例</p>
+<p>在<span class="math notranslate nohighlight">\(m\)</span>个商店联营出租照相机的业务中（顾客从其中一个商店租出，可以到<span class="math notranslate nohighlight">\(m\)</span>个商店中的任意一个归还），规定一天为一个时间单位，“<span class="math notranslate nohighlight">\(\xi_{t}=j\)</span> ”表示“第<span class="math notranslate nohighlight">\(t\)</span> 天开始营业时照相机在第<span class="math notranslate nohighlight">\(j\)</span>个商店”，<span class="math notranslate nohighlight">\(j = 1,2,\cdots,m\)</span> 。则<span class="math notranslate nohighlight">\(\{ \xi_n = 1,2,\cdots\}\)</span>是一个随机序列，其状态空间 <span class="math notranslate nohighlight">\(E = \{1,2,\cdots,m\}\)</span>。</p>
+<p>我们从生活经验知道，照相机明天会位于哪个商店，是完全由今天的状态决定的，历史上它曾经去过哪个商店已经不重要了。也就是说，相机的位置没有记忆性，这是一个典型的马氏链Markov Chain。</p>
 </div>
 </div>
 <div class="section" id="id5">
@@ -400,27 +401,31 @@ p_{10}=P\left\{X_{n+1}=0 | X_{n}=1\right\} \approx \dfrac{18}{18+52}=\dfrac{9}{3
 \[
 p_{11}=P\left\{X_{n+1}=1 | X_{n}=1\right\} \approx \dfrac{52}{18+52}=\dfrac{26}{35}
 \]</div>
-<p>对于一个马尔可夫链<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span> ，称<span class="math notranslate nohighlight">\(P =p_ {ij}\)</span> 为马尔可夫链的一步转移矩阵。它们具有下列两个基本性质：</p>
+<p>对于一个马尔可夫链<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span> ，称<span class="math notranslate nohighlight">\(P =[p_ {ij}]\)</span> 为马尔可夫链的一步转移矩阵。它们具有下列两个基本性质：</p>
 <p>（i）对一切<span class="math notranslate nohighlight">\(i, j \in E, \quad 0 \leq p_{i j}(m) \leq 1\)</span>；</p>
 <p>（ii）对一切<span class="math notranslate nohighlight">\(i \in E, \sum_{j \in E} p_{i j}(m)=1\)</span>；</p>
+<div class="admonition- admonition">
+<p class="admonition-title">思考</p>
+<p>你能解释为什么以上两个性质成立吗?</p>
+</div>
 <p>当实际问题可以用马尔可夫链来描述时，首先要确定它的状态空间及参数集合，然后确定它的一步转移概率。关于这一概率的确定，可以由问题的内在规律得到，也可以由过去经验给出，还可以根据观测数据来估计。</p>
 <div class="admonition- admonition">
 <p class="admonition-title">转移概率矩阵求解案例</p>
 <p>设一随机系统状态空间 <span class="math notranslate nohighlight">\(E = \{1,2,3,4\}\)</span>，记录观测系统所处状态如下：</p>
 <p><code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">3</span> <span class="pre">2</span> <span class="pre">1</span> <span class="pre">4</span> <span class="pre">3</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">2</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">4</span> <span class="pre">4</span> <span class="pre">3</span> <span class="pre">3</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">3</span> <span class="pre">3</span> <span class="pre">2</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">2</span> <span class="pre">2</span> <span class="pre">4</span> <span class="pre">4</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">4</span> <span class="pre">3</span> <span class="pre">1</span> </code></p>
 <p>若该系统可用马氏模型描述，估计转移概率<span class="math notranslate nohighlight">\(p_{ij}\)</span></p>
-</div>
 <p><strong>解：</strong> 首先将不同类型的转移数nij 统计出来分类记入下表</p>
 <p><span class="math notranslate nohighlight">\(i \rightarrow j\)</span>转移数<span class="math notranslate nohighlight">\(n_{ij}\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{array}{|c|cccc|c|}\hline &amp; {1} &amp; {2} &amp; {3} &amp; {4} &amp; {\text { 行和 } n_{i}} \\ \hline 1 &amp; {4} &amp; {4} &amp; {1} &amp; {1} &amp; {10} \\ {2} &amp; {3} &amp; {2} &amp; {4} &amp; {2} &amp; {11} \\ {3} &amp; {4} &amp; {4} &amp; {2} &amp; {1} &amp; {11} \\ {4} &amp; {0} &amp; {1} &amp; {4} &amp; {2} &amp; {7} \\ \hline\end{array}
 \end{split}\]</div>
-<p>各类转移总和<span class="math notranslate nohighlight">\(\displaystyle \sum_{i} \sum_{j} n_{i j}\)</span>等于观测数据中马氏链处于各种状态次数总和减 1，而行和<span class="math notranslate nohighlight">\(n_i\)</span> 是系统从状态i 转移到其它状态的次数,<span class="math notranslate nohighlight">\(n_{ij}\)</span>是由状态<span class="math notranslate nohighlight">\(i\)</span> 到状态 <span class="math notranslate nohighlight">\(j \)</span>的转移次数,，则 <span class="math notranslate nohighlight">\(p_{ij}\)</span> 的估计值<span class="math notranslate nohighlight">\(p_{i j}=\dfrac{n_{i j}}{n_{i}}\)</span>。计算得</p>
+<p>各类转移总和<span class="math notranslate nohighlight">\(\displaystyle \sum_{i} \sum_{j} n_{i j}\)</span>等于观测数据中马氏链处于各种状态次数总和减 1，而行和<span class="math notranslate nohighlight">\(n_i\)</span> 是系统从状态<span class="math notranslate nohighlight">\(i\)</span> 转移到其它状态的次数,<span class="math notranslate nohighlight">\(n_{ij}\)</span>是由状态<span class="math notranslate nohighlight">\(i\)</span> 到状态 <span class="math notranslate nohighlight">\(j \)</span>的转移次数,，则 <span class="math notranslate nohighlight">\(p_{ij}\)</span> 的估计值<span class="math notranslate nohighlight">\(p_{i j}=\dfrac{n_{i j}}{n_{i}}\)</span>。计算得</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \hat{P}=\left[\begin{array}{cccc}{2 / 5} &amp; {2 / 5} &amp; {1 / 10} &amp; {1 / 10} \\ {3 / 11} &amp; {2 / 11} &amp; {4 / 11} &amp; {2 / 11} \\ {4 / 11} &amp; {4 / 11} &amp; {2 / 11} &amp; {1 / 11} \\ {0} &amp; {1 / 7} &amp; {4 / 7} &amp; {2 / 7}\end{array}\right]
 \end{split}\]</div>
+</div>
 </div>
 <div class="section" id="id6">
 <h2><span class="section-number">2.5. </span>柯尔莫哥洛夫定理<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
@@ -433,12 +438,12 @@ P^{(n)}=P^{(0)} P^{n}
 <p class="admonition-title">柯尔莫哥洛夫定理案例</p>
 <p>若顾客的购买是无记忆的，即已知现在顾客购买情况，未来顾客的购买情况不受过去购买历史的影响，而只与现在购买情况有关。现在市场上供应<span class="math notranslate nohighlight">\(A、B、C\)</span>三个不同厂家生产的 50 克袋状味精，用“<span class="math notranslate nohighlight">\(\xi_n = 1\)</span>”、“<span class="math notranslate nohighlight">\(\xi_n = 2\)</span> ”、“<span class="math notranslate nohighlight">\(\xi_n = 3\)</span>”分别表示“顾客第<span class="math notranslate nohighlight">\(n\)</span> 次购买<span class="math notranslate nohighlight">\(A、B、C\)</span>厂的味精”。显然<span class="math notranslate nohighlight">\(\left\{\xi_{n}, n=1,2, \cdots\right\}\)</span>是一个马氏链。若已知第一次顾客购买三个厂味精的概率依次为 0.2，0.4，0.4。又知道一般顾客购买的倾向由表 2给出。求顾客第四次购买各家味精的概率。</p>
 <p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/q2y45nlv3n.png?imageView2/0/w/960/h/960" /></p>
-</div>
 <p><strong>解:</strong> 第一次购买的概率分布为
 <span class="math notranslate nohighlight">\(P^{(1)}=\left[\begin{array}{lll}{0.2} &amp; {0.4} &amp; {0.4}\end{array}\right]\)</span></p>
 <p>转移矩阵<span class="math notranslate nohighlight">\(P=\left[\begin{array}{lll}{0.8} &amp; {0.1} &amp; {0.1} \\ {0.5} &amp; {0.1} &amp; {0.4} \\ {0.5} &amp; {0.3} &amp; {0.2}\end{array}\right]\)</span></p>
 <p>则顾客第四次购买各家味精的概率为
 <span class="math notranslate nohighlight">\(P^{(4)}=P^{(1)} P^{3}=\left[\begin{array}{ccc}{0.7004} &amp; {0.136} &amp; {0.1636}\end{array}\right]\)</span>。</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -485,7 +490,6 @@ u=\left[\begin{array}{ll}{\dfrac{7}{12}} &amp; {\dfrac{5}{12}}\end{array}\right]
 <div class="admonition- admonition">
 <p class="admonition-title">极限概率分布</p>
 <p>根据例 6 中给出的一般顾客购买三种味精倾向的转移矩阵，预测经过长期的多次购买之后，顾客的购买倾向如何？</p>
-</div>
 <p><strong>解</strong> :  可以根据这个马氏链的转移矩阵，求出其极限概率分布。为此，解下列方程组：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -493,6 +497,7 @@ u=\left[\begin{array}{ll}{\dfrac{7}{12}} &amp; {\dfrac{5}{12}}\end{array}\right]
 \end{split}\]</div>
 <p>求得 <span class="math notranslate nohighlight">\(p_1=\dfrac{5}{7}\)</span>,<span class="math notranslate nohighlight">\(p_2=\dfrac{11}{84}\)</span>,<span class="math notranslate nohighlight">\(p_3=\dfrac{13}{84}\)</span>
 这说明，无论第一次顾客购买的情况如何，经过长期多次购买以后， <span class="math notranslate nohighlight">\(A\)</span> 厂产的味精占有市场的<span class="math notranslate nohighlight">\(\dfrac{5}{7}\)</span>,<span class="math notranslate nohighlight">\(B\)</span>,<span class="math notranslate nohighlight">\(C\)</span> 两厂产品分别占有市场的<span class="math notranslate nohighlight">\(\dfrac{11}{84}\)</span>,<span class="math notranslate nohighlight">\(\dfrac{13}{84}\)</span></p>
+</div>
 </div>
 <div class="section" id="id8">
 <h2><span class="section-number">2.7. </span>吸收链<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
@@ -539,7 +544,7 @@ P=\left[\begin{array}{cccc}{0.3} &amp; {0.3} &amp; {0} &amp; {0.4} \\ {0.2} &amp
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x113ee67d0&gt;
 </pre></div>
 </div>
-<img alt="../_images/markov-chain_9_1.png" src="../_images/markov-chain_9_1.png" />
+<img alt="../_images/markov-chain_5_1.png" src="../_images/markov-chain_5_1.png" />
 </div>
 </div>
 </div>
