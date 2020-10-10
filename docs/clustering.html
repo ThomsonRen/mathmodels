@@ -1,0 +1,846 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>4. 聚类分析 &#8212; 数学建模系列课程</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Matplotlib" href="matplotlib.html" />
+    <link rel="prev" title="3. 排队论模型" href="queue-model.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.jpeg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">数学建模系列课程</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  预备知识
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="contest-intro.html">
+   1. HiMCM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="matrix-and-lg.html">
+   2. 矩阵和线性代数基础回顾
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="anaconda.html">
+   3. Jupyter notebook 安装教程
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模基础课
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="LP.html">
+   1. 规划模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="evaluation_model.html">
+   2. 评价模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="prediction_model.html">
+   3. 预测模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ode_model.html">
+   4. 微分方程模型
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数学建模高阶课
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="monte-carlo.html">
+   1. 蒙特卡洛模拟
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="markov-chain.html">
+   2. 马氏链模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="queue-model.html">
+   3. 排队论模型
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   4. 聚类分析
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  数据可视化
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="matplotlib.html">
+   1. Matplotlib
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seaborn-1.html">
+   2. Seaborn-1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seaborn-2.html">
+   3. Seaborn-2
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  作业解答
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="answers.html">
+   1. 作业解答
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/docs/clustering.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/docs/clustering.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/clustering.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#knn">
+   4.1. KNN 算法
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#k-means">
+   4.2. k-means聚类
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   4.3. 系统聚类法
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#python">
+     4.3.1. 系统聚类法python实例
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   4.4. 课后习题
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1><span class="section-number">4. </span>聚类分析<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>将认识对象进行分类是人类认识世界的一种重要方法，比如有关世界的时间进程的研究，就形成了历史学，也有关世界空间地域的研究，则形成了地理学。又如在生物学中，为了研究生物的演变，需要对生物进行分类，生物学家根据各种生物的特征，将它们归属于不同的界、门、纲、目、科、属、种之中。</p>
+<p>通常，人们可以凭经验和专业知识来实现分类。而聚类分析（Cluster Analyses）作为一种定量方法，将从数据分析的角度，给出一个更准确、细致的分类工具。</p>
+<div class="section" id="knn">
+<h2><span class="section-number">4.1. </span>KNN 算法<a class="headerlink" href="#knn" title="Permalink to this headline">¶</a></h2>
+<p>最近邻 (k-Nearest Neighbors， KNN) 算法是一种分类算法， 1968年由 Cover和 Hart 提出， 应用场景有字符识别、 文本分类、 图像识别等领域。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>KNN算法的思想是： 一个样本与数据集中的个样本最相似， 如果这个样本中的大多数属于某一个类别， 则该样本也属于这个类别。</p>
+<div class="figure align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/knn.jpg"><img alt="../_images/knn.jpg" src="../_images/knn.jpg" style="height: 350px;" /></a>
+</div>
+</div>
+<p>那么样本之间的相似度如何度量呢？我们接下来展开讨论。</p>
+<p>要用数量化的方法对事物进行分类，就必须用数量化的方法描述事物之间的相似程度。一个事物常常需要用多个变量来刻画。如果对于一群有待分类的样本点需用<span class="math notranslate nohighlight">\(p\)</span>个变量描述，则每个样本点可以看成是 <span class="math notranslate nohighlight">\(R^{p}\)</span> 空间中的一个点。因此，很自然地想到可以用距离来度量样本点间的相似程度。在聚类分析中，最一般的相似度度量方法是 Minkowski 距离</p>
+<div class="math notranslate nohighlight">
+\[
+d_{q}(x, y)=\left[\sum_{k=1}^{p}\left|x_{k}-y_{k}\right|^{q}\right]^{\frac{1}{q}}, \quad q&gt;0
+\]</div>
+<div class="admonition- admonition">
+<p class="admonition-title">相似度度量常用的距离</p>
+<p>当 <span class="math notranslate nohighlight">\(q=1,2\)</span>时， 分别得到</p>
+<ul class="simple">
+<li><p>绝对值距离(曼哈顿距离)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+d_{1}(x, y)=\sum_{k=1}^{q}\left|x_{k}-y_{k}\right|
+\]</div>
+<ul class="simple">
+<li><p>欧式距离</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+d_{2}(x, y)=\left[\sum_{k=1}^{p}\left|x_{k}-y_{k}\right|^{2}\right]^{\frac{1}{2}}
+\]</div>
+</div>
+<p>最常用的是欧氏距离，它的主要优点是当坐标轴进行正交旋转时，欧氏距离是保持不变的。例如我们可以通过搞笑镜头、拥抱镜头、打斗镜头三个维度来衡量电影之间的相似性。《唐人街探案》和《伦敦陷落》之间的相似性可以用三个镜头组成的向量之间的欧式距离来衡量</p>
+<div class="figure align-default" id="dis-demo">
+<a class="reference internal image-reference" href="../_images/dis-demo.png"><img alt="../_images/dis-demo.png" src="../_images/dis-demo.png" style="height: 350px;" /></a>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>值得注意的是在采用 Minkowski 距离时，一定要采用相同量纲的变量。如果变量的量纲不同，测量值变异范围相差悬殊时，建议首先进行数据的标准化处理，然后再计算距离。</p>
+</div>
+<p>有了距离和定义后，我们来看KNN算法的基本流程（在以下的讨论中，我们用欧氏距离衡量样本之间的相似度）</p>
+<ol class="simple">
+<li><p>计算已知类别数据集中的点与当前点之间的距离</p></li>
+<li><p>按距离递增次序排序</p></li>
+<li><p>选取与当前点距离最小的<span class="math notranslate nohighlight">\(k\)</span>个点</p></li>
+<li><p>统计前<span class="math notranslate nohighlight">\(k\)</span>个点所在的类别出现的频率</p></li>
+<li><p>返回前<span class="math notranslate nohighlight">\(k\)</span>个点出现频率最高的类别作为当前点的预测分类</p></li>
+</ol>
+<p>比如我们想用数据的方法对《唐人街探案》进行分类，我们可以求解与其最相似的<span class="math notranslate nohighlight">\(k\)</span>个电影，然后投票选出其类型，这里我们以<span class="math notranslate nohighlight">\(k=5\)</span>的情况举例。</p>
+<div class="figure align-default" id="trj">
+<a class="reference internal image-reference" href="../_images/trj.png"><img alt="../_images/trj.png" src="../_images/trj.png" style="height: 350px;" /></a>
+</div>
+<p>这里是程序实现</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="n">movie_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;宝贝当家&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">45</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;喜剧片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;美人鱼&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;喜剧片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;澳门风云3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">54</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="s2">&quot;喜剧片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;功夫熊猫3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">39</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="s2">&quot;喜剧片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;谍影重重&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="s2">&quot;动作片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;叶问3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="s2">&quot;动作片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;伦敦陷落&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="s2">&quot;动作片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;我的特工爷爷&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;动作片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;奔爱&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;爱情片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;夜孔雀&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;爱情片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;代理情人&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;爱情片&quot;</span><span class="p">],</span>
+              <span class="s2">&quot;新步步惊心&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="s2">&quot;爱情片&quot;</span><span class="p">]}</span>
+
+<span class="c1"># 测试样本  唐人街探案&quot;: [23, 3, 17, &quot;？片&quot;]</span>
+<span class="c1">#下面为求与数据集中所有数据的距离代码：</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">17</span><span class="p">]</span>
+<span class="n">KNN</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">movie_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">KNN</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">key</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+
+<span class="c1"># 输出所用电影到 唐人街探案的距离</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">KNN</span><span class="p">)</span>
+
+<span class="c1">#按照距离大小进行递增排序</span>
+<span class="n">KNN</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">dis</span><span class="p">:</span> <span class="n">dis</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1">#选取距离最小的k个样本，这里取k=5；</span>
+<span class="n">KNN</span><span class="o">=</span><span class="n">KNN</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">KNN</span><span class="p">)</span>
+
+<span class="c1">#确定前k个样本所在类别出现的频率，并输出出现频率最高的类别</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;喜剧片&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;动作片&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;爱情片&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">KNN</span><span class="p">:</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">movie_data</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">labels</span><span class="p">[</span><span class="n">label</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">labels</span> <span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[&#39;宝贝当家&#39;, 23.43], [&#39;美人鱼&#39;, 18.55], [&#39;澳门风云3&#39;, 32.14], [&#39;功夫熊猫3&#39;, 21.47], [&#39;谍影重重&#39;, 43.87], [&#39;叶问3&#39;, 52.01], [&#39;伦敦陷落&#39;, 43.42], [&#39;我的特工爷爷&#39;, 17.49], [&#39;奔爱&#39;, 47.69], [&#39;夜孔雀&#39;, 39.66], [&#39;代理情人&#39;, 40.57], [&#39;新步步惊心&#39;, 34.44]]
+[[&#39;我的特工爷爷&#39;, 17.49], [&#39;美人鱼&#39;, 18.55], [&#39;功夫熊猫3&#39;, 21.47], [&#39;宝贝当家&#39;, 23.43], [&#39;澳门风云3&#39;, 32.14]]
+[(&#39;喜剧片&#39;, 4), (&#39;动作片&#39;, 1), (&#39;爱情片&#39;, 0)]
+喜剧片
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="k-means">
+<h2><span class="section-number">4.2. </span>k-means聚类<a class="headerlink" href="#k-means" title="Permalink to this headline">¶</a></h2>
+<p>k-means算法是集简单和经典于一身的基于距离的聚类算法,采用距离作为相似性的评价指标，即认为两个对象的距离越近，其相似度就越大。该算法认为类簇是由距离靠近的对象组成的，因此把得到紧凑且独立的簇作为最终目标。</p>
+<p>k-means通过迭代寻找<span class="math notranslate nohighlight">\(k\)</span>个类簇的一种划分方案，使得用这<span class="math notranslate nohighlight">\(k\)</span>个类簇的均值来代表相应各类样本时所得的总体误差最小。</p>
+<p><span class="math notranslate nohighlight">\(k\)</span>个聚类具有以下特点：各聚类本身尽可能的紧凑，而各聚类之间尽可能的分开。k-means算法的基础是最小误差平方和准则,如果用数据表达式表示，假设簇划分为<span class="math notranslate nohighlight">\(\left(C_{1}, C_{2}, \ldots C_{k}\right)\)</span>，则我们的目标是最小化平方误差<span class="math notranslate nohighlight">\(E\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+E=\sum_{i=1}^{k} \sum_{x \in C_{i}}\left\|x-\mu_{i}\right\|_{2}^{2}
+\]</div>
+<p>其中<span class="math notranslate nohighlight">\(\mu_{i}\)</span>是簇<span class="math notranslate nohighlight">\(C_i\)</span>的均值向量，有时也称质心，表达式为</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_{i}=\frac{1}{\left|C_{i}\right|} \sum_{x \in C_{i}} x
+\]</div>
+<p>如果我们想直接寻求上式的最小值并不容易，这是一个NP难问题，只能采用启发式的迭代方法</p>
+<div class="admonition-k-means admonition">
+<p class="admonition-title">k-means聚类算法步骤</p>
+<ul>
+<li><p>随机选取<span class="math notranslate nohighlight">\(k\)</span>个聚类质心点（cluster centroids）为<span class="math notranslate nohighlight">\(\mu_{1}, \mu_{2}, \ldots, \mu_{k} \in \mathbb{R}^{n}\)</span>。</p></li>
+<li><p>重复下面过程直到收敛</p>
+<ul>
+<li><p>对于每一个样例<span class="math notranslate nohighlight">\(i\)</span>，计算其应该属于的类</p>
+<div class="math notranslate nohighlight">
+\[
+    c^{(i)}:=\arg \min _{j}\left\|x^{(i)}-\mu_{j}\right\|^{2}
+    \]</div>
+</li>
+<li><p>对于每一个类<span class="math notranslate nohighlight">\(j\)</span>，重新计算该类的质心</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+  \mu_{i}=\frac{1}{\left|C_{j}\right|} \sum_{x \in C_{j}} x
+  \]</div>
+</li>
+<li><p>收敛指如果新计算出来的质心和原来的质心之间的距离小于某一个设置的阈值，表示重新计算的质心的位置变化不大，趋于稳定</p></li>
+</ul>
+</div>
+<p>我们通过一个示意图来解释k-means的计算过程</p>
+<div class="figure align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/k-means.jpg"><img alt="../_images/k-means.jpg" src="../_images/k-means.jpg" style="height: 350px;" /></a>
+</div>
+<ul class="simple">
+<li><p>图<span class="math notranslate nohighlight">\(a\)</span>表达了初始的数据集，假设<span class="math notranslate nohighlight">\(k=2\)</span>。</p></li>
+<li><p>图<span class="math notranslate nohighlight">\(b\)</span>中，我们随机选择了两个类别所对应的类别质心，即图中的红色质心和蓝色质心。</p></li>
+<li><p>图<span class="math notranslate nohighlight">\(c\)</span>表示通过求样本中所有点到这两个质心的距离，并标记每个样本的类别为和该样本距离最小的质心的类别，得到了所有样本点的第一轮迭代后所属的类别。</p></li>
+<li><p>图<span class="math notranslate nohighlight">\(d\)</span>中，我们对我们当前标记为红色和蓝色的点分别求其新的质心新的红色质心和蓝色质心的位置已经发生了变动。</p></li>
+<li><p>图<span class="math notranslate nohighlight">\(e\)</span>和图<span class="math notranslate nohighlight">\(f\)</span>重复了我们在图<span class="math notranslate nohighlight">\(c\)</span>和图<span class="math notranslate nohighlight">\(d\)</span>的过程，即将所有点的类别标记为距离最近的质心的类别并求新的质心。最终我们得到的两个类别如图<span class="math notranslate nohighlight">\(f\)</span>所示。</p></li>
+</ul>
+<p>下面我们通过一个案例，来看python中k-means聚类的实现方法。本案例采用二维数据集，共80个样本，有4个类。数据存在testSet.txt中</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+ 
+<span class="c1">#加载数据集，是一个字典类似Java中的map</span>
+<span class="n">lris_df</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+ 
+
+<span class="c1">#挑选出前两个维度作为x轴和y轴，你也可以选择其他维度</span>
+<span class="n">x_axis</span> <span class="o">=</span> <span class="n">lris_df</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y_axis</span> <span class="o">=</span> <span class="n">lris_df</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+ 
+<span class="c1">#绘制散点图</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x11c5ac8d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/clustering_3_1.png" src="../_images/clustering_3_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+ 
+<span class="c1">#加载数据集，是一个字典类似Java中的map</span>
+<span class="n">lris_df</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+ 
+<span class="c1">#挑选出前两个维度作为x轴和y轴，你也可以选择其他维度</span>
+<span class="n">x_axis</span> <span class="o">=</span> <span class="n">lris_df</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y_axis</span> <span class="o">=</span> <span class="n">lris_df</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+ 
+ 
+<span class="c1">#这里已经知道了分3类，其他分类这里的参数需要调试</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+ 
+<span class="c1">#训练模型</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">lris_df</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1">#预测全部150条数据</span>
+<span class="n">all_predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">lris_df</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+ 
+<span class="c1">#打印出来对150条数据的聚类散点图</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">all_predictions</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/clustering_4_0.png" src="../_images/clustering_4_0.png" />
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>请你自行尝试分两类或者分四类的情况，你有什么发现？</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">4.3. </span>系统聚类法<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>系统聚类法是聚类分析方法中最常用的一种方法。它的优点在于可以指出由粗到细的多种分类情况，典型的系统聚类结果可由一个聚类图展示出来。</p>
+<p>例如，在平面上有 7 个点 <span class="math notranslate nohighlight">\(w_1,w_2,w_3,w_4,w_5,w_6,w_7\)</span>（如图（a）），可以用聚类图（如图 （b））来表示聚类结果。</p>
+<div class="figure align-default" id="h-c">
+<a class="reference internal image-reference" href="../_images/h-c.png"><img alt="../_images/h-c.png" src="../_images/h-c.png" style="height: 350px;" /></a>
+</div>
+<p>记 <span class="math notranslate nohighlight">\(\Omega=\left\{w_{1}, w_{2}, \cdots, w_{7}\right\}\)</span>，</p>
+<p>聚类结果如下：当距离为 <span class="math notranslate nohighlight">\(f_5\)</span>时，分为一类</p>
+<div class="math notranslate nohighlight">
+\[
+G_{1}=\left\{w_{1}, w_{2}, w_{3}, w_{4}, w_{5}, w_{6}, w_{7}\right\}
+\]</div>
+<p>距离值为 <span class="math notranslate nohighlight">\(f_4\)</span>分为两类：</p>
+<div class="math notranslate nohighlight">
+\[
+G_{1}=\left\{w_{1}, w_{2}, w_{3}\right\}, \quad G_{2}=\left\{w_{4}, w_{5}, w_{6}, w_{7}\right\}
+\]</div>
+<p>距离值为<span class="math notranslate nohighlight">\(f_3\)</span>分为三类：</p>
+<div class="math notranslate nohighlight">
+\[
+G_{1}=\left\{w_{1}, w_{2}, w_{3}\right\}, \quad G_{2}=\left\{w_{4}, w_{5}, w_{6}\right\}, \quad G_{3}=\left\{w_{7}\right\}
+\]</div>
+<p>距离值为 <span class="math notranslate nohighlight">\(f_2\)</span>分为四类：</p>
+<div class="math notranslate nohighlight">
+\[
+G_{1}=\left\{w_{1}, w_{2}, w_{3}\right\}, \quad G_{2}=\left\{w_{4}, w_{5}\right\}, \quad G_{3}=\left\{w_{6}\right\}, \quad G_{4}=\left\{w_{7}\right\}
+\]</div>
+<p>距离值为 <span class="math notranslate nohighlight">\(f_1\)</span>分为六类：</p>
+<div class="math notranslate nohighlight">
+\[
+G_{1}=\left\{w_{4}, w_{5}\right\}, G_{2}=\left\{w_{1}\right\}, G_{3}=\left\{w_{2}\right\}, G_{4}=\left\{w_{3}\right\}, G_{5}=\left\{w_{6}\right\}, G_{6}=\left\{w_{7}\right\}
+\]</div>
+<p>距离小于 <span class="math notranslate nohighlight">\(f_1\)</span>分为七类，每一个点自成一类.</p>
+<p>怎样才能生成这样的聚类图呢？步骤如下：</p>
+<div class="admonition- admonition">
+<p class="admonition-title">系统聚类计算流程</p>
+<p>设<span class="math notranslate nohighlight">\(\Omega=\left\{w_{1}, w_{2}, \cdots, w_{7}\right\}\)</span></p>
+<ol class="simple">
+<li><p>计算<span class="math notranslate nohighlight">\(n\)</span> 个样本点两两之间的距离<span class="math notranslate nohighlight">\(\left\{d_{i j}\right\}\)</span> ，记为矩阵<span class="math notranslate nohighlight">\(D=\left(d_{i j}\right)_{n \times n}\)</span> ；</p></li>
+<li><p>首先构造<span class="math notranslate nohighlight">\(n\)</span> 个类，每一个类中只包含一个样本点，每一类的平台高度均为零；</p></li>
+<li><p>合并距离最近的两类为新类，并且以这两<strong>类间的距离值</strong>作为聚类图中的平台高
+度；</p></li>
+<li><p>计算新类与当前各类的距离，若类的个数已经等于 1，转入步骤 (5），否则，回到步骤 (3）；</p></li>
+<li><p>画聚类图；</p></li>
+<li><p>决定类的个数和类</p></li>
+</ol>
+</div>
+<p>下面我们通过一个案例来看系统聚类的实际应用。在服装标准制定中，对某地成年女子的各部位尺寸进行了统计，通过14个部位的测量资料，获得各因素之间的相关系数表</p>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/qfq81boanz.png?imageView2/0/w/960/h/960" /></p>
+<p>其中 <span class="math notranslate nohighlight">\(x_1\)</span> − 上体长，<span class="math notranslate nohighlight">\(x_2\)</span> − 手臂长，<span class="math notranslate nohighlight">\(x_3\)</span> − 胸围，<span class="math notranslate nohighlight">\(x_4\)</span> − 颈围，<span class="math notranslate nohighlight">\(x_5\)</span> − 总肩围，<span class="math notranslate nohighlight">\(x_6\)</span> − 总胸宽，<span class="math notranslate nohighlight">\(x_7\)</span> − 后背宽，<span class="math notranslate nohighlight">\(x_8\)</span> − 前腰节高，<span class="math notranslate nohighlight">\(x_9\)</span> −后腰节高，<span class="math notranslate nohighlight">\(x_{10}\)</span> −总体长，<span class="math notranslate nohighlight">\(x_{11}\)</span> − 身高，<span class="math notranslate nohighlight">\(x_{12}\)</span> −下体长，<span class="math notranslate nohighlight">\(x_{13}\)</span> −腰围， <span class="math notranslate nohighlight">\(x_{14}\)</span> −臀围。</p>
+<p>在系统分析或评估过程中，为避免遗漏某些重要因素，往往在一开始选取指标时，尽可能多地考虑所有的相关因素。而这样做的结果，则是变量过多，变量间的相关度高，给系统分析与建模带来很大的不便。因此，人们常常希望能研究变量间的相似关系，按照变量的相似关系把它们聚合成若干类，进而找出影响系统的主要因素。</p>
+<p>在聚类分析之前，首先要确定变量的相似性度量，常用的变量相似性度量是相关系数。记变量<span class="math notranslate nohighlight">\(x_{j}\)</span> 的取值</p>
+<div class="math notranslate nohighlight">
+\[
+\left(x_{1 j}, x_{2 j}, \cdots, x_{n j}\right)^{T} \in R^{n}(j=1,2, \cdots, m)
+\]</div>
+<p>则可以用两变量<span class="math notranslate nohighlight">\(x_j\)</span>与<span class="math notranslate nohighlight">\(x_k\)</span>的样本<strong>相关系数</strong>作为它们的相似性度量</p>
+<div class="math notranslate nohighlight">
+\[
+r_{j k}=\frac{\sum_{i=1}^{n}\left(x_{i j}-\bar{x}_{j}\right)\left(x_{i k}-\bar{x}_{k}\right)}{\left[\sum_{i=1}^{n}\left(x_{i j}-\bar{x}_{j}\right)^{2} \sum_{i=1}^{n}\left(x_{i k}-\bar{x}_{k}\right)^{2}\right]^{\frac{1}{2}}}
+\]</div>
+<p>用最大系数法对这14个变量进行系统聚类，其中类别与类别之间的距离定义为：</p>
+<div class="math notranslate nohighlight">
+\[
+R\left(G_{1}, G_{2}\right)=\max _{x_{j} \in G_{1} \atop x_{k} \in G_{2}}\left\{r_{j k}\right\}
+\]</div>
+<p>分类结果如图下（为了方便观察，平台高度定义为“1-相似系数”）。</p>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/qfq81mbtb8.png?imageView2/0/w/960/h/960" /></p>
+<p>这时，<span class="math notranslate nohighlight">\(R\left(G_{1}, G_{2}\right)\)</span>等于两类中最相似的两变量间的相似性度量值。</p>
+<p>可以看出，人体的变量大体可以分为两类：</p>
+<ul class="simple">
+<li><p>一类反映人高、矮的变量，如上体长，手臂长，前腰节高，后腰节高，总体长，身高，下体长；</p></li>
+<li><p>另一类是反映人体胖瘦的变量，如胸围，颈围，总肩围，总胸宽，后背宽，腰围，臀围。</p></li>
+</ul>
+<div class="section" id="python">
+<h3><span class="section-number">4.3.1. </span>系统聚类法python实例<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h3>
+<p>首先还是导入各种库</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>  
+<span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">dendrogram</span><span class="p">,</span> <span class="n">linkage</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>接下来是生成数据集。我们这次用的数据集是随机生成的，数量也不多，一共15个数据点，分为两个数据簇，一个有7个数据点，另一个有8个。</p>
+<p>之所以把数据点数量设置这么少，是因为便于看清数据分布，以及后面画图时容易看清图片的分类。代码如下。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span> <span class="c1">#设置随机状态  </span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">]],</span> <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>  <span class="c1">#生成多元正态变量  </span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">]],</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>  
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span> <span class="c1">#把数据进行拼接 </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>这里我们设置一个随机状态，便于重复试验。然后利用这个随机状态生成两个变量<span class="math notranslate nohighlight">\(a\)</span>和<span class="math notranslate nohighlight">\(b\)</span>，这两个变量就是前面说过的数据簇，<span class="math notranslate nohighlight">\(a\)</span>有7个数据点，<span class="math notranslate nohighlight">\(b\)</span>有8个，<span class="math notranslate nohighlight">\(a\)</span>和<span class="math notranslate nohighlight">\(b\)</span>都是多元正态变量，其中a的均值向量是[10, 10]，b的均值向量是[-10, -10]，两者协方差矩阵是[[1, 3], [3, 11]]。然后对<span class="math notranslate nohighlight">\(a\)</span>与<span class="math notranslate nohighlight">\(b\)</span>进行拼接，得到变量data。</p>
+<p>接下来要绘制数据点的分布。代码如下。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>  
+<span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">dendrogram</span><span class="p">,</span> <span class="n">linkage</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span> <span class="c1">#设置随机状态  </span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">]],</span> <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>  <span class="c1">#生成多元正态变量  </span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">]],</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>  
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span> <span class="c1">#把数据进行拼接 </span>
+<span class="c1">#此处以下为绘制数据点分布代码</span>
+<span class="n">ig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span> <span class="c1">#设置图片大小  </span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span> <span class="c1">#把两坐标轴的比例设为相等  </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">])</span> <span class="c1">#设置Y轴数值范围  </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">])</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/clustering_10_0.png" src="../_images/clustering_10_0.png" />
+</div>
+</div>
+<p>这里代码比较简单，不再赘述，主要说一下ax.set_aspect(‘equal’)这行代码，因为matplotlib默认情况下<span class="math notranslate nohighlight">\(x\)</span>轴和<span class="math notranslate nohighlight">\(y\)</span>轴的比例是不同的，也就是相同单位长度的线段，在显示时长度是不一样的，所以要把二者的比例设为一样，这样图片看起来更协调更准确。</p>
+<p>所绘制图片如上所示，从图中可以明显看到两个数据簇，上面那个数据簇大概集中在坐标点[10, 10]附近，而下面那个大概集中在[-10, -10]附近，这和我们设置的是一样的。从图中可以很明显看出，这个数据集大概可以分为两类，即上面的数据簇分为一类，下面的数据簇分为另一类。</p>
+<p>然后是数据处理，代码如下。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;average&quot;</span><span class="p">)</span> <span class="c1">#用average算法，即类平均法 </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>数据处理只有这一行代码，非常简单，但难点也就在这。首先我们来看一下z的结果，如图下所示。</p>
+<p><img alt="Image Name" src="https://cdn.kesci.com/upload/image/qfq84kinki.png?imageView2/0/w/960/h/960" /></p>
+<p>这个结果不是很好理解。scipy官方对此有一些设定，比如该结果中第一行有4个数字，即11、13、0.14740505、2，前两个数字就是指“类”，刚开始每个点就是一个类，所以11和13这两个点就是两个类，第三个数字0.14740505就是这两个点的距离，这两个点被合并成一个类，所以这个新的类包含两个点（11和13），这也就是第四个点的数值2。</p>
+<p>而这个新的类就被算为类15。注意这里是类15，不是第15个类，因为我们原来的数据集中有15个点，按照顺序就是类0、类1、类2…类14，因为python是从0开始，所以这里类15就是指第16个类。</p>
+<p>z的第二行数据里，前两个数字是2和5，就是原来类2和类5，距离是0.3131184，包含2个点，这行数据和第一行类似。</p>
+<p>然后再看第三行数据，前两个数字是10和15，就是类10与类15，类15就是前面第一行合并成的新类，其包含11和13这两个点，类15与类10的距离是0.39165998，这个数字是类11和13与类10的平均距离，因为我们这里用的算法是average，类10、11和13合并为了一个新类，其包含3个点，所以第四个数字就是3。</p>
+<p>z中其他行的数据按照此规律以此类推。最后一行数据中，类26和27合并成一个新类，这个类包含了全部15个点，也就是这15个点最终划为了一个类，算法终止。</p>
+<p>接下来就是画图，代码如下</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>  
+<span class="n">dendrogram</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">leaf_font_size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span> <span class="c1">#画图 </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Hierachial Clustering Dendrogram&quot;</span><span class="p">)</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Cluster label&quot;</span><span class="p">)</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Distance&quot;</span><span class="p">)</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1">#画一条分类线  </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/clustering_14_0.png" src="../_images/clustering_14_0.png" />
+</div>
+</div>
+<p>完整代码如下</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>  
+<span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">dendrogram</span><span class="p">,</span> <span class="n">linkage</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span> <span class="c1">#设置随机状态 </span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">]],</span> <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>  <span class="c1">#生成多元正态变量  </span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">]],</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>  
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span> <span class="c1">#把数据进行拼接 </span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span> <span class="c1">#设置图片大小  </span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span> <span class="c1">#把两坐标轴的比例设为相等  </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">])</span> <span class="c1">#设置Y轴数值范围  </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">])</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;average&quot;</span><span class="p">)</span> <span class="c1">#用average算法，即类平均法</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>  
+<span class="n">dendrogram</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">leaf_font_size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span> <span class="c1">#画图 </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Hierachial Clustering Dendrogram&quot;</span><span class="p">)</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Cluster label&quot;</span><span class="p">)</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Distance&quot;</span><span class="p">)</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1">#画一条分类线  </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/clustering_16_0.png" src="../_images/clustering_16_0.png" />
+<img alt="../_images/clustering_16_1.png" src="../_images/clustering_16_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">4.4. </span>课后习题<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>课后作业
+1.数据集如下，使用K-means算法进行聚类（聚成三类）</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span> 
+<span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span> 
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># #表示我们取特征空间中的2个维度</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># 绘制数据分布图</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;see&#39;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;sepal length&#39;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;sepal width&#39;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(150, 2)
+</pre></div>
+</div>
+<img alt="../_images/clustering_18_1.png" src="../_images/clustering_18_1.png" />
+</div>
+</div>
+<p>2.数据如下，使用系统聚类法进行聚类</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span>  <span class="mf">9.31556164</span> <span class="p">,</span> <span class="mf">10.69767437</span><span class="p">],</span>
+ <span class="p">[</span>  <span class="mf">9.21300425</span> <span class="p">,</span>  <span class="mf">9.20698909</span><span class="p">],</span>
+ <span class="p">[</span> <span class="mf">10.16931836</span> <span class="p">,</span> <span class="mf">10.50496561</span><span class="p">],</span>
+ <span class="p">[</span>  <span class="mf">8.97948118</span> <span class="p">,</span>  <span class="mf">7.58733691</span><span class="p">],</span>
+ <span class="p">[</span> <span class="mf">11.04203644</span> <span class="p">,</span> <span class="mf">10.11493029</span><span class="p">],</span>
+ <span class="p">[</span>  <span class="mf">9.881797</span>   <span class="p">,</span> <span class="mf">10.62895995</span><span class="p">],</span>
+ <span class="p">[</span>  <span class="mf">9.79766011</span> <span class="p">,</span>  <span class="mf">9.97217018</span><span class="p">],</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">9.67975098</span> <span class="p">,</span><span class="o">-</span><span class="mf">11.05412528</span><span class="p">],</span>
+ <span class="p">[</span><span class="o">-</span><span class="mf">10.58070834</span> <span class="p">,</span><span class="o">-</span><span class="mf">12.99003422</span><span class="p">],</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">9.7736453</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">8.27254942</span><span class="p">],</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">9.43198433</span> <span class="p">,</span> <span class="o">-</span><span class="mf">7.54610439</span><span class="p">],</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">9.13994785</span> <span class="p">,</span> <span class="o">-</span><span class="mf">7.18378278</span><span class="p">],</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">9.47403457</span> <span class="p">,</span> <span class="o">-</span><span class="mf">8.81266627</span><span class="p">],</span>
+ <span class="p">[</span> <span class="o">-</span><span class="mf">9.23248318</span> <span class="p">,</span> <span class="o">-</span><span class="mf">7.29852363</span><span class="p">],</span>
+ <span class="p">[</span><span class="o">-</span><span class="mf">10.47829261</span> <span class="p">,</span><span class="o">-</span><span class="mf">10.30055412</span><span class="p">],</span>
+ <span class="p">[</span> <span class="mf">10.50596899</span> <span class="p">,</span> <span class="o">-</span><span class="mf">8.09211343</span><span class="p">],</span>
+ <span class="p">[</span>  <span class="mf">7.81810663</span> <span class="p">,</span><span class="o">-</span><span class="mf">17.27380884</span><span class="p">],</span>
+ <span class="p">[</span>  <span class="mf">9.38509479</span> <span class="p">,</span><span class="o">-</span><span class="mf">11.5525437</span> <span class="p">],</span>
+ <span class="p">[</span> <span class="mf">11.66143844</span> <span class="p">,</span> <span class="o">-</span><span class="mf">4.37736872</span><span class="p">],</span>
+ <span class="p">[</span> <span class="mf">11.62327952</span> <span class="p">,</span> <span class="o">-</span><span class="mf">2.8127609</span> <span class="p">],</span>
+ <span class="p">[</span>  <span class="mf">8.64840945</span> <span class="p">,</span><span class="o">-</span><span class="mf">15.69415165</span><span class="p">],</span>
+ <span class="p">[</span>  <span class="mf">8.82528612</span> <span class="p">,</span><span class="o">-</span><span class="mf">15.96868896</span><span class="p">],</span>
+ <span class="p">[</span> <span class="mf">10.87536071</span> <span class="p">,</span> <span class="o">-</span><span class="mf">5.98830375</span><span class="p">],</span>
+ <span class="p">[</span> <span class="mf">10.94598118</span> <span class="p">,</span> <span class="o">-</span><span class="mf">7.34968697</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="queue-model.html" title="previous page"><span class="section-number">3. </span>排队论模型</a>
+    <a class='right-next' id="next-link" href="matplotlib.html" title="next page"><span class="section-number">1. </span>Matplotlib</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>
