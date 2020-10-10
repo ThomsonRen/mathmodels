@@ -17,55 +17,38 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply['content'])
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import matplotlib.pyplot as plt 
-import numpy as np 
-from sklearn.cluster import KMeans
-from sklearn import datasets 
-# 加载数据
-def loadDataSet(fileName):  # 解析文件，按tab分割字段，得到一个浮点数字类型的矩阵
-    dataMat = []              # 文件的最后一个字段是类别标签
-    fr = open(fileName)
-    for line in fr.readlines():
-        curLine = line.strip().split('\t')
-        fltLine = list(map(float, curLine))    # 将每个元素转成float类型
-        dataMat.append(fltLine[:-1])
-    return np.array(dataMat)
-X=loadDataSet('testSet.txt')
-estimator = KMeans(n_clusters=4) # 构造聚类器
-estimator.fit(X) # 聚类
-
-label_pred = estimator.labels_ # 获取聚类标签
-# 绘制k-means结果
-x0 = X[label_pred == 0]
-x1 = X[label_pred == 1]
-x2 = X[label_pred == 2]
-x3 = X[label_pred == 3]
-plt.scatter(x0[:, 0], x0[:, 1], c="red", marker='o', label='label0') 
-plt.scatter(x1[:, 0], x1[:, 1], c="green", marker='*', label='label1') 
-plt.scatter(x2[:, 0], x2[:, 1], c="blue", marker='+', label='label2') 
-plt.scatter(x3[:, 0], x3[:, 1], c="yellow", marker='p', label='label3') 
-plt.xlabel('sepal length') 
-plt.ylabel('sepal width') 
-plt.legend(loc=2) 
-plt.show()
+from sklearn import datasets
+import matplotlib.pyplot as plt
+ 
+#加载数据集，是一个字典类似Java中的map
+lris_df = datasets.load_iris()
+lris_df.head()
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
-[0;32m<ipython-input-2-33d0776ceee3>[0m in [0;36m<module>[0;34m[0m
-[1;32m     12[0m         [0mdataMat[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mfltLine[0m[0;34m[[0m[0;34m:[0m[0;34m-[0m[0;36m1[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     13[0m     [0;32mreturn[0m [0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mdataMat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 14[0;31m [0mX[0m[0;34m=[0m[0mloadDataSet[0m[0;34m([0m[0;34m'testSet.txt'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     15[0m [0mestimator[0m [0;34m=[0m [0mKMeans[0m[0;34m([0m[0mn_clusters[0m[0;34m=[0m[0;36m4[0m[0;34m)[0m [0;31m# 构造聚类器[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     16[0m [0mestimator[0m[0;34m.[0m[0mfit[0m[0;34m([0m[0mX[0m[0;34m)[0m [0;31m# 聚类[0m[0;34m[0m[0;34m[0m[0m
+[0;31mKeyError[0m                                  Traceback (most recent call last)
+[0;32m/opt/anaconda3/envs/qe-mini-example/lib/python3.7/site-packages/sklearn/utils/__init__.py[0m in [0;36m__getattr__[0;34m(self, key)[0m
+[1;32m     95[0m         [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 96[0;31m             [0;32mreturn[0m [0mself[0m[0;34m[[0m[0mkey[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     97[0m         [0;32mexcept[0m [0mKeyError[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
 
-[0;32m<ipython-input-2-33d0776ceee3>[0m in [0;36mloadDataSet[0;34m(fileName)[0m
-[1;32m      6[0m [0;32mdef[0m [0mloadDataSet[0m[0;34m([0m[0mfileName[0m[0;34m)[0m[0;34m:[0m  [0;31m# 解析文件，按tab分割字段，得到一个浮点数字类型的矩阵[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      7[0m     [0mdataMat[0m [0;34m=[0m [0;34m[[0m[0;34m][0m              [0;31m# 文件的最后一个字段是类别标签[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 8[0;31m     [0mfr[0m [0;34m=[0m [0mopen[0m[0;34m([0m[0mfileName[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      9[0m     [0;32mfor[0m [0mline[0m [0;32min[0m [0mfr[0m[0;34m.[0m[0mreadlines[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     10[0m         [0mcurLine[0m [0;34m=[0m [0mline[0m[0;34m.[0m[0mstrip[0m[0;34m([0m[0;34m)[0m[0;34m.[0m[0msplit[0m[0;34m([0m[0;34m'\t'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mKeyError[0m: 'head'
 
-[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'testSet.txt'
-FileNotFoundError: [Errno 2] No such file or directory: 'testSet.txt'
+During handling of the above exception, another exception occurred:
+
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+[0;32m<ipython-input-2-91466de3906c>[0m in [0;36m<module>[0;34m[0m
+[1;32m      4[0m [0;31m#加载数据集，是一个字典类似Java中的map[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0mlris_df[0m [0;34m=[0m [0mdatasets[0m[0;34m.[0m[0mload_iris[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 6[0;31m [0mlris_df[0m[0;34m.[0m[0mhead[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m
+[0;32m/opt/anaconda3/envs/qe-mini-example/lib/python3.7/site-packages/sklearn/utils/__init__.py[0m in [0;36m__getattr__[0;34m(self, key)[0m
+[1;32m     96[0m             [0;32mreturn[0m [0mself[0m[0;34m[[0m[0mkey[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     97[0m         [0;32mexcept[0m [0mKeyError[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 98[0;31m             [0;32mraise[0m [0mAttributeError[0m[0;34m([0m[0mkey[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     99[0m [0;34m[0m[0m
+[1;32m    100[0m     [0;32mdef[0m [0m__setstate__[0m[0;34m([0m[0mself[0m[0;34m,[0m [0mstate[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mAttributeError[0m: head
+AttributeError: head
 

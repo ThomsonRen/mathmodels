@@ -10,6 +10,8 @@
 
 ## KNN 算法
 
+### KNN 算法介绍
+
 最近邻 (k-Nearest Neighbors， KNN) 算法是一种分类算法， 1968年由 Cover和 Hart 提出， 应用场景有字符识别、 文本分类、 图像识别等领域。
 
 ```{tip}
@@ -18,7 +20,7 @@ KNN算法的思想是： 一个样本与数据集中的个样本最相似， 如
  ```{figure} ../_static/lecture_specific/clustering/knn.jpg
 ---
 height: 350px
-name: dis-demo
+name: knn
 ---
 ```
 
@@ -26,6 +28,7 @@ name: dis-demo
 那么样本之间的相似度如何度量呢？我们接下来展开讨论。
 
 
+### 样本相似度度量方法
 要用数量化的方法对事物进行分类，就必须用数量化的方法描述事物之间的相似程度。一个事物常常需要用多个变量来刻画。如果对于一群有待分类的样本点需用$p$个变量描述，则每个样本点可以看成是 $R^{p}$ 空间中的一个点。因此，很自然地想到可以用距离来度量样本点间的相似程度。在聚类分析中，最一般的相似度度量方法是 Minkowski 距离
 
 $$
@@ -69,9 +72,9 @@ name: dis-demo
 ```
 
 
+### KNN算法计算流程
 
-
-有了距离和定义后，我们来看KNN算法的基本流程（在以下的讨论中，我们用欧氏距离衡量样本之间的相似度）
+有了距离的定义后，我们来看KNN算法的基本流程（在以下的讨论中，我们用欧氏距离衡量样本之间的相似度）
 
 1. 计算已知类别数据集中的点与当前点之间的距离
 2. 按距离递增次序排序
@@ -83,12 +86,14 @@ name: dis-demo
 
 比如我们想用数据的方法对《唐人街探案》进行分类，我们可以求解与其最相似的$k$个电影，然后投票选出其类型，这里我们以$k=5$的情况举例。
 
-::::{figure} ../_static/lecture_specific/clustering/trj.png
+```{figure} ../_static/lecture_specific/clustering/trj.png
 ---
 height: 350px
-name: dis-demo
+name: trj
 ---
-::::
+```
+
+这里是程序实现
 
 import math
 movie_data = {"宝贝当家": [45, 2, 9, "喜剧片"],
@@ -129,6 +134,28 @@ for s in KNN:
     labels[label[3]] += 1
 labels =sorted(labels.items(),key=lambda l: l[1],reverse=True)
 print(labels,labels[0][0],sep='\n')
+
+### K值选择
+如果选择较小的$K$值，就相当于用较小的邻域中的训练实例进行预测，学习的近似误差会减小，只有与输入实例较近的训练实例才会对预测结果起作用，但缺点是学习的估计误差会增大，预测结果会对近邻的实例点分成敏感。如果邻近的实例点恰巧是噪声，预测就会出错。换句话说，$K$值减小就意味着整体模型变复杂，分的不清楚，就容易发生过拟合。
+
+如果选择较大$K$值，就相当于用较大邻域中的训练实例进行预测，其优点是可以减少学习的估计误差，但近似误差会增大，也就是对输入实例预测不准确，$K$值增大就意味着整体模型变的简单
+
+- 近似误差：可以理解为对现有训练集的训练误差。
+- 估计误差：可以理解为对测试集的测试误差。
+
+
+近似误差关注训练集，如果$K$值小了会出现过拟合的现象，对现有的训练集能有很好的预测，但是对未知的测试样本将会出现较大偏差的预测。模型本身不是最接近最佳模型。
+
+在应用中，$K$值一般取一个比较小的数值，通常采用交叉验证法来选取最优的$K$值。
+
+
+
+
+
+
+
+
+
 
 ## k-means聚类
 
@@ -179,7 +206,7 @@ $$
 ```{figure} ../_static/lecture_specific/clustering/k-means.jpg
 ---
 height: 350px
-name: dis-demo
+name: k-means
 ---
 
 ```
@@ -195,49 +222,74 @@ name: dis-demo
 
 
 
-下面我们通过一个案例，来看python中k-means聚类的实现方法。本案例采用二维数据集，共80个样本，有4个类。数据存在testSet.txt中
+下面我们通过一个案例，来看python中k-means聚类的实现方法。本案例采用的是iris数据集。
 
-import matplotlib.pyplot as plt 
-import numpy as np 
+from sklearn import datasets
+import matplotlib.pyplot as plt
+ 
+#加载数据集，是一个字典类似Java中的map
+lris_df = datasets.load_iris()
+lris_df.head()
+
+from sklearn import datasets
+import matplotlib.pyplot as plt
+ 
+#加载数据集，是一个字典类似Java中的map
+lris_df = datasets.load_iris()
+ 
+
+#挑选出前两个维度作为x轴和y轴，你也可以选择其他维度
+x_axis = lris_df.data[:,0]
+y_axis = lris_df.data[:,2]
+ 
+#绘制散点图
+plt.scatter(x_axis, y_axis)
+
+from sklearn import datasets
+import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
-from sklearn import datasets 
-# 加载数据
-def loadDataSet(fileName):  # 解析文件，按tab分割字段，得到一个浮点数字类型的矩阵
-    dataMat = []              # 文件的最后一个字段是类别标签
-    fr = open(fileName)
-    for line in fr.readlines():
-        curLine = line.strip().split('\t')
-        fltLine = list(map(float, curLine))    # 将每个元素转成float类型
-        dataMat.append(fltLine[:-1])
-    return np.array(dataMat)
-X=loadDataSet('testSet.txt')
-estimator = KMeans(n_clusters=4) # 构造聚类器
-estimator.fit(X) # 聚类
+ 
+#加载数据集，是一个字典类似Java中的map
+lris_df = datasets.load_iris()
+ 
+#挑选出前两个维度作为x轴和y轴，你也可以选择其他维度
+x_axis = lris_df.data[:,0]
+y_axis = lris_df.data[:,2]
+ 
+ 
+#这里已经知道了分3类，其他分类这里的参数需要调试
+model = KMeans(n_clusters=3)
+ 
+#训练模型
+model.fit(lris_df.data)
 
-label_pred = estimator.labels_ # 获取聚类标签
-# 绘制k-means结果
-x0 = X[label_pred == 0]
-x1 = X[label_pred == 1]
-x2 = X[label_pred == 2]
-x3 = X[label_pred == 3]
-plt.scatter(x0[:, 0], x0[:, 1], c="red", marker='o', label='label0') 
-plt.scatter(x1[:, 0], x1[:, 1], c="green", marker='*', label='label1') 
-plt.scatter(x2[:, 0], x2[:, 1], c="blue", marker='+', label='label2') 
-plt.scatter(x3[:, 0], x3[:, 1], c="yellow", marker='p', label='label3') 
-plt.xlabel('sepal length') 
-plt.ylabel('sepal width') 
-plt.legend(loc=2) 
+#预测全部150条数据
+all_predictions = model.predict(lris_df.data)
+ 
+#打印出来对150条数据的聚类散点图
+plt.scatter(x_axis, y_axis, c=all_predictions)
 plt.show()
+
+```{tip} 
+请你自行尝试分两类或者分四类的情况，你有什么发现？
+```
+
+
+
 
 ## 系统聚类法
 
 
 系统聚类法是聚类分析方法中最常用的一种方法。它的优点在于可以指出由粗到细的多种分类情况，典型的系统聚类结果可由一个聚类图展示出来。
 
-例如，在平面上有 7 个点 $w_1,w_2,w_3,w_4,w_5,w_6,w_7$（如图 1（a）），可以用聚类图（如图 1（b））来表示聚类结果。
+例如，在平面上有 7 个点 $w_1,w_2,w_3,w_4,w_5,w_6,w_7$（如图（a）），可以用聚类图（如图 （b））来表示聚类结果。
 
-![Image Name](https://cdn.kesci.com/upload/image/qfq80t68hv.png?imageView2/0/w/960/h/960)
-
+ ```{figure} ../_static/lecture_specific/clustering/h-c.png
+---
+height: 350px
+name: h-c
+---
+```
 
 记 $\Omega=\left\{w_{1}, w_{2}, \cdots, w_{7}\right\}$，
 
@@ -287,7 +339,7 @@ $$
 设$\Omega=\left\{w_{1}, w_{2}, \cdots, w_{7}\right\}$
 1. 计算$n$ 个样本点两两之间的距离$\left\{d_{i j}\right\}$ ，记为矩阵$D=\left(d_{i j}\right)_{n \times n}$ ；
 2. 首先构造$n$ 个类，每一个类中只包含一个样本点，每一类的平台高度均为零；
-3. 合并距离最近的两类为新类，并且以这两类间的距离值作为聚类图中的平台高
+3. 合并距离最近的两类为新类，并且以这两**类间的距离值**作为聚类图中的平台高
 度；
 4. 计算新类与当前各类的距离，若类的个数已经等于 1，转入步骤 (5），否则，回到步骤 (3）；
 5. 画聚类图；
@@ -296,84 +348,57 @@ $$
 
 
 
-## 变量聚类法
-
-在实际工作中，变量聚类法的应用也是十分重要的。在系统分析或评估过程中，为避免遗漏某些重要因素，往往在一开始选取指标时，尽可能多地考虑所有的相关因素。而这样做的结果，则是变量过多，变量间的相关度高，给系统分析与建模带来很大的不便。因此，人们常常希望能研究变量间的相似关系，按照变量的相似关系把它们聚合成若干类，进而找出影响系统的主要因素。
 
 
-### 1.3.1 变量相似性度量
+下面我们通过一个案例来看系统聚类的实际应用。在服装标准制定中，对某地成年女子的各部位尺寸进行了统计，通过14个部位的测量资料，获得各因素之间的相关系数表
+
+![Image Name](https://cdn.kesci.com/upload/image/qfq81boanz.png?imageView2/0/w/960/h/960)
 
 
-在对变量进行聚类分析时，首先要确定变量的相似性度量，常用的变量相似性度量有两种。
+其中 $x_1$ − 上体长，$x_2$ − 手臂长，$x_3$ − 胸围，$x_4$ − 颈围，$x_5$ − 总肩围，$x_6$ − 总胸宽，$x_7$ − 后背宽，$x_8$ − 前腰节高，$x_9$ −后腰节高，$x_{10}$ −总体长，$x_{11}$ − 身高，$x_{12}$ −下体长，$x_{13}$ −腰围， $x_{14}$ −臀围。
 
-1）相关系数 
 
- 记变量$x_{j}$ 的取值 $\left(x_{1 j}, x_{2 j}, \cdots, x_{n j}\right)^{T} \in R^{n}(j=1,2, \cdots, m)$则可以用两变量$x_j$与$x_k$的样本相关系数作为它们的相似性度量
+
+在系统分析或评估过程中，为避免遗漏某些重要因素，往往在一开始选取指标时，尽可能多地考虑所有的相关因素。而这样做的结果，则是变量过多，变量间的相关度高，给系统分析与建模带来很大的不便。因此，人们常常希望能研究变量间的相似关系，按照变量的相似关系把它们聚合成若干类，进而找出影响系统的主要因素。
+
+
+在聚类分析之前，首先要确定变量的相似性度量，常用的变量相似性度量是相关系数。记变量$x_{j}$ 的取值 
+
+$$
+\left(x_{1 j}, x_{2 j}, \cdots, x_{n j}\right)^{T} \in R^{n}(j=1,2, \cdots, m)
+$$
+
+则可以用两变量$x_j$与$x_k$的样本**相关系数**作为它们的相似性度量
 
 $$
 r_{j k}=\frac{\sum_{i=1}^{n}\left(x_{i j}-\bar{x}_{j}\right)\left(x_{i k}-\bar{x}_{k}\right)}{\left[\sum_{i=1}^{n}\left(x_{i j}-\bar{x}_{j}\right)^{2} \sum_{i=1}^{n}\left(x_{i k}-\bar{x}_{k}\right)^{2}\right]^{\frac{1}{2}}}
 $$
 
 
-在对变量进行聚类分析时，利用相关系数矩阵是最多的。
+用最大系数法对这14个变量进行系统聚类，其中类别与类别之间的距离定义为：
 
-
-2）夹角余弦 
- 也可以直接利用两变量$x_j$与$x_k$的夹角余弦$r_{jk}$ 来定义它们的相似性度量，有
-
-$$
-r_{j k}=\frac{\sum_{i=1}^{n} x_{i j} x_{i k}}{\left(\sum_{i=1}^{n} x_{i j}^{2} \sum_{i=1}^{n} x_{i k}^{2}\right)^{\frac{1}{2}}}
-$$
-
-
-各种定义的相似度量均应具有以下两个性质：
-$$
-\begin{array}{l}\text { a) }\left|r_{j k}\right| \leq 1, \text { 对于一切 } j, k \text { ; } \\ \text { b) } r_{j k}=r_{k j}, \text { 对于一切 } j, k \text { 。 }\end{array}
-$$
-
-
-$\left|r_{j k}\right|$越接近1，$x_j$与$x_k$越相关或越相似。$\left|r_{j k}\right|$越接近零， $x_j$与$x_k$的相似性越弱。
-
-
-### 1.3.2 变量聚类法
-
-
-类似于样本集合聚类分析中最常用的最短距离法、最长距离法等，变量聚类法采用了与系统聚类法相同的思路和过程。在变量聚类问题中，常用的有最大系数法、最小系数法等。
-
-
-1）最大系数法 
-
- 在最大系数法中，定义两类变量的距离为
 $$
 R\left(G_{1}, G_{2}\right)=\max _{x_{j} \in G_{1} \atop x_{k} \in G_{2}}\left\{r_{j k}\right\}
 $$
-这时，$R\left(G_{1}, G_{2}\right)$等于两类中最相似的两变量间的相似性度量值。
 
-2）最小系数法 
 
- 在最小系数法中，定义两类变量的距离为
-$$
-R\left(G_{1}, G_{2}\right)=\min _{x_{j} \in G_{1} \atop x_{k} \in G_{2}}\left\{r_{j k}\right\}
-$$
-这时，$R\left(G_{1}, G_{2}\right)$等于两类中相似性最小的两变量间的相似性度量值。
-
-### 1.3.3变量聚类法应用举例
-
-在服装标准制定中，对某地成年女子的各部位尺寸进行了统计，通过14个部位的测量资料，获得各因素之间的相关系数表
-
-![Image Name](https://cdn.kesci.com/upload/image/qfq81boanz.png?imageView2/0/w/960/h/960)
-
-其中 $x_1$ − 上体长，$x_2$ − 手臂长，$x_3$ − 胸围，$x_4$ − 颈围，$x_5$ − 总肩围，$x_6$ − 总胸宽，$x_7$ −
-后背宽，$x_8$ − 前腰节高，$x_9$ −后腰节高，$x_{10}$ −总体长，$x_{11}$ − 身高，$x_{12}$ −下体长，$x_{13}$ −
-腰围， $x_{14}$ −臀围。用最大系数法对这14个变量进行系统聚类，分类结果如图下。
+分类结果如图下（为了方便观察，平台高度定义为“1-相似系数”）。
 
 ![Image Name](https://cdn.kesci.com/upload/image/qfq81mbtb8.png?imageView2/0/w/960/h/960)
 
-可以看出，人体的变量大体可以分为两类：一类反映人高、矮的变量，如上体长，手臂长，前腰节高，后腰节高，总体长，身高，下体长；另一类是反映人体胖瘦的变量，如胸围，颈围，总肩围，总胸宽，后背宽，腰围，臀围。
 
-## 系统聚类法python实例
 
-首先还是导入各种库。
+这时，$R\left(G_{1}, G_{2}\right)$等于两类中最相似的两变量间的相似性度量值。
+
+
+可以看出，人体的变量大体可以分为两类：
+  - 一类反映人高、矮的变量，如上体长，手臂长，前腰节高，后腰节高，总体长，身高，下体长；
+  - 另一类是反映人体胖瘦的变量，如胸围，颈围，总肩围，总胸宽，后背宽，腰围，臀围。
+
+
+### 系统聚类法python实例
+
+首先还是导入各种库
 
 import numpy as np  
 from matplotlib import pyplot as plt  
@@ -388,7 +413,8 @@ a = state.multivariate_normal([10, 10], [[1, 3], [3, 11]], size=7)  #生成多�
 b = state.multivariate_normal([-10, -10], [[1, 3], [3, 11]], size=8)  
 data = np.concatenate((a, b)) #把数据进行拼接 
 
-这里我们设置一个随机状态，便于重复试验。然后利用这个随机状态生成两个变量a和b，这两个变量就是前面说过的数据簇，a有7个数据点，b有8个，a和b都是多元正态变量，其中a的均值向量是[10, 10]，b的均值向量是[-10, -10]，两者协方差矩阵是[[1, 3], [3, 11]]。这里要注意的是协方差矩阵要是正定矩阵或半正定矩阵。然后对a与b进行拼接，得到变量data。
+这里我们设置一个随机状态，便于重复试验。然后利用这个随机状态生成两个变量$a$和$b$，这两个变量就是前面说过的数据簇，$a$有7个数据点，$b$有8个，$a$和$b$都是多元正态变量，其中a的均值向量是[10, 10]，b的均值向量是[-10, -10]，两者协方差矩阵是[[1, 3], [3, 11]]。然后对$a$与$b$进行拼接，得到变量data。
+
 
 接下来要绘制数据点的分布。代码如下。
 
@@ -408,7 +434,7 @@ plt.ylim([-30,30]) #设置Y轴数值范围
 plt.xlim([-30,30])  
 plt.show() 
 
-这里代码比较简单，不再赘述，主要说一下ax.set_aspect('equal')这行代码，因为matplotlib默认情况下x轴和y轴的比例是不同的，也就是相同单位长度的线段，在显示时长度是不一样的，所以要把二者的比例设为一样，这样图片看起来更协调更准确。
+这里代码比较简单，不再赘述，主要说一下ax.set_aspect('equal')这行代码，因为matplotlib默认情况下$x$轴和$y$轴的比例是不同的，也就是相同单位长度的线段，在显示时长度是不一样的，所以要把二者的比例设为一样，这样图片看起来更协调更准确。
 
 所绘制图片如上所示，从图中可以明显看到两个数据簇，上面那个数据簇大概集中在坐标点[10, 10]附近，而下面那个大概集中在[-10, -10]附近，这和我们设置的是一样的。从图中可以很明显看出，这个数据集大概可以分为两类，即上面的数据簇分为一类，下面的数据簇分为另一类。
 
@@ -417,6 +443,7 @@ plt.show()
 z = linkage(data, "average") #用average算法，即类平均法 
 
 数据处理只有这一行代码，非常简单，但难点也就在这。首先我们来看一下z的结果，如图下所示。
+
 
 ![Image Name](https://cdn.kesci.com/upload/image/qfq84kinki.png?imageView2/0/w/960/h/960)
 
@@ -429,6 +456,7 @@ z的第二行数据里，前两个数字是2和5，就是原来类2和类5，距
 然后再看第三行数据，前两个数字是10和15，就是类10与类15，类15就是前面第一行合并成的新类，其包含11和13这两个点，类15与类10的距离是0.39165998，这个数字是类11和13与类10的平均距离，因为我们这里用的算法是average，类10、11和13合并为了一个新类，其包含3个点，所以第四个数字就是3。
 
 z中其他行的数据按照此规律以此类推。最后一行数据中，类26和27合并成一个新类，这个类包含了全部15个点，也就是这15个点最终划为了一个类，算法终止。
+
 
 接下来就是画图，代码如下
 
@@ -445,7 +473,7 @@ plt.show()
 import numpy as np  
 from matplotlib import pyplot as plt  
 from scipy.cluster.hierarchy import dendrogram, linkage
-
+state = np.random.RandomState(99) #设置随机状态 
 a = state.multivariate_normal([10, 10], [[1, 3], [3, 11]], size=7)  #生成多元正态变量  
 b = state.multivariate_normal([-10, -10], [[1, 3], [3, 11]], size=8)  
 data = np.concatenate((a, b)) #把数据进行拼接 
@@ -470,7 +498,7 @@ plt.show()
 ##  课后习题
 
 课后作业
-1.数据集如下，使用K-means算法进行聚类（聚成三类）
+1.数据集如下，使用K-means算法进行聚类（聚成4类）
 
 import matplotlib.pyplot as plt 
 from sklearn.cluster import KMeans

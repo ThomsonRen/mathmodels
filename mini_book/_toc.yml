@@ -24,6 +24,8 @@
   - file: docs/markov-chain
   - file: docs/queue-model
   - file: docs/clustering
+  - file: docs/ga
+  - file: docs/sa
 
 
 - part: 数据可视化
