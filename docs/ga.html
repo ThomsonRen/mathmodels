@@ -152,11 +152,6 @@
    5. 遗传算法
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="#id11">
-   6. 遗传算法案例代码求解
-  </a>
- </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
@@ -358,6 +353,53 @@
     </ul>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   5.5. 遗传算法案例求解
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     5.5.1. 种群初始化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     5.5.2. 适应度计算
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     5.5.3. 选择操作
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     5.5.4. 交叉
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     5.5.5. 变异
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     5.5.6. 其他
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     5.5.7. 主程序
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id19">
+   5.6. 遗传算法总结
+  </a>
  </li>
 </ul>
 
@@ -619,12 +661,37 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="id11">
-<h1><span class="section-number">6. </span>遗传算法案例代码求解<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h1>
-<p>现在我们用 Python 来实现遗传算法</p>
-<p>1.种群初始化</p>
-<p>(1)随机生成若干个数的二进制染色体。</p>
+<h2><span class="section-number">5.5. </span>遗传算法案例求解<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>现在我们用 Python 来实现遗传算法，简单起见，我们只求解一元函数</p>
+<div class="math notranslate nohighlight">
+\[
+f(x)=2 x \sin ( x)+\cos(x) ,x \in[0,10]
+\]</div>
+<p>在指定区间内的最大值。我们先来看下函数的图像。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span><span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x118f6aed0&gt;]
+</pre></div>
+</div>
+<img alt="../_images/ga_2_1.png" src="../_images/ga_2_1.png" />
+</div>
+</div>
+<p>可以看到这个函数有许多局部极大值点，接下来我们使用遗传算法进行最优解的搜索。</p>
+<div class="section" id="id12">
+<h3><span class="section-number">5.5.1. </span>种群初始化<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>随机生成若干个数的二进制染色体。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*-coding:utf-8 -*-</span>
@@ -650,8 +717,7 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 </div>
 </div>
 </div>
-<p>(2)编码</p>
-<p>将二进制的染色体基因型编码成十进制的表现型。</p>
+<p><strong>编码</strong>：将二进制的染色体基因型编码成十进制的表现型。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#从二进制到十进制</span>
@@ -672,7 +738,9 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 </div>
 </div>
 </div>
-<p>2.适应度计算</p>
+</div>
+<div class="section" id="id13">
+<h3><span class="section-number">5.5.2. </span>适应度计算<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>个体适应度与其对应的个体表现型<span class="math notranslate nohighlight">\(x\)</span>的目标函数值相关联，<span class="math notranslate nohighlight">\(x\)</span>越接近于目标函数的最优点，其适应度越大，从而其存活的概率越大。反之适应度越小，存活概率越小。这就引出一个问题关于适应度函数的选择，本例中，函数值总取非负值，<strong>以函数最大值为优化目标，故直接将目标函数作为适应度函数</strong>。这里我们直接将目标函数<span class="math notranslate nohighlight">\(2x\sin(x)+\cos(x)\)</span>作为个体适应度。如果，你想优化的是多元函数的话，需要将个体中基因型的每个变量提取出来，分别带入目标函数。比如说：我们想求<span class="math notranslate nohighlight">\(x_1+\ln(x_2)\)</span>的最大值。基因编码为4位编码，其中前两位是<span class="math notranslate nohighlight">\(x_1\)</span>，后两位是<span class="math notranslate nohighlight">\(x_2\)</span>。那么我们在求适应度的时候，需要将这两个值分别带入<span class="math notranslate nohighlight">\(f(x_1)=x\)</span>,<span class="math notranslate nohighlight">\(f(x_2)=\ln x\)</span>。再对<span class="math notranslate nohighlight">\(f(x_1)\)</span>和<span class="math notranslate nohighlight">\(f(x_2)\)</span>求和得到此个体的适应度。在本篇中，虽然染色体长度为10,但是实际上只有一个变量。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -693,7 +761,9 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 </div>
 </div>
 </div>
-<p>3.选择操作</p>
+</div>
+<div class="section" id="id14">
+<h3><span class="section-number">5.5.3. </span>选择操作<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>(1).只保留非负值的适应度/函数值(不小于0)——避免轮盘赌出现负的概率</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -781,7 +851,9 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 </div>
 </div>
 </div>
-<p>4.交叉</p>
+</div>
+<div class="section" id="id15">
+<h3><span class="section-number">5.5.4. </span>交叉<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">crossover</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">pc</span><span class="p">):</span>
@@ -810,7 +882,9 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 </div>
 </div>
 </div>
-<p>5.变异</p>
+</div>
+<div class="section" id="id16">
+<h3><span class="section-number">5.5.5. </span>变异<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#step4：突变</span>
@@ -834,7 +908,9 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 </div>
 </div>
 </div>
-<p>6.其他</p>
+</div>
+<div class="section" id="id17">
+<h3><span class="section-number">5.5.6. </span>其他<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 将每一个染色体都转化成十进制 max_value为基因最大值，为了后面画图用</span>
@@ -865,7 +941,9 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 </div>
 </div>
 </div>
-<p>7.主程序</p>
+</div>
+<div class="section" id="id18">
+<h3><span class="section-number">5.5.7. </span>主程序<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">population_size</span><span class="o">=</span><span class="mi">500</span>
@@ -874,6 +952,7 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 <span class="n">chromosome_length</span><span class="o">=</span><span class="mi">10</span>
 <span class="n">pc</span><span class="o">=</span><span class="mf">0.6</span>
 <span class="n">pm</span><span class="o">=</span><span class="mf">0.01</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
  
 <span class="n">results</span><span class="o">=</span><span class="p">[[]]</span>
 <span class="n">fitness1</span><span class="o">=</span><span class="p">[]</span>
@@ -901,298 +980,24 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
     <span class="n">Y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ga_20_0.png" src="../_images/ga_20_0.png" />
-</div>
-</div>
-<hr class="docutils" />
-<div class="section" id="id12">
-<h2><span class="section-number">6.1. </span>完整代码<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*-coding:utf-8 -*-</span>
-<span class="c1">#目标求解2*sin(x)+cos(x)最大值</span>
-<span class="o">%</span><span class="k">matplotlib</span> notebook
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="k">class</span> <span class="nc">GA</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="c1">#初始化种群 生成chromosome_length大小的population_size个个体的种群</span>
- 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">population_size</span><span class="p">,</span><span class="n">chromosome_length</span><span class="p">,</span><span class="n">max_value</span><span class="p">,</span><span class="n">pc</span><span class="p">,</span><span class="n">pm</span><span class="p">):</span>
- 
-        <span class="bp">self</span><span class="o">.</span><span class="n">population_size</span><span class="o">=</span><span class="n">population_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">choromosome_length</span><span class="o">=</span><span class="n">chromosome_length</span>
-        <span class="c1"># self.population=[[]]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_value</span><span class="o">=</span><span class="n">max_value</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pc</span><span class="o">=</span><span class="n">pc</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="o">=</span><span class="n">pm</span>
-        <span class="c1"># self.fitness_value=[]</span>
- 
- 
- 
-    <span class="k">def</span> <span class="nf">species_origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">population</span><span class="o">=</span><span class="p">[[]]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_size</span><span class="p">):</span>
- 
-            <span class="n">temporary</span><span class="o">=</span><span class="p">[]</span>
-        <span class="c1">#染色体暂存器</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choromosome_length</span><span class="p">):</span>
- 
-                <span class="n">temporary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-            <span class="c1">#随机产生一个染色体,由二进制数组成</span>
- 
-            <span class="n">population</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temporary</span><span class="p">)</span>
-            <span class="c1">#将染色体添加到种群中</span>
-        <span class="k">return</span> <span class="n">population</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-            <span class="c1"># 将种群返回，种群是个二维数组，个体和染色体两维</span>
- 
-    <span class="c1">#从二进制到十进制</span>
-    <span class="c1">#编码  input:种群,染色体长度 编码过程就是将多元函数转化成一元函数的过程</span>
-    <span class="k">def</span> <span class="nf">translation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">population</span><span class="p">):</span>
- 
-        <span class="n">temporary</span><span class="o">=</span><span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
-            <span class="n">total</span><span class="o">=</span><span class="mi">0</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choromosome_length</span><span class="p">):</span>
-                <span class="n">total</span><span class="o">+=</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">j</span><span class="p">))</span>
-            <span class="c1">#从第一个基因开始，每位对2求幂，再求和</span>
-            <span class="c1"># 如：0101 转成十进制为：1 * 20 + 0 * 21 + 1 * 22 + 0 * 23 = 1 + 0 + 4 + 0 = 5</span>
-            <span class="n">temporary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
-        <span class="c1">#一个染色体编码完成，由一个二进制数编码为一个十进制数</span>
-        <span class="k">return</span> <span class="n">temporary</span>
-   <span class="c1"># 返回种群中所有个体编码完成后的十进制数</span>
- 
- 
- 
-<span class="c1">#from protein to function,according to its functoin value</span>
- 
-<span class="c1">#a protein realize its function according its structure</span>
-<span class="c1"># 目标函数相当于环境 对染色体进行筛选，这里是2*sin(x)+math.cos(x)</span>
-    <span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">population</span><span class="p">):</span>
-        <span class="n">temporary</span><span class="o">=</span><span class="p">[]</span>
-        <span class="n">function1</span><span class="o">=</span><span class="p">[]</span>
-        <span class="n">temporary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temporary</span><span class="p">)):</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">temporary</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">max_value</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">choromosome_length</span><span class="p">)</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
-            <span class="n">function1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
- 
-         <span class="c1">#这里将sin(x)作为目标函数</span>
-        <span class="k">return</span> <span class="n">function1</span>
- 
-<span class="c1">#定义适应度</span>
-    <span class="k">def</span> <span class="nf">fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">function1</span><span class="p">):</span>
- 
-        <span class="n">fitness_value</span><span class="o">=</span><span class="p">[]</span>
- 
-        <span class="n">num</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">function1</span><span class="p">)</span>
- 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
- 
-            <span class="k">if</span><span class="p">(</span><span class="n">function1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
-                <span class="n">temporary</span><span class="o">=</span><span class="n">function1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">temporary</span><span class="o">=</span><span class="mf">0.0</span>
-        <span class="c1"># 如果适应度小于0,则定为0</span>
- 
-            <span class="n">fitness_value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temporary</span><span class="p">)</span>
-        <span class="c1">#将适应度添加到列表中</span>
- 
-        <span class="k">return</span> <span class="n">fitness_value</span>
- 
-<span class="c1">#计算适应度和</span>
- 
-    <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fitness_value</span><span class="p">):</span>
-        <span class="n">total</span><span class="o">=</span><span class="mi">0</span>
- 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fitness_value</span><span class="p">)):</span>
-            <span class="n">total</span><span class="o">+=</span><span class="n">fitness_value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">total</span>
- 
-<span class="c1">#计算适应度斐伯纳且列表</span>
-    <span class="k">def</span> <span class="nf">cumsum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">fitness1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fitness1</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="c1"># range(start,stop,[step])</span>
-        <span class="c1"># 倒计数</span>
-            <span class="n">total</span><span class="o">=</span><span class="mi">0</span>
-            <span class="n">j</span><span class="o">=</span><span class="mi">0</span>
- 
-            <span class="k">while</span><span class="p">(</span><span class="n">j</span><span class="o">&lt;=</span><span class="n">i</span><span class="p">):</span>
-                 <span class="n">total</span><span class="o">+=</span><span class="n">fitness1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-                 <span class="n">j</span><span class="o">+=</span><span class="mi">1</span>
- 
-            <span class="n">fitness1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">total</span>
-            <span class="n">fitness1</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">fitness1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
- 
- 
-<span class="c1">#3.选择种群中个体适应度最大的个体</span>
-    <span class="k">def</span> <span class="nf">selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">population</span><span class="p">,</span><span class="n">fitness_value</span><span class="p">):</span>
-        <span class="n">new_fitness</span><span class="o">=</span><span class="p">[]</span>
-    <span class="c1">#单个公式暂存器</span>
-        <span class="n">total_fitness</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fitness_value</span><span class="p">)</span>
-    <span class="c1">#将所有的适应度求和</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fitness_value</span><span class="p">)):</span>
-            <span class="n">new_fitness</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fitness_value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">total_fitness</span><span class="p">)</span>
-    <span class="c1">#将所有个体的适应度正则化</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">new_fitness</span><span class="p">)</span>
-    <span class="c1">#</span>
-        <span class="n">ms</span><span class="o">=</span><span class="p">[]</span>
-    <span class="c1">#存活的种群</span>
-        <span class="n">population_length</span><span class="o">=</span><span class="n">pop_len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
-    <span class="c1">#求出种群长度</span>
-    <span class="c1">#根据随机数确定哪几个能存活</span>
- 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pop_len</span><span class="p">):</span>
-            <span class="n">ms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
-    <span class="c1"># 产生种群个数的随机值</span>
-    <span class="c1"># ms.sort()</span>
-    <span class="c1"># 存活的种群排序</span>
-        <span class="n">fitin</span><span class="o">=</span><span class="mi">0</span>
-        <span class="n">newin</span><span class="o">=</span><span class="mi">0</span>
-        <span class="n">new_population</span><span class="o">=</span><span class="n">new_pop</span><span class="o">=</span><span class="n">population</span>
- 
-    <span class="c1">#轮盘赌方式</span>
-        <span class="k">while</span> <span class="n">newin</span><span class="o">&lt;</span><span class="n">pop_len</span><span class="p">:</span>
-              <span class="k">if</span><span class="p">(</span><span class="n">ms</span><span class="p">[</span><span class="n">newin</span><span class="p">]</span><span class="o">&lt;</span><span class="n">new_fitness</span><span class="p">[</span><span class="n">fitin</span><span class="p">]):</span>
-                 <span class="n">new_pop</span><span class="p">[</span><span class="n">newin</span><span class="p">]</span><span class="o">=</span><span class="n">population</span><span class="p">[</span><span class="n">fitin</span><span class="p">]</span>
-                 <span class="n">newin</span><span class="o">+=</span><span class="mi">1</span>
-              <span class="k">else</span><span class="p">:</span>
-                 <span class="n">fitin</span><span class="o">+=</span><span class="mi">1</span>
-        <span class="n">population</span><span class="o">=</span><span class="n">new_pop</span>
- 
-<span class="c1">#4.交叉操作</span>
-    <span class="k">def</span> <span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">population</span><span class="p">):</span>
-<span class="c1">#pc是概率阈值，选择单点交叉还是多点交叉，生成新的交叉个体，这里没用</span>
-        <span class="n">pop_len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
- 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pop_len</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
- 
-            <span class="k">if</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">pc</span><span class="p">):</span>
- 
-               <span class="n">cpoint</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-           <span class="c1">#在种群个数内随机生成单点交叉点</span>
-               <span class="n">temporary1</span><span class="o">=</span><span class="p">[]</span>
-               <span class="n">temporary2</span><span class="o">=</span><span class="p">[]</span>
- 
-               <span class="n">temporary1</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">cpoint</span><span class="p">])</span>
-               <span class="n">temporary1</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">cpoint</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">])])</span>
-           <span class="c1">#将tmporary1作为暂存器，暂时存放第i个染色体中的前0到cpoint个基因，</span>
-           <span class="c1">#然后再把第i+1个染色体中的后cpoint到第i个染色体中的基因个数，补充到temporary2后面</span>
- 
-               <span class="n">temporary2</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">cpoint</span><span class="p">])</span>
-               <span class="n">temporary2</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">cpoint</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">])])</span>
-        <span class="c1"># 将tmporary2作为暂存器，暂时存放第i+1个染色体中的前0到cpoint个基因，</span>
-        <span class="c1"># 然后再把第i个染色体中的后cpoint到第i个染色体中的基因个数，补充到temporary2后面</span>
-               <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">temporary1</span>
-               <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">temporary2</span>
-        <span class="c1"># 第i个染色体和第i+1个染色体基因重组/交叉完成</span>
-    <span class="k">def</span> <span class="nf">mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">population</span><span class="p">):</span>
-     <span class="c1"># pm是概率阈值</span>
-         <span class="n">px</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
-    <span class="c1"># 求出种群中所有种群/个体的个数</span>
-         <span class="n">py</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="c1"># 染色体/个体基因的个数</span>
-         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">px</span><span class="p">):</span>
-             <span class="k">if</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">pm</span><span class="p">):</span>
-                <span class="n">mpoint</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">py</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="c1">#</span>
-                <span class="k">if</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">mpoint</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span>
-               <span class="c1">#将mpoint个基因进行单点随机变异，变为0或者1</span>
-                   <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">mpoint</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
-                <span class="k">else</span><span class="p">:</span>
-                   <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">mpoint</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
- 
-<span class="c1">#transform the binary to decimalism</span>
-<span class="c1"># 将每一个染色体都转化成十进制 max_value,再筛去过大的值</span>
-    <span class="k">def</span> <span class="nf">b2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">best_individual</span><span class="p">):</span>
-        <span class="n">total</span><span class="o">=</span><span class="mi">0</span>
-        <span class="n">b</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">best_individual</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
-            <span class="n">total</span><span class="o">=</span><span class="n">total</span><span class="o">+</span><span class="n">best_individual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
- 
-        <span class="n">total</span><span class="o">=</span><span class="n">total</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">max_value</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">choromosome_length</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">total</span>
- 
-<span class="c1">#寻找最好的适应度和个体</span>
- 
-    <span class="k">def</span> <span class="nf">best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">population</span><span class="p">,</span><span class="n">fitness_value</span><span class="p">):</span>
- 
-        <span class="n">px</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
-        <span class="n">bestindividual</span><span class="o">=</span><span class="p">[]</span>
-        <span class="n">bestfitness</span><span class="o">=</span><span class="n">fitness_value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="c1"># print(fitness_value)</span>
- 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">px</span><span class="p">):</span>
-   <span class="c1"># 循环找出最大的适应度，适应度最大的也就是最好的个体</span>
-            <span class="k">if</span><span class="p">(</span><span class="n">fitness_value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="n">bestfitness</span><span class="p">):</span>
- 
-               <span class="n">bestfitness</span><span class="o">=</span><span class="n">fitness_value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-               <span class="n">bestindividual</span><span class="o">=</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
- 
-        <span class="k">return</span> <span class="p">[</span><span class="n">bestindividual</span><span class="p">,</span><span class="n">bestfitness</span><span class="p">]</span>
- 
- 
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">Y</span> <span class="o">=</span> <span class="p">[]</span>
- 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">500</span><span class="p">):</span>
-            <span class="n">X</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-            <span class="n">Y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
- 
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
- 
-    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
- 
-        <span class="n">results</span> <span class="o">=</span> <span class="p">[[]]</span>
-        <span class="n">fitness_value</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">fitmean</span> <span class="o">=</span> <span class="p">[]</span>
- 
-        <span class="n">population</span> <span class="o">=</span> <span class="n">pop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">species_origin</span><span class="p">()</span>
- 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">500</span><span class="p">):</span>
-            <span class="n">function_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
-            <span class="c1"># print(&#39;fit funtion_value:&#39;,function_value)</span>
-            <span class="n">fitness_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">(</span><span class="n">function_value</span><span class="p">)</span>
-            <span class="c1"># print(&#39;fitness_value:&#39;,fitness_value)</span>
- 
-            <span class="n">best_individual</span><span class="p">,</span> <span class="n">best_fitness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">fitness_value</span><span class="p">)</span>
-            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">best_fitness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b2d</span><span class="p">(</span><span class="n">best_individual</span><span class="p">)])</span>
-        <span class="c1"># 将最好的个体和最好的适应度保存，并将最好的个体转成十进制,适应度函数</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">fitness_value</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">crossover</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mutation</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-        <span class="n">results</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
- 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-   <span class="n">population_size</span><span class="o">=</span><span class="mi">400</span>
-   <span class="n">max_value</span><span class="o">=</span><span class="mi">10</span>
-   <span class="n">chromosome_length</span><span class="o">=</span><span class="mi">20</span>
-   <span class="n">pc</span><span class="o">=</span><span class="mf">0.6</span>
-   <span class="n">pm</span><span class="o">=</span><span class="mf">0.01</span>
-   <span class="n">ga</span><span class="o">=</span><span class="n">GA</span><span class="p">(</span><span class="n">population_size</span><span class="p">,</span><span class="n">chromosome_length</span><span class="p">,</span><span class="n">max_value</span><span class="p">,</span><span class="n">pc</span><span class="p">,</span><span class="n">pm</span><span class="p">)</span>
-   <span class="n">ga</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+<img alt="../_images/ga_22_0.png" src="../_images/ga_22_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15.739587279022171
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/ga_23_0.png" src="../_images/ga_23_0.png" />
 </div>
-</div>
-<p>作为对比,下面简单介绍一种基于贪婪思想的<strong>爬山法</strong>:</p>
-<p>从搜索空间中随机产生邻近的点，从中选择对应解最优的个体，替换原来的个体，不断重复上述过程。</p>
+<p>可以看到，在经过500代遗传以后，算法找到的最优解15.74。已经与原函数的最大值非常接近了。</p>
+<p>作为对比,下面简单介绍一种基于贪婪思想的<strong>爬山法</strong>: 从搜索空间中随机产生邻近的点，从中选择对应解最优的个体，替换原来的个体，不断重复上述过程。</p>
 <p>因为爬山法只对“邻近”的点作比较，所以目光比较“短浅”，常常只能收敛到离开初始位置比较近的局部最优解上面。对于存在很多局部最优点的问题，通过一个简单的迭代找出全局最优解的机会非常渺茫。（在爬山法中，袋鼠最有希望到达最靠近它出发点的山顶，但不能保证该山顶是珠穆朗玛峰，或者是一个非常高的山峰。因为一路上它<strong>只顾上坡，没有下坡</strong>。）</p>
 </div>
-<div class="section" id="id13">
-<h2><span class="section-number">6.2. </span>启发式优化方法总结<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
-<p><strong>遗传算法</strong></p>
+</div>
+<div class="section" id="id19">
+<h2><span class="section-number">5.6. </span>遗传算法总结<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
 <p>优点：</p>
 <ul class="simple">
 <li><p>可以解决复杂的实际问题</p></li>
@@ -1205,11 +1010,6 @@ F=\sum_{i=1}^{n} f_{i}=5+7+10+13+15=50
 <li><p>求出的解是满意解，只能接近最优解</p></li>
 <li><p>存在算法不适用的情况，并且难以判断原因</p></li>
 </ul>
-<p><strong>模拟退火算法</strong></p>
-<p>迭代搜索效率高，并且可以并行化；</p>
-<p>算法中有一定概率接受比当前解较差的解，因此一定程度上可以跳出局部最优；</p>
-<p>算法求得的解与初始解状态S无关，因此有一定的鲁棒性；</p>
-<p>具有渐近收敛性，已在理论上被证明是一种以概率l收敛于全局最优解的全局优化算法。</p>
 </div>
 </div>
 
