@@ -23,6 +23,7 @@
   - file: docs/monte-carlo
   - file: docs/markov-chain
   - file: docs/queue-model
+  - file: docs/clustering
 
 
 - part: 数据可视化

@@ -1,0 +1,71 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/qe-mini-example/lib/python3.7/site-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
+    record_timing=False,
+  File "/opt/anaconda3/envs/qe-mini-example/lib/python3.7/site-packages/nbclient/client.py", line 1082, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/envs/qe-mini-example/lib/python3.7/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/opt/anaconda3/envs/qe-mini-example/lib/python3.7/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/opt/anaconda3/envs/qe-mini-example/lib/python3.7/asyncio/base_events.py", line 587, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/envs/qe-mini-example/lib/python3.7/site-packages/nbclient/client.py", line 536, in async_execute
+    cell, index, execution_count=self.code_cells_executed + 1
+  File "/opt/anaconda3/envs/qe-mini-example/lib/python3.7/site-packages/nbclient/client.py", line 827, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/anaconda3/envs/qe-mini-example/lib/python3.7/site-packages/nbclient/client.py", line 735, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply['content'])
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import matplotlib.pyplot as plt 
+import numpy as np 
+from sklearn.cluster import KMeans
+from sklearn import datasets 
+# 加载数据
+def loadDataSet(fileName):  # 解析文件，按tab分割字段，得到一个浮点数字类型的矩阵
+    dataMat = []              # 文件的最后一个字段是类别标签
+    fr = open(fileName)
+    for line in fr.readlines():
+        curLine = line.strip().split('\t')
+        fltLine = list(map(float, curLine))    # 将每个元素转成float类型
+        dataMat.append(fltLine[:-1])
+    return np.array(dataMat)
+X=loadDataSet('testSet.txt')
+estimator = KMeans(n_clusters=4) # 构造聚类器
+estimator.fit(X) # 聚类
+
+label_pred = estimator.labels_ # 获取聚类标签
+# 绘制k-means结果
+x0 = X[label_pred == 0]
+x1 = X[label_pred == 1]
+x2 = X[label_pred == 2]
+x3 = X[label_pred == 3]
+plt.scatter(x0[:, 0], x0[:, 1], c="red", marker='o', label='label0') 
+plt.scatter(x1[:, 0], x1[:, 1], c="green", marker='*', label='label1') 
+plt.scatter(x2[:, 0], x2[:, 1], c="blue", marker='+', label='label2') 
+plt.scatter(x3[:, 0], x3[:, 1], c="yellow", marker='p', label='label3') 
+plt.xlabel('sepal length') 
+plt.ylabel('sepal width') 
+plt.legend(loc=2) 
+plt.show()
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+[0;32m<ipython-input-2-33d0776ceee3>[0m in [0;36m<module>[0;34m[0m
+[1;32m     12[0m         [0mdataMat[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mfltLine[0m[0;34m[[0m[0;34m:[0m[0;34m-[0m[0;36m1[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     13[0m     [0;32mreturn[0m [0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0mdataMat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 14[0;31m [0mX[0m[0;34m=[0m[0mloadDataSet[0m[0;34m([0m[0;34m'testSet.txt'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     15[0m [0mestimator[0m [0;34m=[0m [0mKMeans[0m[0;34m([0m[0mn_clusters[0m[0;34m=[0m[0;36m4[0m[0;34m)[0m [0;31m# 构造聚类器[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     16[0m [0mestimator[0m[0;34m.[0m[0mfit[0m[0;34m([0m[0mX[0m[0;34m)[0m [0;31m# 聚类[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m<ipython-input-2-33d0776ceee3>[0m in [0;36mloadDataSet[0;34m(fileName)[0m
+[1;32m      6[0m [0;32mdef[0m [0mloadDataSet[0m[0;34m([0m[0mfileName[0m[0;34m)[0m[0;34m:[0m  [0;31m# 解析文件，按tab分割字段，得到一个浮点数字类型的矩阵[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m     [0mdataMat[0m [0;34m=[0m [0;34m[[0m[0;34m][0m              [0;31m# 文件的最后一个字段是类别标签[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 8[0;31m     [0mfr[0m [0;34m=[0m [0mopen[0m[0;34m([0m[0mfileName[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      9[0m     [0;32mfor[0m [0mline[0m [0;32min[0m [0mfr[0m[0;34m.[0m[0mreadlines[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     10[0m         [0mcurLine[0m [0;34m=[0m [0mline[0m[0;34m.[0m[0mstrip[0m[0;34m([0m[0;34m)[0m[0;34m.[0m[0msplit[0m[0;34m([0m[0;34m'\t'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'testSet.txt'
+FileNotFoundError: [Errno 2] No such file or directory: 'testSet.txt'
+
