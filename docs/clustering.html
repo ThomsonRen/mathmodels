@@ -38,7 +38,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="1. Matplotlib" href="matplotlib.html" />
+    <link rel="next" title="5. 优化算法" href="ga.html" />
     <link rel="prev" title="3. 排队论模型" href="queue-model.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -145,6 +145,16 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    4. 聚类分析
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ga.html">
+   5. 优化算法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ga.html#id12">
+   6. 遗传算法案例代码求解
   </a>
  </li>
 </ul>
@@ -275,6 +285,28 @@
   <a class="reference internal nav-link" href="#knn">
    4.1. KNN 算法
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     4.1.1. KNN 算法介绍
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     4.1.2. 样本相似度度量方法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     4.1.3. KNN算法计算流程
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#k">
+     4.1.4. K值选择
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#k-means">
@@ -282,7 +314,7 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
+  <a class="reference internal nav-link" href="#id7">
    4.3. 系统聚类法
   </a>
   <ul class="nav section-nav flex-column">
@@ -294,7 +326,7 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id5">
+  <a class="reference internal nav-link" href="#id8">
    4.4. 课后习题
   </a>
  </li>
@@ -314,15 +346,20 @@
 <p>通常，人们可以凭经验和专业知识来实现分类。而聚类分析（Cluster Analyses）作为一种定量方法，将从数据分析的角度，给出一个更准确、细致的分类工具。</p>
 <div class="section" id="knn">
 <h2><span class="section-number">4.1. </span>KNN 算法<a class="headerlink" href="#knn" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3><span class="section-number">4.1.1. </span>KNN 算法介绍<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>最近邻 (k-Nearest Neighbors， KNN) 算法是一种分类算法， 1968年由 Cover和 Hart 提出， 应用场景有字符识别、 文本分类、 图像识别等领域。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>KNN算法的思想是： 一个样本与数据集中的个样本最相似， 如果这个样本中的大多数属于某一个类别， 则该样本也属于这个类别。</p>
-<div class="figure align-default" id="id2">
+<div class="figure align-default" id="id3">
 <a class="reference internal image-reference" href="../_images/knn.jpg"><img alt="../_images/knn.jpg" src="../_images/knn.jpg" style="height: 350px;" /></a>
 </div>
 </div>
 <p>那么样本之间的相似度如何度量呢？我们接下来展开讨论。</p>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">4.1.2. </span>样本相似度度量方法<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>要用数量化的方法对事物进行分类，就必须用数量化的方法描述事物之间的相似程度。一个事物常常需要用多个变量来刻画。如果对于一群有待分类的样本点需用<span class="math notranslate nohighlight">\(p\)</span>个变量描述，则每个样本点可以看成是 <span class="math notranslate nohighlight">\(R^{p}\)</span> 空间中的一个点。因此，很自然地想到可以用距离来度量样本点间的相似程度。在聚类分析中，最一般的相似度度量方法是 Minkowski 距离</p>
 <div class="math notranslate nohighlight">
 \[
@@ -354,7 +391,10 @@ d_{2}(x, y)=\left[\sum_{k=1}^{p}\left|x_{k}-y_{k}\right|^{2}\right]^{\frac{1}{2}
 <p class="admonition-title">Warning</p>
 <p>值得注意的是在采用 Minkowski 距离时，一定要采用相同量纲的变量。如果变量的量纲不同，测量值变异范围相差悬殊时，建议首先进行数据的标准化处理，然后再计算距离。</p>
 </div>
-<p>有了距离和定义后，我们来看KNN算法的基本流程（在以下的讨论中，我们用欧氏距离衡量样本之间的相似度）</p>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">4.1.3. </span>KNN算法计算流程<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>有了距离的定义后，我们来看KNN算法的基本流程（在以下的讨论中，我们用欧氏距离衡量样本之间的相似度）</p>
 <ol class="simple">
 <li><p>计算已知类别数据集中的点与当前点之间的距离</p></li>
 <li><p>按距离递增次序排序</p></li>
@@ -421,6 +461,18 @@ d_{2}(x, y)=\left[\sum_{k=1}^{p}\left|x_{k}-y_{k}\right|^{2}\right]^{\frac{1}{2}
 </div>
 </div>
 </div>
+<div class="section" id="k">
+<h3><span class="section-number">4.1.4. </span>K值选择<a class="headerlink" href="#k" title="Permalink to this headline">¶</a></h3>
+<p>如果选择较小的<span class="math notranslate nohighlight">\(K\)</span>值，就相当于用较小的邻域中的训练实例进行预测，学习的近似误差会减小，只有与输入实例较近的训练实例才会对预测结果起作用，但缺点是学习的估计误差会增大，预测结果会对近邻的实例点分成敏感。如果邻近的实例点恰巧是噪声，预测就会出错。换句话说，<span class="math notranslate nohighlight">\(K\)</span>值减小就意味着整体模型变复杂，分的不清楚，就容易发生过拟合。</p>
+<p>如果选择较大<span class="math notranslate nohighlight">\(K\)</span>值，就相当于用较大邻域中的训练实例进行预测，其优点是可以减少学习的估计误差，但近似误差会增大，也就是对输入实例预测不准确，<span class="math notranslate nohighlight">\(K\)</span>值增大就意味着整体模型变的简单</p>
+<ul class="simple">
+<li><p>近似误差：可以理解为对现有训练集的训练误差。</p></li>
+<li><p>估计误差：可以理解为对测试集的测试误差。</p></li>
+</ul>
+<p>近似误差关注训练集，如果<span class="math notranslate nohighlight">\(K\)</span>值小了会出现过拟合的现象，对现有的训练集能有很好的预测，但是对未知的测试样本将会出现较大偏差的预测。模型本身不是最接近最佳模型。</p>
+<p>在应用中，<span class="math notranslate nohighlight">\(K\)</span>值一般取一个比较小的数值，通常采用交叉验证法来选取最优的<span class="math notranslate nohighlight">\(K\)</span>值。</p>
+</div>
+</div>
 <div class="section" id="k-means">
 <h2><span class="section-number">4.2. </span>k-means聚类<a class="headerlink" href="#k-means" title="Permalink to this headline">¶</a></h2>
 <p>k-means算法是集简单和经典于一身的基于距离的聚类算法,采用距离作为相似性的评价指标，即认为两个对象的距离越近，其相似度就越大。该算法认为类簇是由距离靠近的对象组成的，因此把得到紧凑且独立的簇作为最终目标。</p>
@@ -459,7 +511,7 @@ E=\sum_{i=1}^{k} \sum_{x \in C_{i}}\left\|x-\mu_{i}\right\|_{2}^{2}
 </ul>
 </div>
 <p>我们通过一个示意图来解释k-means的计算过程</p>
-<div class="figure align-default" id="id3">
+<div class="figure align-default" id="id6">
 <a class="reference internal image-reference" href="../_images/k-means.jpg"><img alt="../_images/k-means.jpg" src="../_images/k-means.jpg" style="height: 350px;" /></a>
 </div>
 <ul class="simple">
@@ -469,7 +521,7 @@ E=\sum_{i=1}^{k} \sum_{x \in C_{i}}\left\|x-\mu_{i}\right\|_{2}^{2}
 <li><p>图<span class="math notranslate nohighlight">\(d\)</span>中，我们对我们当前标记为红色和蓝色的点分别求其新的质心新的红色质心和蓝色质心的位置已经发生了变动。</p></li>
 <li><p>图<span class="math notranslate nohighlight">\(e\)</span>和图<span class="math notranslate nohighlight">\(f\)</span>重复了我们在图<span class="math notranslate nohighlight">\(c\)</span>和图<span class="math notranslate nohighlight">\(d\)</span>的过程，即将所有点的类别标记为距离最近的质心的类别并求新的质心。最终我们得到的两个类别如图<span class="math notranslate nohighlight">\(f\)</span>所示。</p></li>
 </ul>
-<p>下面我们通过一个案例，来看python中k-means聚类的实现方法。本案例采用二维数据集，共80个样本，有4个类。数据存在testSet.txt中</p>
+<p>下面我们通过一个案例，来看python中k-means聚类的实现方法。本案例采用的是iris数据集。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
@@ -495,6 +547,7 @@ E=\sum_{i=1}^{k} \sum_{x \in C_{i}}\left\|x-\mu_{i}\right\|_{2}^{2}
 <img alt="../_images/clustering_3_1.png" src="../_images/clustering_3_1.png" />
 </div>
 </div>
+<p>我们用k-means算法将其分成三类</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
@@ -525,16 +578,19 @@ E=\sum_{i=1}^{k} \sum_{x \in C_{i}}\left\|x-\mu_{i}\right\|_{2}^{2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/clustering_4_0.png" src="../_images/clustering_4_0.png" />
+<img alt="../_images/clustering_5_0.png" src="../_images/clustering_5_0.png" />
 </div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>请你自行尝试分两类或者分四类的情况，你有什么发现？</p>
+<ul class="simple">
+<li><p>请你自行尝试分两类或者分四类的情况，你有什么发现？</p></li>
+<li></li>
+</ul>
 </div>
 </div>
-<div class="section" id="id4">
-<h2><span class="section-number">4.3. </span>系统聚类法<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2><span class="section-number">4.3. </span>系统聚类法<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>系统聚类法是聚类分析方法中最常用的一种方法。它的优点在于可以指出由粗到细的多种分类情况，典型的系统聚类结果可由一个聚类图展示出来。</p>
 <p>例如，在平面上有 7 个点 <span class="math notranslate nohighlight">\(w_1,w_2,w_3,w_4,w_5,w_6,w_7\)</span>（如图（a）），可以用聚类图（如图 （b））来表示聚类结果。</p>
 <div class="figure align-default" id="h-c">
@@ -655,7 +711,7 @@ R\left(G_{1}, G_{2}\right)=\max _{x_{j} \in G_{1} \atop x_{k} \in G_{2}}\left\{r
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/clustering_10_0.png" src="../_images/clustering_10_0.png" />
+<img alt="../_images/clustering_11_0.png" src="../_images/clustering_11_0.png" />
 </div>
 </div>
 <p>这里代码比较简单，不再赘述，主要说一下ax.set_aspect(‘equal’)这行代码，因为matplotlib默认情况下<span class="math notranslate nohighlight">\(x\)</span>轴和<span class="math notranslate nohighlight">\(y\)</span>轴的比例是不同的，也就是相同单位长度的线段，在显示时长度是不一样的，所以要把二者的比例设为一样，这样图片看起来更协调更准确。</p>
@@ -689,7 +745,7 @@ R\left(G_{1}, G_{2}\right)=\max _{x_{j} \in G_{1} \atop x_{k} \in G_{2}}\left\{r
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/clustering_14_0.png" src="../_images/clustering_14_0.png" />
+<img alt="../_images/clustering_15_0.png" src="../_images/clustering_15_0.png" />
 </div>
 </div>
 <p>完整代码如下</p>
@@ -723,16 +779,16 @@ R\left(G_{1}, G_{2}\right)=\max _{x_{j} \in G_{1} \atop x_{k} \in G_{2}}\left\{r
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/clustering_16_0.png" src="../_images/clustering_16_0.png" />
-<img alt="../_images/clustering_16_1.png" src="../_images/clustering_16_1.png" />
+<img alt="../_images/clustering_17_0.png" src="../_images/clustering_17_0.png" />
+<img alt="../_images/clustering_17_1.png" src="../_images/clustering_17_1.png" />
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="id5">
-<h2><span class="section-number">4.4. </span>课后习题<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2><span class="section-number">4.4. </span>课后习题<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>课后作业
-1.数据集如下，使用K-means算法进行聚类（聚成三类）</p>
+1.数据集如下，使用K-means算法进行聚类（聚成4类）</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
@@ -754,7 +810,7 @@ R\left(G_{1}, G_{2}\right)=\max _{x_{j} \in G_{1} \atop x_{k} \in G_{2}}\left\{r
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(150, 2)
 </pre></div>
 </div>
-<img alt="../_images/clustering_18_1.png" src="../_images/clustering_18_1.png" />
+<img alt="../_images/clustering_19_1.png" src="../_images/clustering_19_1.png" />
 </div>
 </div>
 <p>2.数据如下，使用系统聚类法进行聚类</p>
@@ -821,7 +877,7 @@ R\left(G_{1}, G_{2}\right)=\max _{x_{j} \in G_{1} \atop x_{k} \in G_{2}}\left\{r
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="queue-model.html" title="previous page"><span class="section-number">3. </span>排队论模型</a>
-    <a class='right-next' id="next-link" href="matplotlib.html" title="next page"><span class="section-number">1. </span>Matplotlib</a>
+    <a class='right-next' id="next-link" href="ga.html" title="next page"><span class="section-number">5. </span>优化算法</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
