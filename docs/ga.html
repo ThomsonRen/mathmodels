@@ -38,7 +38,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="1. Matplotlib" href="matplotlib.html" />
+    <link rel="next" title="6. 模拟退火算法" href="sa.html" />
     <link rel="prev" title="4. 聚类分析" href="clustering.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -150,6 +150,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    5. 遗传算法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sa.html">
+   6. 模拟退火算法
   </a>
  </li>
 </ul>
@@ -993,7 +998,14 @@ f(x)=2 x \sin ( x)+\cos(x) ,x \in[0,10]
 </div>
 <p>可以看到，在经过500代遗传以后，算法找到的最优解15.74。已经与原函数的最大值非常接近了。</p>
 <p>作为对比,下面简单介绍一种基于贪婪思想的<strong>爬山法</strong>: 从搜索空间中随机产生邻近的点，从中选择对应解最优的个体，替换原来的个体，不断重复上述过程。</p>
+<div class="figure align-default" id="ps">
+<a class="reference internal image-reference" href="../_images/ps.jpg"><img alt="../_images/ps.jpg" src="../_images/ps.jpg" style="height: 350px;" /></a>
+</div>
 <p>因为爬山法只对“邻近”的点作比较，所以目光比较“短浅”，常常只能收敛到离开初始位置比较近的局部最优解上面。对于存在很多局部最优点的问题，通过一个简单的迭代找出全局最优解的机会非常渺茫。（在爬山法中，袋鼠最有希望到达最靠近它出发点的山顶，但不能保证该山顶是珠穆朗玛峰，或者是一个非常高的山峰。因为一路上它<strong>只顾上坡，没有下坡</strong>。）</p>
+<div class="admonition- admonition">
+<p class="admonition-title">思考</p>
+<p>了解了遗传算法的基本思想以后，请你思考如何使用遗传算法求解上面提到的TSP问题？</p>
+</div>
 </div>
 </div>
 <div class="section" id="id19">
@@ -1042,7 +1054,7 @@ f(x)=2 x \sin ( x)+\cos(x) ,x \in[0,10]
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="clustering.html" title="previous page"><span class="section-number">4. </span>聚类分析</a>
-    <a class='right-next' id="next-link" href="matplotlib.html" title="next page"><span class="section-number">1. </span>Matplotlib</a>
+    <a class='right-next' id="next-link" href="sa.html" title="next page"><span class="section-number">6. </span>模拟退火算法</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
