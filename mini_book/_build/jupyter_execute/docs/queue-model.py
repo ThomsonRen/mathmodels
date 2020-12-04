@@ -31,7 +31,7 @@
 ![Image Name](https://cdn.kesci.com/upload/image/q768iziig6.jpg?imageView2/0/w/960/h/960)
 
 
-``` 
+```
 
 虽然我们不能在牛仔射击前准确地预测得出具体的分数$k$，但是可以求出$k$的概率分布，比如得九分的情况对应于：射失一发。根据组合数性质，它的概率是
 
@@ -506,9 +506,42 @@ plt.ylabel(r"$f_k(t)$",fontsize = 15)
 服务时系统的状态转移图如下图
 
 
+
+
+
+
+
+
 ![状态转移图](https://cdn.kesci.com/upload/image/q2yhjoztyk.png?imageView2/0/w/960/h/960)
 
-其状态平衡方程为
+
+
+在负指数分布中可以假定
+
+从 $[t, t+\Delta t]$ 内 $,$有一个顾客到达的概率为 $\lambda \Delta t+o(\Delta t),$有一个顾客离开的概率为 $\mu \Delta t+o(\Delta t)$，多于一个顾客达到或离开的概率为 $o(\Delta t)$ 。
+
+
+
+
+
+在时刻 $[t, t+\Delta t]$时，$N(t+\Delta t)=n$的概率用状态转移来理解，可以表述为如下表达式：
+
+
+$$
+P_{n}(t+\Delta t)=P_{n-1}(t) *\left(\lambda \Delta t+o(\Delta t)\right)+P_{n+1}(t) \\
+*\left(\mu \Delta t+o(\Delta t)\right)+P_{n}(t) *\left(\lambda \Delta t+o(\Delta t)\right) *\left(\mu \Delta t+o(\Delta t)\right)+P_{n}(t) *(1- \\
+\left.\lambda \Delta t+o(\Delta t)\right) *\left(1-\mu \Delta t+o(\Delta t)\right)
+$$
+
+整理后得到
+
+$$
+P_{n}(t+\Delta t)-P_{n}(t)=\left[P_{n-1}(t) * \lambda +P_{n+1}(t) * \mu-P_{n}(t) * \lambda -\right. \\
+\left.\left.P_{n}(t) * \mu \right] \Delta t+o(\Delta t)\right)
+$$
+
+
+对于整个系统，在系统稳定时，列状态平衡方程为
 
 $$
 \left\{\begin{array}{l}
